@@ -1,6 +1,6 @@
 # ARI Weighting Studio
 
-An expert-weighted **AI Readiness Index (ARI)** for census tracts, and the browser tool that builds it.
+An expert-weighted **AI Readiness Index (ARI)** at the **census tract or county level**, and the browser tool that builds it.
 
 - **Website (AIreadiness):** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/>
 - **Open the studio:** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/ARI_Weighting_Studio.html>
@@ -25,10 +25,12 @@ The studio runs entirely in your browser. There is nothing to install and no ser
 
 Artificial intelligence is reaching many areas of community life at once, including transport, health care, education and work. It will not arrive the same way everywhere. Whether residents can benefit depends on whether they have the digital infrastructure AI runs on and the education, income and skills to use it, and both vary sharply between neighbourhoods within the same city. Existing AI-readiness indices compare countries, which says little about which neighbourhoods are prepared and which risk being left behind.
 
-The ARI measures readiness at the census-tract level with two pillars:
+The ARI measures readiness at the census tract or county level, with two pillars:
 
 - **Access**: the digital infrastructure available to residents, such as broadband subscriptions and computers.
 - **Capacity**: residents' ability to make use of it: education, income, employment and skills.
+
+Census tracts show the differences between neighbourhoods within a city; counties compare places across a region. The studio switches between the two with the **Unit of analysis** setting on the Index tab, using the same expert weights for both.
 
 How much each indicator should count is a value judgement that local policy makers and experts have to make for their own area. The studio lets a panel make those judgements in a structured, transparent way with the **Analytic Hierarchy Process (AHP)**, checks them for consistency, and turns them into weights, an index, maps and a sensitivity analysis. It is tested on Charlotte and Mecklenburg County, North Carolina, with data from the [Carolinas Regional Explorer](https://github.com/kvenkita/crxp) and the U.S. Census Bureau's American Community Survey.
 
@@ -39,7 +41,7 @@ How much each indicator should count is a value judgement that local policy make
 | **Setup** | Build the hierarchy: dimensions (Level 1) and indicators (Level 2). Give each indicator a pillar (Access or Capacity), a direction (higher or lower is better) and a data column. A searchable catalogue lists ready-made indicators. Import and export project files. |
 | **Compare** | Each team member compares items two at a time on Saaty's 1–9 scale, first the dimensions, then the indicators within each dimension. The studio flags inconsistent answers and suggests which to revisit. |
 | **Group weights** | Pools everyone's judgements into group weights, with each person's consistency ratio, the group's agreement (Kendall's W) and a full report. Import teammates' judgement files here. |
-| **Index** | Load the tract table, set the study area, and compute the Access and Capacity scores, the ARI and the readiness gap for every tract. Map them, find spatial clusters (Moran's I, LISA), click any tract for a breakdown with radar charts, and test how stable the ranking is (Monte Carlo). Switch between tracts and counties. |
+| **Index** | Load the tract table, set the study area, and compute the Access and Capacity scores, the ARI and the readiness gap for every tract. Map them, find spatial clusters (Moran's I, LISA), click any tract for a breakdown with radar charts, and test how stable the ranking is (Monte Carlo). Switch between census tracts and counties with **Unit of analysis**; each level has its own table and map, and the weights are shared. |
 | **Disaggregation (beta)** | Break the results down by characteristics of the tracts, such as income or majority race, alone or in combination. **Still being worked on and not yet tested**: treat its results as provisional. |
 | **Guide** | Instructions inside the app. |
 
@@ -60,7 +62,7 @@ The ARI combines two streams. On the weights side, experts' pairwise judgements 
      ARI = sqrt(A x C)  overall readiness      Gap G = A - C  where to invest
 ```
 
-**1. Hierarchy.** The goal (AI readiness of census tracts) splits into dimensions, and each dimension into indicators. Each indicator belongs to one pillar, Access ($A$) or Capacity ($C$), and has a direction $\delta_j = +1$ (higher is better) or $-1$ (lower is better).
+**1. Hierarchy.** The goal (AI readiness of census tracts or counties) splits into dimensions, and each dimension into indicators. Each indicator belongs to one pillar, Access ($A$) or Capacity ($C$), and has a direction $\delta_j = +1$ (higher is better) or $-1$ (lower is better).
 
 **2. Pairwise comparisons.** For each pair of siblings, an expert answers how much more important one is than the other: 1 equal, 3 moderately, 5 strongly, 7 very strongly, 9 extremely more important (2, 4, 6, 8 in between). The answers fill a reciprocal matrix $\mathbf{A}=(a_{ij})$ with $a_{ii}=1$ and $a_{ji}=1/a_{ij}$.
 
@@ -138,7 +140,7 @@ Everyone must judge the **same hierarchy**: the AHP pools judgements pair by pai
 
 ### The table (CSV)
 
-Any CSV with a header row and **one row per area** works: tracts, block groups, neighbourhoods, counties.
+Any CSV with a header row and **one row per area** works: tracts, block groups, neighbourhoods, counties. For county-level data, switch **Unit of analysis** on the Index tab to **Counties** before you upload; the census-tract and county levels each keep their own table and map.
 
 - **An ID column**, such as `geoid`, unique for each row. It is also what joins the table to the map.
 - **A name column** (optional), such as `tract_name`.
@@ -188,6 +190,8 @@ Census tract boundaries for every state are free from the U.S. Census Bureau. It
    4. Click **Export**, choose **GeoJSON** and save the file.
 3. **Upload it in the studio.** On the Index tab, click **Upload boundaries (GeoJSON)…**. The studio matches the file's `GEOID` to your table's ID column on its own. Check that the map's **Join** setting shows every row matched; rows without a shape have IDs that are not in the file.
 4. **Optional: add an outline.** County outlines help orient readers. Download **Counties** from the same Census page, convert it the same way, and add it under **Outline layer → Upload…**.
+
+**Working at the county level?** Switch **Unit of analysis** on the Index tab to **Counties** first; each level keeps its own table and map. In step 1, download **Counties** instead of Census Tracts. That file covers the whole country, so filter it to your state or region in step 2, for example `-filter 'STATEFP == "37"'` for North Carolina. A county's `GEOID` has 5 digits: state (2) and county (3), for example `37119`.
 
 **Make the IDs in your table match.** A tract's `GEOID` has 11 digits: state (2), county (3) and tract (6), for example `37119000101`. How you get it depends on where your data comes from:
 
@@ -240,7 +244,7 @@ tools/make_four_dimension_example.py   builds the example project
 
 ## Data, credits and status
 
-**Data.** The example covers the 752 census tracts of the 14-county Charlotte region (North and South Carolina); the example study area is Mecklenburg County's 305 tracts. Sources and licences are listed in [`data/README.md`](data/README.md):
+**Data.** The example covers the 752 census tracts and the 14 counties of the Charlotte region (North and South Carolina); the example study area is Mecklenburg County's 305 tracts. Sources and licences are listed in [`data/README.md`](data/README.md):
 
 - Carolinas Regional Explorer, UNC Charlotte Urban Institute. © 2026 Kailas Venkitasubramanian. Data licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). <https://github.com/kvenkita/crxp>
 - U.S. Census Bureau, American Community Survey 2020–2024 five-year estimates (public domain).

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AIreadiness</title>
-<meta name="description" content="An expert-weighted AI Readiness Index for census tracts, built with the Analytic Hierarchy Process. Tested on Charlotte and Mecklenburg County, North Carolina.">
+<meta name="description" content="An expert-weighted AI Readiness Index at the census tract or county level, built with the Analytic Hierarchy Process. Tested on Charlotte and Mecklenburg County, North Carolina.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -116,7 +116,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
   <div class="hero">
     <div class="eyebrow">AI Readiness Index · Analytic Hierarchy Process</div>
     <h1>How ready is each neighbourhood for AI?</h1>
-    <p class="lede">The ARI Weighting Studio lets a panel of local experts weigh what matters for AI readiness, then scores every census tract on <b>Access</b> to digital infrastructure and residents' <b>Capacity</b> to use it.</p>
+    <p class="lede">The ARI Weighting Studio lets a panel of local experts weigh what matters for AI readiness, then scores every census tract or county on <b>Access</b> to digital infrastructure and residents' <b>Capacity</b> to use it.</p>
     <div class="buttons">
       <a class="btn primary" href="ARI_Weighting_Studio.html">Open the studio</a>
       <a class="btn ghost" href="examples/ari_11_indicators_four_dimensions.json" download>Download the Charlotte example</a>
@@ -131,12 +131,13 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
   <div class="wrap">
     <h2>Introduction</h2>
     <p>Artificial intelligence is reaching many areas of community life at once, from transport and health care to education and work. It will not arrive the same way everywhere. Whether residents can benefit depends on whether they have the digital infrastructure AI runs on, and the education, income and skills to use it. Both vary sharply between neighbourhoods within the same city, yet existing AI-readiness indices compare whole countries.</p>
-    <p>The AI Readiness Index (ARI) measures readiness at the census-tract level, with two pillars:</p>
+    <p>The AI Readiness Index (ARI) measures readiness at the <b>census tract or county level</b>, with two pillars:</p>
     <div class="grid2">
       <div class="card"><h3><span class="pill a">A</span> Access</h3><p>The digital infrastructure available to residents, such as broadband subscriptions and computers.</p></div>
       <div class="card"><h3><span class="pill c">C</span> Capacity</h3><p>Residents' ability to make use of it: education, income, employment and skills.</p></div>
     </div>
-    <p style="margin-top:18px">How much each indicator should count is a value judgement that local policy makers and experts have to make for their own area. The studio helps a panel make those judgements in a structured, transparent and checkable way with the Analytic Hierarchy Process (AHP). It then turns them into weights, scores every tract, maps the results and tests how stable they are. It is tested on Charlotte and Mecklenburg County, North Carolina, with data from the <a href="https://github.com/kvenkita/crxp">Carolinas Regional Explorer</a> and the U.S. Census Bureau's American Community Survey.</p>
+    <p style="margin-top:18px">Census tracts show the differences between neighbourhoods within a city; counties compare places across a region. The studio switches between the two with the <b>Unit of analysis</b> setting on the Index tab, using the same expert weights for both.</p>
+    <p>How much each indicator should count is a value judgement that local policy makers and experts have to make for their own area. The studio helps a panel make those judgements in a structured, transparent and checkable way with the Analytic Hierarchy Process (AHP). It then turns them into weights, scores every tract or county, maps the results and tests how stable they are. It is tested on Charlotte and Mecklenburg County, North Carolina, with data from the <a href="https://github.com/kvenkita/crxp">Carolinas Regional Explorer</a> and the U.S. Census Bureau's American Community Survey.</p>
   </div>
 </section>
 
@@ -186,7 +187,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
       <figcaption>Expert judgements become weights (left); census data become scores (right). Both feed the Access and Capacity scores, which combine into the index and the gap.</figcaption>
     </figure>
 
-    <div class="math-step"><b>1. Hierarchy.</b> The goal, the AI readiness of census tracts, splits into dimensions (Level 1), and each dimension into indicators (Level 2). Each indicator belongs to one pillar, Access or Capacity, and has a direction: higher is better, or lower is better.</div>
+    <div class="math-step"><b>1. Hierarchy.</b> The goal, the AI readiness of census tracts or counties, splits into dimensions (Level 1), and each dimension into indicators (Level 2). Each indicator belongs to one pillar, Access or Capacity, and has a direction: higher is better, or lower is better.</div>
     <div class="math-step"><b>2. Pairwise comparisons.</b> For each pair of siblings, an expert answers how much more important one is than the other: 1 equal, 3 moderately, 5 strongly, 7 very strongly, 9 extremely more important, with 2, 4, 6 and 8 in between. The answers fill a reciprocal matrix with \(a_{ii}=1\) and \(a_{ji}=1/a_{ij}\).</div>
     <div class="math-step"><b>3. Local weights.</b> The row geometric mean gives the weights within each set:
       $$g_i=\Bigl(\prod_{j=1}^{n}a_{ij}\Bigr)^{1/n},\qquad w_i=\frac{g_i}{\sum_k g_k}.$$</div>
@@ -254,7 +255,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
   <div class="wrap">
     <h2>Using your own data</h2>
     <h3>The table (CSV)</h3>
-    <p>Any CSV with a header row and <b>one row per area</b> works: tracts, block groups, neighbourhoods or counties.</p>
+    <p>Any CSV with a header row and <b>one row per area</b> works: tracts, block groups, neighbourhoods or counties. For county-level data, switch <b>Unit of analysis</b> on the Index tab to <b>Counties</b> before you upload; the census-tract and county levels each keep their own table and map.</p>
     <ul>
       <li><b>An ID column</b>, such as <code>geoid</code>, unique for each row. It also joins the table to the map.</li>
       <li><b>A name column</b> (optional), such as <code>tract_name</code>.</li>
@@ -292,6 +293,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
       <li><b>Upload it in the studio.</b> On the Index tab, click <b>Upload boundaries (GeoJSON)…</b>. The studio matches the file's <code>GEOID</code> to your table's ID column on its own. Check that the map's <b>Join</b> setting shows every row matched; rows without a shape have IDs that are not in the file.</li>
       <li><b>Optional: add an outline.</b> County outlines help orient readers. Download <b>Counties</b> from the same Census page, convert it the same way, and add it under <b>Outline layer → Upload…</b>.</li>
     </ol>
+    <p><b>Working at the county level?</b> Switch <b>Unit of analysis</b> on the Index tab to <b>Counties</b> first; each level keeps its own table and map. In step 1, download <b>Counties</b> instead of Census Tracts. That file covers the whole country, so filter it to your state or region in step 2, for example <code>-filter 'STATEFP == "37"'</code> for North Carolina. A county's <code>GEOID</code> has 5 digits: state (2) and county (3), for example <code>37119</code>.</p>
     <div class="callout">
       <p><b>Make the IDs in your table match.</b> A tract's <code>GEOID</code> has 11 digits: state (2), county (3) and tract (6), for example <code>37119000101</code>.</p>
       <ul>
@@ -333,7 +335,7 @@ python -m http.server 8000</code></pre>
 <section id="status">
   <div class="wrap">
     <h2>Data, credits and status</h2>
-    <p>The example covers the 752 census tracts of the 14-county Charlotte region in North and South Carolina; the example study area is Mecklenburg County's 305 tracts.</p>
+    <p>The example covers the 752 census tracts and the 14 counties of the Charlotte region in North and South Carolina; the example study area is Mecklenburg County's 305 tracts.</p>
     <ul>
       <li>Carolinas Regional Explorer, UNC Charlotte Urban Institute. © 2026 Kailas Venkitasubramanian. Data licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. <a href="https://github.com/kvenkita/crxp">github.com/kvenkita/crxp</a></li>
       <li>U.S. Census Bureau, American Community Survey 2020–2024 five-year estimates (public domain).</li>
