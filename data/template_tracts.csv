@@ -1,0 +1,4 @@
+geoid,tract_name,county_name,household-income,household-income_cv,acs-broadband-any,acs-broadband-any_cv,no-vehicle,no-vehicle_cv,routine-checkup,routine-checkup_cv
+37119000101,Second Ward / Uptown,Mecklenburg County,119044.0,10.01,97.1429,3.97,5.9429,49.51,71.8,2.88
+37119000102,Third Ward / Uptown,Mecklenburg County,134506.0,5.91,97.1713,2.98,12.9911,41.55,72.0,2.87
+37119000103,Fourth Ward / Gateway / Uptown,Mecklenburg County,130114.0,11.89,98.2642,0.83,8.1003,37.09,74.3,2.61

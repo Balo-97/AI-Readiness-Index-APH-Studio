@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARI Weighting Studio</title>
+<meta name="description" content="An expert-weighted AI Readiness Index for census tracts, built with the Analytic Hierarchy Process. Tested on Charlotte and Mecklenburg County, North Carolina.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+:root{
+  --bg:#FBFAFC; --surface:#FFFFFF; --surface-2:#F3F0F6; --line:#E3DDE9;
+  --ink:#1D1724; --ink-2:#4A4256; --muted:#6B6378;
+  --accent:#7A2E92; --accent-soft:#F1E6F5;
+  --weights:#B5399F; --data:#0F7CB8; --index:#70349A; --gold:#B7791F;
+  --code-bg:#F3F0F6;
+  --radius:14px;
+  --font:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F0B14; --surface:#18121F; --surface-2:#211A2A; --line:#33293F;
+    --ink:#F2EEF6; --ink-2:#CFC6DA; --muted:#A79EB4;
+    --accent:#D89BEA; --accent-soft:#2A1E33;
+    --gold:#FFD452; --code-bg:#211A2A;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.65}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--surface);padding:8px 12px;border-radius:8px}
+.skip:focus{left:8px;z-index:10}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header.site{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px}
+.brand{font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+nav.top{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
+nav.top a{color:var(--ink-2);text-decoration:none}
+nav.top a:hover{color:var(--accent)}
+@media (max-width:760px){nav.top{display:none}}
+.hero{padding:64px 0 40px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(34px,5vw,52px);line-height:1.1;margin:10px 0 16px;letter-spacing:-.02em}
+.lede{font-size:20px;color:var(--ink-2);max-width:760px;margin:0 0 26px}
+.buttons{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;text-decoration:none;font-size:16px;border:1.5px solid var(--accent)}
+.btn.primary{background:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){.btn.primary{color:#1D1724}}
+.btn.ghost{color:var(--accent);background:transparent}
+.note{font-size:15px;color:var(--muted);margin-top:14px}
+section{padding:36px 0;border-top:1px solid var(--line)}
+h2{font-size:30px;line-height:1.2;margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:20px;margin:26px 0 8px}
+p{margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+.card h3{margin-top:0}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:600}
+.pill.a{background:color-mix(in srgb,var(--data) 16%,transparent);color:var(--data)}
+.pill.c{background:color-mix(in srgb,var(--weights) 16%,transparent);color:var(--weights)}
+@media (prefers-color-scheme: dark){.pill.a{color:#7DD3FC}.pill.c{color:#F5A3EA}}
+figure{margin:20px 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+figure svg{display:block;width:100%;height:auto;max-width:760px;margin:0 auto}
+figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:10px}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 48px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+.math-step{margin:0 0 16px}
+.math-step b{color:var(--ink)}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+code{font-family:var(--mono);font-size:.88em;background:var(--code-bg);padding:1px 6px;border-radius:6px}
+pre{font-family:var(--mono);font-size:14px;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;line-height:1.5}
+pre code{background:none;padding:0}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;background:var(--surface-2)}
+tr:last-child td{border-bottom:none}
+.callout{border-left:4px solid var(--gold);background:var(--surface);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0}
+footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">ARI Weighting Studio</a>
+    <nav class="top" aria-label="Sections">
+      <a href="#introduction">Introduction</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#quick-start">Quick start</a>
+      <a href="#your-data">Your own data</a>
+      <a href="#run-locally">Run locally</a>
+      <a href="https://github.com/Balo-97/ari-weighting-studio">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap" id="top">
+  <div class="hero">
+    <div class="eyebrow">AI Readiness Index · Analytic Hierarchy Process</div>
+    <h1>How ready is each neighbourhood for AI?</h1>
+    <p class="lede">The ARI Weighting Studio lets a panel of local experts weigh what matters for AI readiness, then scores every census tract on <b>Access</b> to digital infrastructure and residents' <b>Capacity</b> to use it.</p>
+    <div class="buttons">
+      <a class="btn primary" href="ARI_Weighting_Studio.html">Open the studio</a>
+      <a class="btn ghost" href="examples/ari_11_indicators_four_dimensions.json" download>Download the Charlotte example</a>
+      <a class="btn ghost" href="https://github.com/Balo-97/ari-weighting-studio">View on GitHub</a>
+    </div>
+    <p class="note">Runs entirely in your browser: nothing to install, and your data stays on your computer.</p>
+  </div>
+</div>
+
+<section id="introduction">
+  <div class="wrap">
+    <h2>Introduction</h2>
+    <p>Artificial intelligence is reaching many areas of community life at once, from transport and health care to education and work. It will not arrive the same way everywhere. Whether residents can benefit depends on whether they have the digital infrastructure AI runs on, and the education, income and skills to use it. Both vary sharply between neighbourhoods within the same city, yet existing AI-readiness indices compare whole countries.</p>
+    <p>The AI Readiness Index (ARI) measures readiness at the census-tract level, with two pillars:</p>
+    <div class="grid2">
+      <div class="card"><h3><span class="pill a">A</span> Access</h3><p>The digital infrastructure available to residents, such as broadband subscriptions and computers.</p></div>
+      <div class="card"><h3><span class="pill c">C</span> Capacity</h3><p>Residents' ability to make use of it: education, income, employment and skills.</p></div>
+    </div>
+    <p style="margin-top:18px">How much each indicator should count is a value judgement that local policy makers and experts have to make for their own area. The studio helps a panel make those judgements in a structured, transparent and checkable way with the Analytic Hierarchy Process (AHP). It then turns them into weights, scores every tract, maps the results and tests how stable they are. It is tested on Charlotte and Mecklenburg County, North Carolina, with data from the <a href="https://github.com/kvenkita/crxp">Carolinas Regional Explorer</a> and the U.S. Census Bureau's American Community Survey.</p>
+  </div>
+</section>
+
+<section id="methodology">
+  <div class="wrap">
+    <h2>Methodology</h2>
+    <p>The ARI combines two streams. Experts' pairwise judgements become indicator weights; each indicator's raw value for every tract becomes a score between 0 and 1. The two meet in the pillar scores.</p>
+    <figure>
+      <svg viewBox="0 0 760 470" role="img" aria-labelledby="pipe-title pipe-desc">
+        <title id="pipe-title">How the AI Readiness Index is built</title>
+        <desc id="pipe-desc">Pairwise judgements become indicator weights; raw indicator values become indicator scores from 0 to 1. Both feed the pillar scores A and C, a weighted geometric mean from 0 to 100, which give the ARI, the square root of A times C, and the gap G, A minus C.</desc>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C24FB6"/></marker></defs>
+        <g font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif" text-anchor="middle">
+          <text x="190" y="22" font-size="13" font-weight="700" letter-spacing="3" fill="#B5399F">WEIGHTS</text>
+          <text x="570" y="22" font-size="13" font-weight="700" letter-spacing="3" fill="#0F7CB8">DATA</text>
+          <rect x="40" y="36" width="300" height="74" rx="14" fill="#B5399F"/>
+          <text x="190" y="68" font-size="19" font-weight="700" fill="#fff">Pairwise judgements</text>
+          <text x="190" y="93" font-size="14" fill="#FFE7FA">Saaty 1–9 scale, Levels 1 and 2</text>
+          <rect x="40" y="146" width="300" height="74" rx="14" fill="#B5399F"/>
+          <text x="190" y="178" font-size="19" font-weight="700" fill="#fff">Indicator weights</text>
+          <text x="190" y="203" font-size="14" fill="#FFE7FA">Decision matrix → weights</text>
+          <rect x="420" y="36" width="300" height="74" rx="14" fill="#0F7CB8"/>
+          <text x="570" y="68" font-size="19" font-weight="700" fill="#fff">Raw indicator values</text>
+          <text x="570" y="93" font-size="14" fill="#DFF4FF">Census tract or county</text>
+          <rect x="420" y="146" width="300" height="74" rx="14" fill="#0F7CB8"/>
+          <text x="570" y="178" font-size="19" font-weight="700" fill="#fff">Indicator scores 0–1</text>
+          <text x="570" y="203" font-size="14" fill="#DFF4FF">Normalise, flip, floor</text>
+          <rect x="200" y="266" width="360" height="74" rx="14" fill="#70349A"/>
+          <text x="380" y="298" font-size="19" font-weight="700" fill="#fff">Pillar scores A and C</text>
+          <text x="380" y="323" font-size="14" fill="#F1E3FB">Weighted geometric mean, 0–100</text>
+          <rect x="40" y="386" width="300" height="74" rx="14" fill="#70349A"/>
+          <text x="190" y="418" font-size="19" font-weight="700" fill="#fff">ARI = √(A × C)</text>
+          <text x="190" y="443" font-size="14" fill="#F1E3FB">Overall readiness</text>
+          <rect x="420" y="386" width="300" height="74" rx="14" fill="#70349A"/>
+          <text x="570" y="418" font-size="19" font-weight="700" fill="#fff">Gap G = A − C</text>
+          <text x="570" y="443" font-size="14" fill="#F1E3FB">Where to invest</text>
+        </g>
+        <g fill="none" stroke="#C24FB6" stroke-width="3">
+          <path d="M190 112 L190 141" marker-end="url(#ah)"/>
+          <path d="M570 112 L570 141" marker-end="url(#ah)"/>
+          <path d="M190 222 C 190 248, 320 240, 330 261" marker-end="url(#ah)"/>
+          <path d="M570 222 C 570 248, 440 240, 430 261" marker-end="url(#ah)"/>
+          <path d="M330 342 C 320 364, 190 356, 190 381" marker-end="url(#ah)"/>
+          <path d="M430 342 C 440 364, 570 356, 570 381" marker-end="url(#ah)"/>
+        </g>
+      </svg>
+      <figcaption>Expert judgements become weights (left); census data become scores (right). Both feed the Access and Capacity scores, which combine into the index and the gap.</figcaption>
+    </figure>
+
+    <div class="math-step"><b>1. Hierarchy.</b> The goal, the AI readiness of census tracts, splits into dimensions (Level 1), and each dimension into indicators (Level 2). Each indicator belongs to one pillar, Access or Capacity, and has a direction: higher is better, or lower is better.</div>
+    <div class="math-step"><b>2. Pairwise comparisons.</b> For each pair of siblings, an expert answers how much more important one is than the other: 1 equal, 3 moderately, 5 strongly, 7 very strongly, 9 extremely more important, with 2, 4, 6 and 8 in between. The answers fill a reciprocal matrix with \(a_{ii}=1\) and \(a_{ji}=1/a_{ij}\).</div>
+    <div class="math-step"><b>3. Local weights.</b> The row geometric mean gives the weights within each set:
+      $$g_i=\Bigl(\prod_{j=1}^{n}a_{ij}\Bigr)^{1/n},\qquad w_i=\frac{g_i}{\sum_k g_k}.$$</div>
+    <div class="math-step"><b>4. Consistency.</b> With \(\lambda_{\max}\) the principal eigenvalue of the matrix,
+      $$\mathrm{CI}=\frac{\lambda_{\max}-n}{n-1},\qquad \mathrm{CR}=\frac{\mathrm{CI}}{\mathrm{RI}(n)},$$
+      where \(\mathrm{RI}\) is Saaty's random index (0.58 for three items, 0.90 for four). Sets with \(\mathrm{CR}<0.10\) are accepted; above that the studio points to the judgements to revisit.</div>
+    <div class="math-step"><b>5. Combining the panel.</b> Each cell is pooled across the \(K\) experts by a weighted geometric mean, which keeps the matrix reciprocal:
+      $$a^{G}_{ij}=\prod_{k=1}^{K}a_{ij,k}^{\,\lambda_k/\sum_l\lambda_l}.$$</div>
+    <div class="math-step"><b>6. Global and pillar weights.</b> An indicator's global weight is its dimension's weight times its weight within the dimension, \(w_j=w_d\,w_{j\mid d}\). Weights are then rescaled to sum to 1 within each pillar: \(w^{P}_j=w_j/\sum_{k\in P}w_k\).</div>
+    <div class="math-step"><b>7. Indicator scores.</b> Each indicator is rescaled across the \(N\) tracts of the study area, flipped if lower is better, and raised off zero by a small floor \(f=0.01\):
+      $$z_{tj}=\frac{x_{tj}-\min_s x_{sj}}{\max_s x_{sj}-\min_s x_{sj}},\qquad x'_{tj}=f+(1-f)\,z_{tj}.$$</div>
+    <div class="math-step"><b>8. Pillar scores.</b> A weighted geometric mean on a 0–100 scale, so a weak indicator cannot be fully offset by a strong one:
+      $$A_t=100\prod_{j\in A}\bigl(x'_{tj}\bigr)^{w^{A}_j},\qquad C_t=100\prod_{j\in C}\bigl(x'_{tj}\bigr)^{w^{C}_j}.$$</div>
+    <div class="math-step"><b>9. Index and gap.</b>
+      $$\mathrm{ARI}_t=\sqrt{A_t\,C_t},\qquad G_t=A_t-C_t.$$
+      The ARI is high only when both pillars are high. A positive gap means access is ahead of residents' capacity to use it, which points to investment in skills; a negative gap means capacity is ahead of access, which points to investment in connectivity.</div>
+    <div class="math-step"><b>10. Robustness and spatial pattern.</b> A Monte Carlo analysis moves every judgement at random along the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster.</div>
+    <div class="callout"><b>Responsible use.</b> Weights are value judgements. The same flexibility that lets a community set its own priorities could be used to make an area look more or less ready than it is. Document who took part and what they judged, report consistency, run the sensitivity analysis, and publish the weights with the results.</div>
+  </div>
+</section>
+
+<section id="quick-start">
+  <div class="wrap">
+    <h2>Quick start with the Charlotte example</h2>
+    <ol class="steps">
+      <li><b>Open the studio.</b> <a href="ARI_Weighting_Studio.html">Open it here</a>. On a first visit it shows a demo; nothing in the demo is saved.</li>
+      <li><b>Load the example project.</b> <a href="examples/ari_11_indicators_four_dimensions.json" download>Download the Charlotte example</a>, then in the studio click <b>Import project file…</b> in the banner (or <b>Setup → Import .json files…</b>, or drag the file onto the page). Check the preview and press <b>Start the project</b>.</li>
+      <li><b>Add yourself.</b> In the top bar choose <b>You are → ＋ New participant…</b> and type your name.</li>
+      <li><b>Compare.</b> On the <b>Compare</b> tab, click the number on the side of the more important item for each pair (16 pairs in this example). Revise any set whose consistency ratio is above 0.10.</li>
+      <li><b>See the weights</b> on the <b>Group weights</b> tab.</li>
+      <li><b>Compute the index.</b> On the <b>Index</b> tab click <b>Load example tracts (CRXP + Census ACS, 2024)</b>. The study area is already Mecklenburg County. Until every pair is answered, equal weights stand in and results are marked provisional.</li>
+      <li><b>Explore.</b> Map the ARI, the pillars, the gap or the bivariate Access × Capacity classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.</li>
+      <li><b>Save.</b> <b>Setup → Export project + all judgements (.json)</b> keeps your work; <b>Export all…</b> saves every output as one zip.</li>
+    </ol>
+    <h3>The example hierarchy</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Dimension</th><th>Indicator</th><th>Pillar</th><th>Better when</th></tr></thead>
+      <tbody>
+        <tr><td>Economy</td><td>Median household income</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+        <tr><td></td><td>Labour-force participation rate</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+        <tr><td></td><td>Broadband subscription of any type</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
+        <tr><td>Education and Employment</td><td>High-AI-exposure occupation share</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
+        <tr><td></td><td>High school diploma or higher</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+        <tr><td></td><td>College enrolment (share of adults 18+)</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+        <tr><td>Health and Transport</td><td>Health insurance coverage</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
+        <tr><td></td><td>Routine checkup (adults)</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
+        <tr><td></td><td>Households without a vehicle</td><td><span class="pill a">Access</span></td><td>lower</td></tr>
+        <tr><td>Character</td><td>Population aged 18–34</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+        <tr><td></td><td>Residents 65+ with a computer and broadband</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Working as a team</h3>
+    <p>This version keeps everything in your browser, so a team combines its work by exchanging files:</p>
+    <ol class="steps">
+      <li><b>The facilitator</b> builds the hierarchy on the Setup tab, agrees it with the group, clicks <b>Lock hierarchy</b>, and sends everyone <b>Export project + all judgements (.json)</b>.</li>
+      <li><b>Each member</b> imports that file, adds themselves as a participant, makes their comparisons, and sends back <b>Export only my judgements</b>.</li>
+      <li><b>The facilitator</b> imports all the returned files at once with <b>Group weights → Import teammates' files…</b> or by dragging them onto the page. A preview shows each person and what will change; nothing is saved until you press <b>Import</b>.</li>
+    </ol>
+    <p>Everyone must judge the <b>same hierarchy</b>: judgements made on different dimensions or indicators cannot be pooled, and the preview warns you when that happens.</p>
+  </div>
+</section>
+
+<section id="your-data">
+  <div class="wrap">
+    <h2>Using your own data</h2>
+    <h3>The table (CSV)</h3>
+    <p>Any CSV with a header row and <b>one row per area</b> works: tracts, block groups, neighbourhoods or counties.</p>
+    <ul>
+      <li><b>An ID column</b>, such as <code>geoid</code>, unique for each row. It also joins the table to the map.</li>
+      <li><b>A name column</b> (optional), such as <code>tract_name</code>.</li>
+      <li><b>A column that defines the study area</b> (optional), such as <code>county_name</code>.</li>
+      <li><b>One numeric column per indicator</b>: percentages, rates, medians or counts.</li>
+      <li><b>Reliability columns</b> (optional): a column named <code>&lt;indicator&gt;_cv</code> is read as that indicator's coefficient of variation (%), and estimates above 30% are flagged as unreliable.</li>
+    </ul>
+    <p>The <a href="data/template_tracts.csv">template</a> shows the layout:</p>
+<pre><code>geoid,tract_name,county_name,household-income,household-income_cv,acs-broadband-any,...
+37119000101,Second Ward / Uptown,Mecklenburg County,119044.0,10.01,97.1429,...</code></pre>
+    <p><b>How values are read.</b> Columns may be separated by commas, semicolons or tabs, and quoted fields may contain commas. Thousands separators, <code>$</code>, <code>%</code> and spaces are ignored, so <code>$61,250</code> and <code>12.5%</code> read as numbers. Blank cells and <code>NA</code>, <code>N/A</code>, <code>null</code>, <code>NaN</code>, <code>none</code> and <code>-</code> count as missing. Decimal commas (<code>1,5</code>) are not supported.</p>
+    <ol class="steps">
+      <li>On the <b>Index</b> tab, click <b>Upload CSV…</b> and choose your file.</li>
+      <li>Set the <b>ID column</b>, the name column and, for a subset, <b>Study area: filter rows by</b> a column and its values.</li>
+      <li>On the <b>Setup</b> tab, give each indicator its data column, its pillar and its direction.</li>
+      <li>On the Index tab, choose how missing values are handled (leave the area unscored, reweight, or fill with the median) and the normalisation (min–max or percentile).</li>
+    </ol>
+    <h3>The boundaries (GeoJSON)</h3>
+    <p>To map your own areas, click <b>Upload boundaries (GeoJSON)…</b> on the Index tab. The file needs polygons or multipolygons, one property whose values match your table's ID column (the studio finds it, and you can change it under the map's <b>Join</b> setting), and longitude/latitude coordinates (WGS 84). A shapefile or GeoPackage converts to GeoJSON in QGIS or at <a href="https://mapshaper.org">mapshaper.org</a>, which can also simplify large files so they draw faster.</p>
+    <p><b>Privacy.</b> Your tables and boundaries are processed in your browser and never sent anywhere. They are kept in this browser for next time; use the Export buttons to keep copies.</p>
+  </div>
+</section>
+
+<section id="run-locally">
+  <div class="wrap">
+    <h2>Running it locally</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>One file, no installation</h3>
+        <p>Download <a href="ARI_Weighting_Studio.html" download>ARI_Weighting_Studio.html</a> and double-click it. It opens in any modern browser and works offline, with the Charlotte example data built in.</p>
+      </div>
+      <div class="card">
+        <h3>The whole repository</h3>
+<pre><code>git clone https://github.com/Balo-97/ari-weighting-studio.git
+cd ari-weighting-studio
+python -m http.server 8000</code></pre>
+        <p>Then open <code>http://localhost:8000/</code>.</p>
+      </div>
+    </div>
+    <h3>Changing the code or the built-in data</h3>
+    <p>The studio's source is <code>app/ari_weighting_studio.html</code>. After editing it, or replacing the files in <code>data/</code>, rebuild the standalone file (Python 3.8 or later, no extra packages):</p>
+<pre><code>python tools/build_standalone.py</code></pre>
+    <p>To regenerate the example project, run <code>python tools/make_four_dimension_example.py</code>. The source file is a page body without the surrounding document, so open the built <code>ARI_Weighting_Studio.html</code>.</p>
+  </div>
+</section>
+
+<section id="status">
+  <div class="wrap">
+    <h2>Data, credits and status</h2>
+    <p>The example covers the 752 census tracts of the 14-county Charlotte region in North and South Carolina; the example study area is Mecklenburg County's 305 tracts.</p>
+    <ul>
+      <li>Carolinas Regional Explorer, UNC Charlotte Urban Institute. © 2026 Kailas Venkitasubramanian. Data licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. <a href="https://github.com/kvenkita/crxp">github.com/kvenkita/crxp</a></li>
+      <li>U.S. Census Bureau, American Community Survey 2020–2024 five-year estimates (public domain).</li>
+      <li>CDC PLACES (public domain).</li>
+      <li>Neighbourhood names © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL).</li>
+    </ul>
+    <div class="callout"><b>Status.</b> The <b>Disaggregation (beta)</b> tab is still being worked on and has not yet been tested; treat its results as provisional. Survey margins of error are flagged but not propagated into the scores. The example project contains no judgements: the weights must come from your own panel.</div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">ARI Weighting Studio · <a href="https://github.com/Balo-97/ari-weighting-studio">Source on GitHub</a> · Example data: Carolinas Regional Explorer (CC BY 4.0) and U.S. Census Bureau ACS.</div>
+</footer>
+</body>
+</html>

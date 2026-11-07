@@ -1,0 +1,167 @@
+{
+ "format": "ari-ahp-studio",
+ "version": 1,
+ "project": {
+  "title": "AI Readiness Index — Charlotte (4 dimensions, 11 indicators)",
+  "goal": "AI readiness of Charlotte census tracts",
+  "dims": [
+   {
+    "id": "d_economy",
+    "name": "Economy",
+    "desc": "Household income, labour-market participation and home internet subscription."
+   },
+   {
+    "id": "d_edu_emp",
+    "name": "Education and Employment",
+    "desc": "Educational attainment, college enrolment and AI-exposed occupations."
+   },
+   {
+    "id": "d_health_transport",
+    "name": "Health and Transport",
+    "desc": "Health-care coverage and use, and access to a vehicle."
+   },
+   {
+    "id": "d_character",
+    "name": "Character",
+    "desc": "Who lives here: young adults and connected older residents."
+   }
+  ],
+  "inds": [
+   {
+    "id": "i_income",
+    "dimId": "d_economy",
+    "name": "Median household income",
+    "pillar": "D",
+    "dir": 1,
+    "column": "household-income",
+    "cvColumn": "",
+    "source": "ACS B19013 · CRXP"
+   },
+   {
+    "id": "i_lfpr",
+    "dimId": "d_economy",
+    "name": "Labour-force participation rate",
+    "pillar": "D",
+    "dir": 1,
+    "column": "acs-labour-force-participation",
+    "cvColumn": "",
+    "source": "ACS B23025"
+   },
+   {
+    "id": "i_broadband",
+    "dimId": "d_economy",
+    "name": "Broadband subscription of any type",
+    "pillar": "S",
+    "dir": 1,
+    "column": "acs-broadband-any",
+    "cvColumn": "",
+    "source": "ACS B28002 · CRXP"
+   },
+   {
+    "id": "i_ai_exposure",
+    "dimId": "d_edu_emp",
+    "name": "High-AI-exposure occupation share",
+    "pillar": "S",
+    "dir": 1,
+    "column": "acs-high-ai-exposure-occ",
+    "cvColumn": "",
+    "source": "ACS C24010 · direction not fixed in the indicator document (set to + here)"
+   },
+   {
+    "id": "i_hs_diploma",
+    "dimId": "d_edu_emp",
+    "name": "High school diploma or higher",
+    "pillar": "D",
+    "dir": 1,
+    "column": "high-school-diploma",
+    "cvColumn": "",
+    "source": "ACS B15003 · CRXP"
+   },
+   {
+    "id": "i_college",
+    "dimId": "d_edu_emp",
+    "name": "College enrolment (share of adults 18+)",
+    "pillar": "D",
+    "dir": 1,
+    "column": "acs-college-enrolment",
+    "cvColumn": "",
+    "source": "ACS B14001, B01001"
+   },
+   {
+    "id": "i_insurance",
+    "dimId": "d_health_transport",
+    "name": "Health insurance coverage",
+    "pillar": "S",
+    "dir": 1,
+    "column": "health-insurance",
+    "cvColumn": "",
+    "source": "ACS · CRXP"
+   },
+   {
+    "id": "i_checkup",
+    "dimId": "d_health_transport",
+    "name": "Routine checkup (adults)",
+    "pillar": "S",
+    "dir": 1,
+    "column": "routine-checkup",
+    "cvColumn": "",
+    "source": "CDC PLACES · CRXP"
+   },
+   {
+    "id": "i_no_vehicle",
+    "dimId": "d_health_transport",
+    "name": "Households without a vehicle",
+    "pillar": "S",
+    "dir": -1,
+    "column": "no-vehicle",
+    "cvColumn": "",
+    "source": "ACS B08201 · CRXP"
+   },
+   {
+    "id": "i_age_18_34",
+    "dimId": "d_character",
+    "name": "Population aged 18–34",
+    "pillar": "D",
+    "dir": 1,
+    "column": "acs-age-18-34",
+    "cvColumn": "",
+    "source": "ACS B01001"
+   },
+   {
+    "id": "i_seniors_connected",
+    "dimId": "d_character",
+    "name": "Residents 65+ with a computer and broadband",
+    "pillar": "D",
+    "dir": 1,
+    "column": "acs-seniors-connected",
+    "cvColumn": "",
+    "source": "ACS B28005"
+   }
+  ],
+  "locked": false,
+  "settings": {
+   "priority": "rgmm",
+   "pooling": "aij",
+   "crMax": 0.1,
+   "pw": {},
+   "excluded": [],
+   "index": {
+    "idCol": "geoid",
+    "nameCol": "tract_name",
+    "filterCol": "county_name",
+    "filterVals": [
+     "Mecklenburg County"
+    ],
+    "norm": "minmax",
+    "floor": 0.01,
+    "winsor": 0,
+    "missing": "exclude",
+    "cvMax": 30,
+    "excludeUnreliable": false,
+    "fallbackEqual": true,
+    "gap": "raw"
+   }
+  }
+ },
+ "participants": {}
+}

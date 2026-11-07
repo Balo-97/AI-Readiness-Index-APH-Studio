@@ -1,0 +1,753 @@
+geoid,tract_name,census_tract,county
+37007920100,"Anson County (Anson County, Census Tract 9201)",Census Tract 9201,Anson County
+37007920200,"Anson County (Anson County, Census Tract 9202)",Census Tract 9202,Anson County
+37007920301,"Anson County (Anson County, Census Tract 9203.01)",Census Tract 9203.01,Anson County
+37007920302,"The Orchard area (Anson County, Census Tract 9203.02)",Census Tract 9203.02,Anson County
+37007920400,"Anson County (Anson County, Census Tract 9204)",Census Tract 9204,Anson County
+37007920501,"Anson County (Anson County, Census Tract 9205.01)",Census Tract 9205.01,Anson County
+37007920502,"Anson County (Anson County, Census Tract 9205.02)",Census Tract 9205.02,Anson County
+37007920600,"Anson County (Anson County, Census Tract 9206)",Census Tract 9206,Anson County
+37007980000,"The Orchard area (Anson County, Census Tract 9800)",Census Tract 9800,Anson County
+37025040501,West Concord / Tucker Chase,Census Tract 405.01,Cabarrus County
+37025040502,"West Concord area (Cabarrus County, Census Tract 405.02)",Census Tract 405.02,Cabarrus County
+37025040600,"Cabarrus County (Cabarrus County, Census Tract 406)",Census Tract 406,Cabarrus County
+37025040701,"Jackson Park area (Cabarrus County, Census Tract 407.01)",Census Tract 407.01,Cabarrus County
+37025040703,Car Town / Settlers Ridge / North Concord,Census Tract 407.03,Cabarrus County
+37025040704,"Car Town area (Cabarrus County, Census Tract 407.04)",Census Tract 407.04,Cabarrus County
+37025040705,"Jackson Park area (Cabarrus County, Census Tract 407.05)",Census Tract 407.05,Cabarrus County
+37025040800,Car Town / Jackson Park,Census Tract 408,Cabarrus County
+37025040900,Settlers Ridge / North Concord / Car Town,Census Tract 409,Cabarrus County
+37025041001,Settlers Ridge / Car Town / Kellswater Bridge,Census Tract 410.01,Cabarrus County
+37025041002,"Car Town area (Cabarrus County, Census Tract 410.02)",Census Tract 410.02,Cabarrus County
+37025041100,Settlers Ridge / North Concord / Kellswater Bridge,Census Tract 411,Cabarrus County
+37025041201,"Kellswater Bridge area (Cabarrus County, Census Tract 412.01)",Census Tract 412.01,Cabarrus County
+37025041202,"Kellswater Bridge area (Cabarrus County, Census Tract 412.02)",Census Tract 412.02,Cabarrus County
+37025041301,Moss Creek / Hopewell,Census Tract 413.01,Cabarrus County
+37025041304,Moss Creek area,Census Tract 413.04,Cabarrus County
+37025041305,Cox Mill / Moss Creek,Census Tract 413.05,Cabarrus County
+37025041306,Cox Mill / Concord Mills,Census Tract 413.06,Cabarrus County
+37025041307,Cox Mill area (Cabarrus County),Census Tract 413.07,Cabarrus County
+37025041503,Camellia Gardens / West Concord,Census Tract 415.03,Cabarrus County
+37025041504,Camellia Gardens / Downtown,Census Tract 415.04,Cabarrus County
+37025041505,"Camellia Gardens area (Cabarrus County, Census Tract 415.05)",Census Tract 415.05,Cabarrus County
+37025041506,Camellia Gardens / Reedy Creek,Census Tract 415.06,Cabarrus County
+37025041507,"Camellia Gardens area (Cabarrus County, Census Tract 415.07)",Census Tract 415.07,Cabarrus County
+37025041602,"Cabarrus County (Cabarrus County, Census Tract 416.02)",Census Tract 416.02,Cabarrus County
+37025041603,Bethel Glen / Saddlebrook,Census Tract 416.03,Cabarrus County
+37025041604,Tucker Chase / Bethel Glen,Census Tract 416.04,Cabarrus County
+37025041701,"Cabarrus County (Cabarrus County, Census Tract 417.01)",Census Tract 417.01,Cabarrus County
+37025041702,"Cabarrus County (Cabarrus County, Census Tract 417.02)",Census Tract 417.02,Cabarrus County
+37025041901,"West Concord / North Concord (Cabarrus County, Census Tract 419.01)",Census Tract 419.01,Cabarrus County
+37025041902,"West Concord / North Concord (Cabarrus County, Census Tract 419.02)",Census Tract 419.02,Cabarrus County
+37025042000,"West Concord area (Cabarrus County, Census Tract 420)",Census Tract 420,Cabarrus County
+37025042101,"West Concord area (Cabarrus County, Census Tract 421.01)",Census Tract 421.01,Cabarrus County
+37025042102,"West Concord area (Cabarrus County, Census Tract 421.02)",Census Tract 421.02,Cabarrus County
+37025042201,"West Concord area (Cabarrus County, Census Tract 422.01)",Census Tract 422.01,Cabarrus County
+37025042202,"West Concord area (Cabarrus County, Census Tract 422.02)",Census Tract 422.02,Cabarrus County
+37025042300,"West Concord / North Concord (Cabarrus County, Census Tract 423)",Census Tract 423,Cabarrus County
+37025042401,"North Concord area (Cabarrus County, Census Tract 424.01)",Census Tract 424.01,Cabarrus County
+37025042402,"North Concord area (Cabarrus County, Census Tract 424.02)",Census Tract 424.02,Cabarrus County
+37025042501,North Concord / Kellswater Bridge,Census Tract 425.01,Cabarrus County
+37025042502,North Concord / West Concord,Census Tract 425.02,Cabarrus County
+37025042503,Riverwalk / North Concord,Census Tract 425.03,Cabarrus County
+37025042504,Riverwalk / West Concord,Census Tract 425.04,Cabarrus County
+37025042601,Riverwalk area,Census Tract 426.01,Cabarrus County
+37025042602,Riverwalk / Concord Mills,Census Tract 426.02,Cabarrus County
+37025042603,Downtown / Riverwalk,Census Tract 426.03,Cabarrus County
+37025042604,Downtown area (Cabarrus County),Census Tract 426.04,Cabarrus County
+37035010101,"Oxford Park area (Catawba County, Census Tract 101.01)",Census Tract 101.01,Catawba County
+37035010102,"Oxford Park area (Catawba County, Census Tract 101.02)",Census Tract 101.02,Catawba County
+37035010201,"Oxford Park area (Catawba County, Census Tract 102.01)",Census Tract 102.01,Catawba County
+37035010203,Oxford Park / Kool Park MHP,Census Tract 102.03,Catawba County
+37035010204,Fairgrove / Kool Park MHP,Census Tract 102.04,Catawba County
+37035010301,"Kool Park MHP area (Catawba County, Census Tract 103.01)",Census Tract 103.01,Catawba County
+37035010302,Lawson's Creek / North Hickory,Census Tract 103.02,Catawba County
+37035010303,"Kool Park MHP area (Catawba County, Census Tract 103.03)",Census Tract 103.03,Catawba County
+37035010304,Sweetwater / Fairgrove / Havenwood,Census Tract 103.04,Catawba County
+37035010402,"Viewmont / Sweetwater (Catawba County, Census Tract 104.02)",Census Tract 104.02,Catawba County
+37035010403,North Hickory / Havenwood / Lawson's Creek,Census Tract 104.03,Catawba County
+37035010404,Viewmont / Lawson's Creek / Sweetwater,Census Tract 104.04,Catawba County
+37035010501,"Viewmont area (Catawba County, Census Tract 105.01)",Census Tract 105.01,Catawba County
+37035010502,North Hickory area,Census Tract 105.02,Catawba County
+37035010600,"Viewmont area (Catawba County, Census Tract 106)",Census Tract 106,Catawba County
+37035010700,Viewmont / Meadow Brook Village,Census Tract 107,Catawba County
+37035010900,"Viewmont / Sweetwater (Catawba County, Census Tract 109)",Census Tract 109,Catawba County
+37035011000,Sweetwater / Fairgrove / Fairbrook,Census Tract 110,Catawba County
+37035011101,"Meadow Brook Village area (Catawba County, Census Tract 111.01)",Census Tract 111.01,Catawba County
+37035011102,Fairbrook / Meadow Brook Village,Census Tract 111.02,Catawba County
+37035011200,Fairgrove area,Census Tract 112,Catawba County
+37035011300,"Catawba County (Catawba County, Census Tract 113)",Census Tract 113,Catawba County
+37035011401,"Catawba County (Catawba County, Census Tract 114.01)",Census Tract 114.01,Catawba County
+37035011402,"Catawba County (Catawba County, Census Tract 114.02)",Census Tract 114.02,Catawba County
+37035011501,"Catawba County (Catawba County, Census Tract 115.01)",Census Tract 115.01,Catawba County
+37035011503,"Catawba County (Catawba County, Census Tract 115.03)",Census Tract 115.03,Catawba County
+37035011505,"Catawba County (Catawba County, Census Tract 115.05)",Census Tract 115.05,Catawba County
+37035011506,"Catawba County (Catawba County, Census Tract 115.06)",Census Tract 115.06,Catawba County
+37035011601,"Catawba County (Catawba County, Census Tract 116.01)",Census Tract 116.01,Catawba County
+37035011602,"Catawba County (Catawba County, Census Tract 116.02)",Census Tract 116.02,Catawba County
+37035011701,Fairgrove / Fairbrook,Census Tract 117.01,Catawba County
+37035011702,"Catawba County (Catawba County, Census Tract 117.02)",Census Tract 117.02,Catawba County
+37035011801,"Meadow Brook Village area (Catawba County, Census Tract 118.01)",Census Tract 118.01,Catawba County
+37035011802,"Catawba County (Catawba County, Census Tract 118.02)",Census Tract 118.02,Catawba County
+37045950101,"Cleveland County (Cleveland County, Census Tract 9501.01)",Census Tract 9501.01,Cleveland County
+37045950102,Polkville,Census Tract 9501.02,Cleveland County
+37045950200,"Cleveland County (Cleveland County, Census Tract 9502)",Census Tract 9502,Cleveland County
+37045950301,Landsdown / Vestavia,Census Tract 9503.01,Cleveland County
+37045950302,Landsdown area,Census Tract 9503.02,Cleveland County
+37045950400,"Kings Mountain (Cleveland County, Census Tract 9504)",Census Tract 9504,Cleveland County
+37045950500,"Kings Mountain (Cleveland County, Census Tract 9505)",Census Tract 9505,Cleveland County
+37045950601,"Landsdown / Light Oak (Cleveland County, Census Tract 9506.01)",Census Tract 9506.01,Cleveland County
+37045950603,"Cleveland County (Cleveland County, Census Tract 9506.03)",Census Tract 9506.03,Cleveland County
+37045950604,"Cleveland County (Cleveland County, Census Tract 9506.04)",Census Tract 9506.04,Cleveland County
+37045950701,"Landsdown / Light Oak (Cleveland County, Census Tract 9507.01)",Census Tract 9507.01,Cleveland County
+37045950702,Country Club Gardens / Hillsdale / Light Oak,Census Tract 9507.02,Cleveland County
+37045950800,Carriage Run / Conifer,Census Tract 9508,Cleveland County
+37045950900,Crestmont Heights / Pinehurst Acres,Census Tract 9509,Cleveland County
+37045951000,Rocky Brook / Valleyhall,Census Tract 9510,Cleveland County
+37045951100,West Shelby area,Census Tract 9511,Cleveland County
+37045951200,Westwood Heights / Brittain Village,Census Tract 9512,Cleveland County
+37045951300,Conifer / Camden Acres,Census Tract 9513,Cleveland County
+37045951400,Shady Oak Acres area,Census Tract 9514,Cleveland County
+37045951501,"Cleveland County (Cleveland County, Census Tract 9515.01)",Census Tract 9515.01,Cleveland County
+37045951502,"Cleveland County (Cleveland County, Census Tract 9515.02)",Census Tract 9515.02,Cleveland County
+37045951503,Camden Acres area,Census Tract 9515.03,Cleveland County
+37045951601,Camden Acres / Brittain Village / Washington Heights,Census Tract 9516.01,Cleveland County
+37045951602,Hillsdale / Washington Heights,Census Tract 9516.02,Cleveland County
+37071030103,Kendrick Farm area,Census Tract 301.03,Gaston County
+37071030104,Allison Ferry area,Census Tract 301.04,Gaston County
+37071030105,Autumn Woods / Dutchman's Ridge / Runnymeade,Census Tract 301.05,Gaston County
+37071030106,Dutchman's Ridge / River Park,Census Tract 301.06,Gaston County
+37071030205,"Highgrove area (Gaston County, Census Tract 302.05)",Census Tract 302.05,Gaston County
+37071030206,Kendrick Farm / Arbordale,Census Tract 302.06,Gaston County
+37071030207,Arbordale / Harper Landing,Census Tract 302.07,Gaston County
+37071030208,Harper Landing / Arbordale,Census Tract 302.08,Gaston County
+37071030209,Harper Landing area,Census Tract 302.09,Gaston County
+37071030301,The Boardwalk / College Park,Census Tract 303.01,Gaston County
+37071030302,The Boardwalk / Highgrove,Census Tract 303.02,Gaston County
+37071030401,College Park / Eden Glen,Census Tract 304.01,Gaston County
+37071030403,"Ashley Park area (Gaston County, Census Tract 304.03)",Census Tract 304.03,Gaston County
+37071030404,Eden Glen area,Census Tract 304.04,Gaston County
+37071030501,"Gaston County (Gaston County, Census Tract 305.01)",Census Tract 305.01,Gaston County
+37071030503,"Ashley Park area (Gaston County, Census Tract 305.03)",Census Tract 305.03,Gaston County
+37071030504,"Ashley Park area (Gaston County, Census Tract 305.04)",Census Tract 305.04,Gaston County
+37071030601,"Gaston County (Gaston County, Census Tract 306.01)",Census Tract 306.01,Gaston County
+37071030602,"Gaston County (Gaston County, Census Tract 306.02)",Census Tract 306.02,Gaston County
+37071030700,"Gaston County (Gaston County, Census Tract 307)",Census Tract 307,Gaston County
+37071030801,"Ashley Park area (Gaston County, Census Tract 308.01)",Census Tract 308.01,Gaston County
+37071030802,Ashley Park / Ashley Place,Census Tract 308.02,Gaston County
+37071030901,"The Boardwalk area (Gaston County, Census Tract 309.01)",Census Tract 309.01,Gaston County
+37071030902,"The Boardwalk area (Gaston County, Census Tract 309.02)",Census Tract 309.02,Gaston County
+37071031001,Country Village / Highgrove,Census Tract 310.01,Gaston County
+37071031004,Dixon Village / Windy Hill,Census Tract 310.04,Gaston County
+37071031005,Springs Creek / Deerfield,Census Tract 310.05,Gaston County
+37071031006,Westland Farm / Kelly's Landing,Census Tract 310.06,Gaston County
+37071031101,Mooreland Oaks area,Census Tract 311.01,Gaston County
+37071031102,Downtown / Riverfront Homes & Marina,Census Tract 311.02,Gaston County
+37071031202,Linford Park / Riverfront Homes & Marina,Census Tract 312.02,Gaston County
+37071031203,"Riverfront Homes & Marina area (Gaston County, Census Tract 312.03)",Census Tract 312.03,Gaston County
+37071031204,Riverfront Homes & Marina / Rhyne's Estate,Census Tract 312.04,Gaston County
+37071031301,"Westside area (Gaston County, Census Tract 313.01)",Census Tract 313.01,Gaston County
+37071031303,"Westside area (Gaston County, Census Tract 313.03)",Census Tract 313.03,Gaston County
+37071031304,Westside / Country Village,Census Tract 313.04,Gaston County
+37071031401,"Downtown Gastonia Historic District area (Gaston County, Census Tract 314.01)",Census Tract 314.01,Gaston County
+37071031402,"Westside / Downtown Gastonia Historic District (Gaston County, Census Tract 314.02)",Census Tract 314.02,Gaston County
+37071031500,Loray Mill Historic District / Eden Glen,Census Tract 315,Gaston County
+37071031600,Ashley Place / Ashley Park,Census Tract 316,Gaston County
+37071031703,"Ashley Place / South Gastonia (Gaston County, Census Tract 317.03)",Census Tract 317.03,Gaston County
+37071031704,South Gastonia / Ashley Place,Census Tract 317.04,Gaston County
+37071031705,"South Gastonia area (Gaston County, Census Tract 317.05)",Census Tract 317.05,Gaston County
+37071031706,"Ashley Place / South Gastonia (Gaston County, Census Tract 317.06)",Census Tract 317.06,Gaston County
+37071031800,Loray Mill Historic District / Ashley Place,Census Tract 318,Gaston County
+37071031901,Downtown Gastonia Historic District / FUSE / Loray Mill Historic District,Census Tract 319.01,Gaston County
+37071031902,FUSE area,Census Tract 319.02,Gaston County
+37071032000,"Downtown Gastonia Historic District area (Gaston County, Census Tract 320)",Census Tract 320,Gaston County
+37071032100,Downtown Gastonia Historic District / Westside,Census Tract 321,Gaston County
+37071032201,Lakewood / Westside,Census Tract 322.01,Gaston County
+37071032202,"Lakewood area (Gaston County, Census Tract 322.02)",Census Tract 322.02,Gaston County
+37071032301,"Lakewood area (Gaston County, Census Tract 323.01)",Census Tract 323.01,Gaston County
+37071032302,"Riverfront Homes & Marina area (Gaston County, Census Tract 323.02)",Census Tract 323.02,Gaston County
+37071032403,"Lakewood area (Gaston County, Census Tract 324.03)",Census Tract 324.03,Gaston County
+37071032404,Lakewood / Riverfront Homes & Marina,Census Tract 324.04,Gaston County
+37071032405,"Lakewood area (Gaston County, Census Tract 324.05)",Census Tract 324.05,Gaston County
+37071032406,Chapel Cove / The Sanctuary,Census Tract 324.06,Gaston County
+37071032505,"Westside / Downtown Gastonia Historic District (Gaston County, Census Tract 325.05)",Census Tract 325.05,Gaston County
+37071032506,"Westside area (Gaston County, Census Tract 325.06)",Census Tract 325.06,Gaston County
+37071032507,Westside / Lakewood,Census Tract 325.07,Gaston County
+37071032508,"Lakewood area (Gaston County, Census Tract 325.08)",Census Tract 325.08,Gaston County
+37071032509,"Lakewood area (Gaston County, Census Tract 325.09)",Census Tract 325.09,Gaston County
+37071032510,"The Sanctuary / Lakewood (Gaston County, Census Tract 325.10)",Census Tract 325.10,Gaston County
+37071032600,"Westside area (Gaston County, Census Tract 326)",Census Tract 326,Gaston County
+37071032702,Downtown Gastonia Historic District / South Gastonia,Census Tract 327.02,Gaston County
+37071032703,"Downtown Gastonia Historic District area (Gaston County, Census Tract 327.03)",Census Tract 327.03,Gaston County
+37071032704,"Downtown Gastonia Historic District area (Gaston County, Census Tract 327.04)",Census Tract 327.04,Gaston County
+37071032801,Downtown Gastonia Historic District / FUSE,Census Tract 328.01,Gaston County
+37071032802,South Gastonia / Downtown Gastonia Historic District,Census Tract 328.02,Gaston County
+37071032900,Loray Mill Historic District / FUSE,Census Tract 329,Gaston County
+37071033100,Loray Mill Historic District / South Gastonia,Census Tract 331,Gaston County
+37071033202,"South Gastonia area (Gaston County, Census Tract 332.02)",Census Tract 332.02,Gaston County
+37071033203,South Gastonia / Loray Mill Historic District,Census Tract 332.03,Gaston County
+37071033204,"South Gastonia area (Gaston County, Census Tract 332.04)",Census Tract 332.04,Gaston County
+37071033303,"Westside / Downtown Gastonia Historic District (Gaston County, Census Tract 333.03)",Census Tract 333.03,Gaston County
+37071033306,South Gastonia / The Sanctuary,Census Tract 333.06,Gaston County
+37071033308,"The Sanctuary / Lakewood (Gaston County, Census Tract 333.08)",Census Tract 333.08,Gaston County
+37071033309,"South Gastonia area (Gaston County, Census Tract 333.09)",Census Tract 333.09,Gaston County
+37071033310,"South Gastonia area (Gaston County, Census Tract 333.10)",Census Tract 333.10,Gaston County
+37071033311,"Lakewood area (Gaston County, Census Tract 333.11)",Census Tract 333.11,Gaston County
+37071033312,"South Gastonia / Westside (Gaston County, Census Tract 333.12)",Census Tract 333.12,Gaston County
+37071033313,"South Gastonia / Westside (Gaston County, Census Tract 333.13)",Census Tract 333.13,Gaston County
+37071033400,"South Gastonia area (Gaston County, Census Tract 334)",Census Tract 334,Gaston County
+37071033501,"Highgrove area (Gaston County, Census Tract 335.01)",Census Tract 335.01,Gaston County
+37071033502,Highgrove / Kelly's Landing,Census Tract 335.02,Gaston County
+37097060100,"Cloverdale area (Iredell County, Census Tract 601)",Census Tract 601,Iredell County
+37097060200,Washington Heights / Cloverdale,Census Tract 602,Iredell County
+37097060300,"Washington Heights area (Iredell County, Census Tract 603)",Census Tract 603,Iredell County
+37097060400,Cloverdale / Washington Heights,Census Tract 604,Iredell County
+37097060500,"Cloverdale area (Iredell County, Census Tract 605)",Census Tract 605,Iredell County
+37097060601,"Broadview area (Iredell County, Census Tract 606.01)",Census Tract 606.01,Iredell County
+37097060602,"Broadview area (Iredell County, Census Tract 606.02)",Census Tract 606.02,Iredell County
+37097060603,"Broadview area (Iredell County, Census Tract 606.03)",Census Tract 606.03,Iredell County
+37097060701,"Broadview area (Iredell County, Census Tract 607.01)",Census Tract 607.01,Iredell County
+37097060702,"Iredell County (Iredell County, Census Tract 607.02)",Census Tract 607.02,Iredell County
+37097060703,"Broadview area (Iredell County, Census Tract 607.03)",Census Tract 607.03,Iredell County
+37097060801,"Iredell County (Iredell County, Census Tract 608.01)",Census Tract 608.01,Iredell County
+37097060802,"Iredell County (Iredell County, Census Tract 608.02)",Census Tract 608.02,Iredell County
+37097060901,"Iredell County (Iredell County, Census Tract 609.01)",Census Tract 609.01,Iredell County
+37097060902,"Iredell County (Iredell County, Census Tract 609.02)",Census Tract 609.02,Iredell County
+37097061001,Cloverdale / Broadview,Census Tract 610.01,Iredell County
+37097061002,"Iredell County (Iredell County, Census Tract 610.02)",Census Tract 610.02,Iredell County
+37097061003,"Cloverdale area (Iredell County, Census Tract 610.03)",Census Tract 610.03,Iredell County
+37097061101,"Iredell County (Iredell County, Census Tract 611.01)",Census Tract 611.01,Iredell County
+37097061102,"Iredell County (Iredell County, Census Tract 611.02)",Census Tract 611.02,Iredell County
+37097061103,"Iredell County (Iredell County, Census Tract 611.03)",Census Tract 611.03,Iredell County
+37097061104,"Washington Heights area (Iredell County, Census Tract 611.04)",Census Tract 611.04,Iredell County
+37097061201,Washington Heights / Norwood Walk,Census Tract 612.01,Iredell County
+37097061202,Aberdeen Village / Norwood Walk,Census Tract 612.02,Iredell County
+37097061203,"Aberdeen Village area (Iredell County, Census Tract 612.03)",Census Tract 612.03,Iredell County
+37097061204,"Aberdeen Village area (Iredell County, Census Tract 612.04)",Census Tract 612.04,Iredell County
+37097061205,Aberdeen Village / Washington Heights,Census Tract 612.05,Iredell County
+37097061301,Norwood Walk / Broadview,Census Tract 613.01,Iredell County
+37097061302,Norwood Walk / Aberdeen Village,Census Tract 613.02,Iredell County
+37097061303,"Mooresville (Iredell County, Census Tract 613.03)",Census Tract 613.03,Iredell County
+37097061304,"Iredell County (Iredell County, Census Tract 613.04)",Census Tract 613.04,Iredell County
+37097061401,"Iredell County (Iredell County, Census Tract 614.01)",Census Tract 614.01,Iredell County
+37097061402,"Iredell County (Iredell County, Census Tract 614.02)",Census Tract 614.02,Iredell County
+37097061403,"Mooresville (Iredell County, Census Tract 614.03)",Census Tract 614.03,Iredell County
+37097061404,"Iredell County (Iredell County, Census Tract 614.04)",Census Tract 614.04,Iredell County
+37097061405,"Iredell County (Iredell County, Census Tract 614.05)",Census Tract 614.05,Iredell County
+37097061406,"Iredell County (Iredell County, Census Tract 614.06)",Census Tract 614.06,Iredell County
+37097061407,Hopewell / Caldwell / Birkdale,Census Tract 614.07,Iredell County
+37097061408,"Iredell County (Iredell County, Census Tract 614.08)",Census Tract 614.08,Iredell County
+37097061501,"Mooresville (Iredell County, Census Tract 615.01)",Census Tract 615.01,Iredell County
+37097061502,"Iredell County (Iredell County, Census Tract 615.02)",Census Tract 615.02,Iredell County
+37097061503,"Mooresville (Iredell County, Census Tract 615.03)",Census Tract 615.03,Iredell County
+37097061601,"Mooresville (Iredell County, Census Tract 616.01)",Census Tract 616.01,Iredell County
+37097061603,"Mooresville (Iredell County, Census Tract 616.03)",Census Tract 616.03,Iredell County
+37097061604,"Iredell County (Iredell County, Census Tract 616.04)",Census Tract 616.04,Iredell County
+37097061605,"Mooresville (Iredell County, Census Tract 616.05)",Census Tract 616.05,Iredell County
+37109070100,Lincolnton,Census Tract 701,Lincoln County
+37109070201,"Lincoln County (Lincoln County, Census Tract 702.01)",Census Tract 702.01,Lincoln County
+37109070202,"Lincoln County (Lincoln County, Census Tract 702.02)",Census Tract 702.02,Lincoln County
+37109070300,"Lincoln County (Lincoln County, Census Tract 703)",Census Tract 703,Lincoln County
+37109070400,"Lincoln County (Lincoln County, Census Tract 704)",Census Tract 704,Lincoln County
+37109070500,"Lincoln County (Lincoln County, Census Tract 705)",Census Tract 705,Lincoln County
+37109070600,"Lincoln County (Lincoln County, Census Tract 706)",Census Tract 706,Lincoln County
+37109070700,"Lincoln County (Lincoln County, Census Tract 707)",Census Tract 707,Lincoln County
+37109070800,"Lincoln County (Lincoln County, Census Tract 708)",Census Tract 708,Lincoln County
+37109070901,"Lincoln County (Lincoln County, Census Tract 709.01)",Census Tract 709.01,Lincoln County
+37109070902,"Lincoln County (Lincoln County, Census Tract 709.02)",Census Tract 709.02,Lincoln County
+37109071001,"Lincoln County (Lincoln County, Census Tract 710.01)",Census Tract 710.01,Lincoln County
+37109071002,"Lincoln County (Lincoln County, Census Tract 710.02)",Census Tract 710.02,Lincoln County
+37109071101,"Lincoln County (Lincoln County, Census Tract 711.01)",Census Tract 711.01,Lincoln County
+37109071102,"Villas of Cowans Ford area (Lincoln County, Census Tract 711.02)",Census Tract 711.02,Lincoln County
+37109071201,"Villas of Cowans Ford area (Lincoln County, Census Tract 712.01)",Census Tract 712.01,Lincoln County
+37109071202,"Villas of Cowans Ford area (Lincoln County, Census Tract 712.02)",Census Tract 712.02,Lincoln County
+37109071203,"Lincoln County (Lincoln County, Census Tract 712.03)",Census Tract 712.03,Lincoln County
+37119000101,Second Ward / Uptown,Census Tract 1.01,Mecklenburg County
+37119000102,Third Ward / Uptown,Census Tract 1.02,Mecklenburg County
+37119000103,Fourth Ward / Gateway / Uptown,Census Tract 1.03,Mecklenburg County
+37119000104,First Ward / Uptown,Census Tract 1.04,Mecklenburg County
+37119000301,Midtown / Cherry,Census Tract 3.01,Mecklenburg County
+37119000302,Second Ward / Midtown,Census Tract 3.02,Mecklenburg County
+37119000401,South End / Second Ward,Census Tract 4.01,Mecklenburg County
+37119000402,South End / Third Ward / Wilmore,Census Tract 4.02,Mecklenburg County
+37119000501,Third Ward / Gateway,Census Tract 5.01,Mecklenburg County
+37119000502,Gateway / Fourth Ward,Census Tract 5.02,Mecklenburg County
+37119000503,Fourth Ward / First Ward,Census Tract 5.03,Mecklenburg County
+37119000600,First Ward area,Census Tract 6,Mecklenburg County
+37119000700,Optimist Park / NoDa,Census Tract 7,Mecklenburg County
+37119000800,Belmont area,Census Tract 8,Mecklenburg County
+37119000900,Villa Heights area,Census Tract 9,Mecklenburg County
+37119001000,Plaza Midwood / Villa Heights,Census Tract 10,Mecklenburg County
+37119001100,Chantilly / Plaza Midwood,Census Tract 11,Mecklenburg County
+37119001200,"Plaza Shamrock area (Mecklenburg County, Census Tract 12)",Census Tract 12,Mecklenburg County
+37119001300,"Plaza Shamrock area (Mecklenburg County, Census Tract 13)",Census Tract 13,Mecklenburg County
+37119001400,NoDa / Plaza Shamrock,Census Tract 14,Mecklenburg County
+37119001504,Plaza Shamrock / Devonshire / Candlewood,Census Tract 15.04,Mecklenburg County
+37119001505,"Newell area (Mecklenburg County, Census Tract 15.05)",Census Tract 15.05,Mecklenburg County
+37119001507,Devonshire / Candlewood,Census Tract 15.07,Mecklenburg County
+37119001508,Devonshire / Embassy East / Hickory Grove,Census Tract 15.08,Mecklenburg County
+37119001509,Fairfax Woods / Newell / Candlewood,Census Tract 15.09,Mecklenburg County
+37119001510,Candlewood area,Census Tract 15.10,Mecklenburg County
+37119001603,Eastland / Plaza Shamrock,Census Tract 16.03,Mecklenburg County
+37119001605,Plaza Shamrock / Eastland / Echo Hills,Census Tract 16.05,Mecklenburg County
+37119001606,"Eastland area (Mecklenburg County, Census Tract 16.06)",Census Tract 16.06,Mecklenburg County
+37119001607,"Eastland area (Mecklenburg County, Census Tract 16.07)",Census Tract 16.07,Mecklenburg County
+37119001608,Plaza Shamrock / Devonshire / Eastland,Census Tract 16.08,Mecklenburg County
+37119001609,Eastland / Hickory Grove,Census Tract 16.09,Mecklenburg County
+37119001701,"Coliseum Drive / Echo Hills (Mecklenburg County, Census Tract 17.01)",Census Tract 17.01,Mecklenburg County
+37119001702,Eastland / Oakhurst / Echo Hills,Census Tract 17.02,Mecklenburg County
+37119001801,"Coliseum Drive / Echo Hills (Mecklenburg County, Census Tract 18.01)",Census Tract 18.01,Mecklenburg County
+37119001802,Oakhurst area,Census Tract 18.02,Mecklenburg County
+37119001910,"Idlewild area (Mecklenburg County, Census Tract 19.10)",Census Tract 19.10,Mecklenburg County
+37119001911,"Idlewild area (Mecklenburg County, Census Tract 19.11)",Census Tract 19.11,Mecklenburg County
+37119001914,"Rama area (Mecklenburg County, Census Tract 19.14)",Census Tract 19.14,Mecklenburg County
+37119001916,Hickory Grove / Idlewild,Census Tract 19.16,Mecklenburg County
+37119001917,Downtown / Idlewild / Hickory Grove,Census Tract 19.17,Mecklenburg County
+37119001918,"Eastland area (Mecklenburg County, Census Tract 19.18)",Census Tract 19.18,Mecklenburg County
+37119001919,Eastland / Idlewild / Rama,Census Tract 19.19,Mecklenburg County
+37119001920,"Idlewild area (Mecklenburg County, Census Tract 19.20)",Census Tract 19.20,Mecklenburg County
+37119001921,"Idlewild area (Mecklenburg County, Census Tract 19.21)",Census Tract 19.21,Mecklenburg County
+37119001922,"Hickory Grove area (Mecklenburg County, Census Tract 19.22)",Census Tract 19.22,Mecklenburg County
+37119001923,"Hickory Grove area (Mecklenburg County, Census Tract 19.23)",Census Tract 19.23,Mecklenburg County
+37119001924,Hickory Grove / Eastland,Census Tract 19.24,Mecklenburg County
+37119001925,"Hickory Grove area (Mecklenburg County, Census Tract 19.25)",Census Tract 19.25,Mecklenburg County
+37119001926,Rama / Idlewild,Census Tract 19.26,Mecklenburg County
+37119001927,Idlewild / Rama,Census Tract 19.27,Mecklenburg County
+37119002004,Mason Oaks / Rama / Providence,Census Tract 20.04,Mecklenburg County
+37119002005,Cotswold area,Census Tract 20.05,Mecklenburg County
+37119002006,Mason Oaks / Rama / Cotswold,Census Tract 20.06,Mecklenburg County
+37119002007,"Rama area (Mecklenburg County, Census Tract 20.07)",Census Tract 20.07,Mecklenburg County
+37119002008,"Rama area (Mecklenburg County, Census Tract 20.08)",Census Tract 20.08,Mecklenburg County
+37119002100,Mason Oaks / Oakhurst,Census Tract 21,Mecklenburg County
+37119002201,Cotswold / Grier Heights,Census Tract 22.01,Mecklenburg County
+37119002202,Lionsgate / Cotswold,Census Tract 22.02,Mecklenburg County
+37119002300,Grier Heights / Echo Hills,Census Tract 23,Mecklenburg County
+37119002400,Rosemont / Crescent Heights,Census Tract 24,Mecklenburg County
+37119002500,Elizabeth area,Census Tract 25,Mecklenburg County
+37119002600,Cherry / Midtown,Census Tract 26,Mecklenburg County
+37119002701,Colonial Heights / Myers Park,Census Tract 27.01,Mecklenburg County
+37119002702,Myers Park / Barclay Downs,Census Tract 27.02,Mecklenburg County
+37119002800,Eastover / Pharr Acres / Briarcliff,Census Tract 28,Mecklenburg County
+37119002903,"Foxcroft / SouthPark (Mecklenburg County, Census Tract 29.03)",Census Tract 29.03,Mecklenburg County
+37119002905,Foxcroft area,Census Tract 29.05,Mecklenburg County
+37119002907,"Foxcroft / SouthPark (Mecklenburg County, Census Tract 29.07)",Census Tract 29.07,Mecklenburg County
+37119002908,Cotswold / Providence / SouthPark,Census Tract 29.08,Mecklenburg County
+37119002909,Barclay Downs / SouthPark,Census Tract 29.09,Mecklenburg County
+37119002910,Parkdale / Barclay Downs,Census Tract 29.10,Mecklenburg County
+37119003006,SouthPark / Beverly Woods / Quail Hollow,Census Tract 30.06,Mecklenburg County
+37119003008,Carmel / Quail Hollow,Census Tract 30.08,Mecklenburg County
+37119003012,Quail Hollow / Carmel,Census Tract 30.12,Mecklenburg County
+37119003013,Providence / Carmel / Quail Hollow,Census Tract 30.13,Mecklenburg County
+37119003015,"Providence area (Mecklenburg County, Census Tract 30.15)",Census Tract 30.15,Mecklenburg County
+37119003016,"Providence area (Mecklenburg County, Census Tract 30.16)",Census Tract 30.16,Mecklenburg County
+37119003017,"Providence area (Mecklenburg County, Census Tract 30.17)",Census Tract 30.17,Mecklenburg County
+37119003018,"Providence area (Mecklenburg County, Census Tract 30.18)",Census Tract 30.18,Mecklenburg County
+37119003019,SouthPark / Quail Hollow,Census Tract 30.19,Mecklenburg County
+37119003020,Quail Hollow / SouthPark,Census Tract 30.20,Mecklenburg County
+37119003021,Quail Hollow / Beverly Woods,Census Tract 30.21,Mecklenburg County
+37119003022,Beverly Woods / SouthPark,Census Tract 30.22,Mecklenburg County
+37119003102,Montclaire / Parkdale,Census Tract 31.02,Mecklenburg County
+37119003105,Huntingtowne Farms area,Census Tract 31.05,Mecklenburg County
+37119003106,Starmount / Montclaire,Census Tract 31.06,Mecklenburg County
+37119003108,"Starmount / Huntingtowne Farms (Mecklenburg County, Census Tract 31.08)",Census Tract 31.08,Mecklenburg County
+37119003109,Starmount area,Census Tract 31.09,Mecklenburg County
+37119003110,Currituck / Madison Park,Census Tract 31.10,Mecklenburg County
+37119003111,Parkdale / Madison Park,Census Tract 31.11,Mecklenburg County
+37119003201,Colonial Village / York Road,Census Tract 32.01,Mecklenburg County
+37119003203,Colonial Village / Madison Park,Census Tract 32.03,Mecklenburg County
+37119003204,Sedgefield / Colonial Village,Census Tract 32.04,Mecklenburg County
+37119003301,"Sedgefield area (Mecklenburg County, Census Tract 33.01)",Census Tract 33.01,Mecklenburg County
+37119003302,"Sedgefield area (Mecklenburg County, Census Tract 33.02)",Census Tract 33.02,Mecklenburg County
+37119003401,Dilworth / South End / Sedgefield,Census Tract 34.01,Mecklenburg County
+37119003402,Dilworth / Myers Park,Census Tract 34.02,Mecklenburg County
+37119003500,Dilworth area,Census Tract 35,Mecklenburg County
+37119003600,Wilmore / Glenwood / Revolution Park,Census Tract 36,Mecklenburg County
+37119003701,Brookhill / South End,Census Tract 37.01,Mecklenburg County
+37119003702,Brookhill / Clanton Park,Census Tract 37.02,Mecklenburg County
+37119003802,York Road / Dalton Village,Census Tract 38.02,Mecklenburg County
+37119003805,City Park area,Census Tract 38.05,Mecklenburg County
+37119003807,"Yorkmount Park area (Mecklenburg County, Census Tract 38.07)",Census Tract 38.07,Mecklenburg County
+37119003808,Starmount / Montclaire / Yorkmount Park,Census Tract 38.08,Mecklenburg County
+37119003809,Ayrsley / Yorkmount Park,Census Tract 38.09,Mecklenburg County
+37119003810,"Yorkmount Park area (Mecklenburg County, Census Tract 38.10)",Census Tract 38.10,Mecklenburg County
+37119003811,"Yorkmount Park area (Mecklenburg County, Census Tract 38.11)",Census Tract 38.11,Mecklenburg County
+37119003902,Reid Park / Dalton Village,Census Tract 39.02,Mecklenburg County
+37119003903,Reid Park / City Park,Census Tract 39.03,Mecklenburg County
+37119004000,Westerly Hill / Lewis / Ashley Park,Census Tract 40,Mecklenburg County
+37119004101,Camp Greene / Glenwood / Wesley Heights,Census Tract 41.01,Mecklenburg County
+37119004102,Wesley Heights / Seversville,Census Tract 41.02,Mecklenburg County
+37119004200,Enderly Park area,Census Tract 42,Mecklenburg County
+37119004302,Thomasboro / Hoskins / Chemway,Census Tract 43.02,Mecklenburg County
+37119004303,Lewis / Woodford Green / White Oak Park,Census Tract 43.03,Mecklenburg County
+37119004304,Todd Park area,Census Tract 43.04,Mecklenburg County
+37119004306,Westerly Hill area,Census Tract 43.06,Mecklenburg County
+37119004307,Lewis / Thomasboro,Census Tract 43.07,Mecklenburg County
+37119004400,Firestone / Chateau Woods,Census Tract 44,Mecklenburg County
+37119004500,Oakview Terrace / Seversville / Enderly Park,Census Tract 45,Mecklenburg County
+37119004600,University Park / Washington Heights,Census Tract 46,Mecklenburg County
+37119004700,Biddleville area,Census Tract 47,Mecklenburg County
+37119004800,Lincoln Heights / Oaklawn / McCrorey Heights,Census Tract 48,Mecklenburg County
+37119004900,Greenville area,Census Tract 49,Mecklenburg County
+37119005000,Greenville / Druid Hills,Census Tract 50,Mecklenburg County
+37119005100,Druid Hills / Atando Junction,Census Tract 51,Mecklenburg County
+37119005200,Tryon Hills / Lockwood / Optimist Park,Census Tract 52,Mecklenburg County
+37119005301,NoDa / Atando Junction / Virginia Manor,Census Tract 53.01,Mecklenburg County
+37119005305,Virginia Manor / Hidden Valley / Fairfax Woods,Census Tract 53.05,Mecklenburg County
+37119005306,Hidden Valley / Fairfax Woods,Census Tract 53.06,Mecklenburg County
+37119005307,Fairfax Woods / Virginia Manor,Census Tract 53.07,Mecklenburg County
+37119005308,Fairfax Woods area,Census Tract 53.08,Mecklenburg County
+37119005403,Nevin / Wilson Heights,Census Tract 54.03,Mecklenburg County
+37119005404,Derita area,Census Tract 54.04,Mecklenburg County
+37119005405,Wilson Heights area,Census Tract 54.05,Mecklenburg County
+37119005406,Garden Park / Northwood / Firestone,Census Tract 54.06,Mecklenburg County
+37119005508,Croft / Joplor,Census Tract 55.08,Mecklenburg County
+37119005510,Henderson Manor / Henderson Oaks / Graceshire,Census Tract 55.10,Mecklenburg County
+37119005511,Croft / Mallard,Census Tract 55.11,Mecklenburg County
+37119005512,Lynn Lee / Graceshire,Census Tract 55.12,Mecklenburg County
+37119005513,"Mallard area (Mecklenburg County, Census Tract 55.13)",Census Tract 55.13,Mecklenburg County
+37119005515,"Cox Mill area (Mecklenburg County, Census Tract 55.15)",Census Tract 55.15,Mecklenburg County
+37119005516,"Cox Mill area (Mecklenburg County, Census Tract 55.16)",Census Tract 55.16,Mecklenburg County
+37119005517,Joplor / Cox Mill / Mallard,Census Tract 55.17,Mecklenburg County
+37119005519,Concord Mills / Cox Mill,Census Tract 55.19,Mecklenburg County
+37119005520,"University City / Concord Mills (Mecklenburg County, Census Tract 55.20)",Census Tract 55.20,Mecklenburg County
+37119005522,Mallard / Lynn Lee,Census Tract 55.22,Mecklenburg County
+37119005525,Joplor area,Census Tract 55.25,Mecklenburg County
+37119005526,Joplor / Croft,Census Tract 55.26,Mecklenburg County
+37119005527,"Mallard area (Mecklenburg County, Census Tract 55.27)",Census Tract 55.27,Mecklenburg County
+37119005528,"Mallard area (Mecklenburg County, Census Tract 55.28)",Census Tract 55.28,Mecklenburg County
+37119005529,Mallard / Concord Mills,Census Tract 55.29,Mecklenburg County
+37119005530,"Mallard area (Mecklenburg County, Census Tract 55.30)",Census Tract 55.30,Mecklenburg County
+37119005531,Concord Mills area,Census Tract 55.31,Mecklenburg County
+37119005532,"University City area (Mecklenburg County, Census Tract 55.32)",Census Tract 55.32,Mecklenburg County
+37119005533,University City / Mallard,Census Tract 55.33,Mecklenburg County
+37119005534,"University City area (Mecklenburg County, Census Tract 55.34)",Census Tract 55.34,Mecklenburg County
+37119005535,Lynn Lee / Mineral Springs / Mallard,Census Tract 55.35,Mecklenburg County
+37119005536,Mineral Springs / University City,Census Tract 55.36,Mecklenburg County
+37119005604,"University City / Newell (Mecklenburg County, Census Tract 56.04)",Census Tract 56.04,Mecklenburg County
+37119005609,"University City area (Mecklenburg County, Census Tract 56.09)",Census Tract 56.09,Mecklenburg County
+37119005610,"University City / Concord Mills (Mecklenburg County, Census Tract 56.10)",Census Tract 56.10,Mecklenburg County
+37119005611,Concord Mills / Downtown,Census Tract 56.11,Mecklenburg County
+37119005612,Reedy Creek / University City / Newell,Census Tract 56.12,Mecklenburg County
+37119005613,Reedy Creek / Newell / Candlewood,Census Tract 56.13,Mecklenburg County
+37119005615,"Reedy Creek area (Mecklenburg County, Census Tract 56.15)",Census Tract 56.15,Mecklenburg County
+37119005616,Reedy Creek / Embassy East / Candlewood,Census Tract 56.16,Mecklenburg County
+37119005617,Embassy East / Reedy Creek,Census Tract 56.17,Mecklenburg County
+37119005618,"Reedy Creek area (Mecklenburg County, Census Tract 56.18)",Census Tract 56.18,Mecklenburg County
+37119005619,"Reedy Creek area (Mecklenburg County, Census Tract 56.19)",Census Tract 56.19,Mecklenburg County
+37119005621,"Reedy Creek / Downtown (Mecklenburg County, Census Tract 56.21)",Census Tract 56.21,Mecklenburg County
+37119005622,"University City / Newell (Mecklenburg County, Census Tract 56.22)",Census Tract 56.22,Mecklenburg County
+37119005623,"Newell area (Mecklenburg County, Census Tract 56.23)",Census Tract 56.23,Mecklenburg County
+37119005624,Camellia Gardens / Reedy Creek / Downtown,Census Tract 56.24,Mecklenburg County
+37119005625,"Reedy Creek area (Mecklenburg County, Census Tract 56.25)",Census Tract 56.25,Mecklenburg County
+37119005626,Reedy Creek / Embassy East / Hickory Grove,Census Tract 56.26,Mecklenburg County
+37119005627,"Reedy Creek / Downtown (Mecklenburg County, Census Tract 56.27)",Census Tract 56.27,Mecklenburg County
+37119005709,"Matthews Commercial Historic District area (Mecklenburg County, Census Tract 57.09)",Census Tract 57.09,Mecklenburg County
+37119005710,"Idlewild area (Mecklenburg County, Census Tract 57.10)",Census Tract 57.10,Mecklenburg County
+37119005712,Matthews Commercial Historic District / Downtown,Census Tract 57.12,Mecklenburg County
+37119005713,"Downtown area (Mecklenburg County, Census Tract 57.13)",Census Tract 57.13,Mecklenburg County
+37119005714,"Downtown area (Mecklenburg County, Census Tract 57.14)",Census Tract 57.14,Mecklenburg County
+37119005715,Downtown / Bethel Glen (Mecklenburg County),Census Tract 57.15,Mecklenburg County
+37119005716,"Idlewild area (Mecklenburg County, Census Tract 57.16)",Census Tract 57.16,Mecklenburg County
+37119005718,"Downtown area (Mecklenburg County, Census Tract 57.18)",Census Tract 57.18,Mecklenburg County
+37119005719,"Downtown area (Mecklenburg County, Census Tract 57.19)",Census Tract 57.19,Mecklenburg County
+37119005720,Downtown / Idlewild / Matthews Commercial Historic District,Census Tract 57.20,Mecklenburg County
+37119005721,"Downtown area (Mecklenburg County, Census Tract 57.21)",Census Tract 57.21,Mecklenburg County
+37119005722,"Idlewild / Matthews Commercial Historic District (Mecklenburg County, Census Tract 57.22)",Census Tract 57.22,Mecklenburg County
+37119005723,"Idlewild / Matthews Commercial Historic District (Mecklenburg County, Census Tract 57.23)",Census Tract 57.23,Mecklenburg County
+37119005811,Matthews Commercial Historic District / Providence / Rama,Census Tract 58.11,Mecklenburg County
+37119005815,Providence / Carmel,Census Tract 58.15,Mecklenburg County
+37119005816,Blakeney / Carmel,Census Tract 58.16,Mecklenburg County
+37119005817,"Providence area (Mecklenburg County, Census Tract 58.17)",Census Tract 58.17,Mecklenburg County
+37119005824,Nations Ford / Starmount,Census Tract 58.24,Mecklenburg County
+37119005826,Carolina Village / Carmel,Census Tract 58.26,Mecklenburg County
+37119005827,"Starmount / Huntingtowne Farms (Mecklenburg County, Census Tract 58.27)",Census Tract 58.27,Mecklenburg County
+37119005828,Carmel / Huntingtowne Farms / Quail Hollow,Census Tract 58.28,Mecklenburg County
+37119005829,Carmel / Carolina Village,Census Tract 58.29,Mecklenburg County
+37119005830,Carmel / Ballantyne,Census Tract 58.30,Mecklenburg County
+37119005832,"Providence area (Mecklenburg County, Census Tract 58.32)",Census Tract 58.32,Mecklenburg County
+37119005833,Matthews Commercial Historic District / Providence,Census Tract 58.33,Mecklenburg County
+37119005834,"Matthews Commercial Historic District area (Mecklenburg County, Census Tract 58.34)",Census Tract 58.34,Mecklenburg County
+37119005835,"Matthews Commercial Historic District area (Mecklenburg County, Census Tract 58.35)",Census Tract 58.35,Mecklenburg County
+37119005836,The Traditions at Covington / Carolina Village,Census Tract 58.36,Mecklenburg County
+37119005839,Ballantyne / Carmel,Census Tract 58.39,Mecklenburg County
+37119005840,"Ballantyne area (Mecklenburg County, Census Tract 58.40)",Census Tract 58.40,Mecklenburg County
+37119005843,"Blakeney area (Mecklenburg County, Census Tract 58.43)",Census Tract 58.43,Mecklenburg County
+37119005845,"Blakeney area (Mecklenburg County, Census Tract 58.45)",Census Tract 58.45,Mecklenburg County
+37119005846,"Blakeney area (Mecklenburg County, Census Tract 58.46)",Census Tract 58.46,Mecklenburg County
+37119005847,"Providence area (Mecklenburg County, Census Tract 58.47)",Census Tract 58.47,Mecklenburg County
+37119005848,Providence / Matthews Commercial Historic District,Census Tract 58.48,Mecklenburg County
+37119005849,"Matthews Commercial Historic District area (Mecklenburg County, Census Tract 58.49)",Census Tract 58.49,Mecklenburg County
+37119005850,Providence / Blakeney,Census Tract 58.50,Mecklenburg County
+37119005851,"Providence area (Mecklenburg County, Census Tract 58.51)",Census Tract 58.51,Mecklenburg County
+37119005852,"Carmel area (Mecklenburg County, Census Tract 58.52)",Census Tract 58.52,Mecklenburg County
+37119005853,"Carmel area (Mecklenburg County, Census Tract 58.53)",Census Tract 58.53,Mecklenburg County
+37119005854,Ballantyne / Carolina Village,Census Tract 58.54,Mecklenburg County
+37119005855,Ballantyne / Bridgehampton Club,Census Tract 58.55,Mecklenburg County
+37119005856,The Traditions at Covington / The Villas at Covington,Census Tract 58.56,Mecklenburg County
+37119005857,"Bridgehampton Club area (Mecklenburg County, Census Tract 58.57)",Census Tract 58.57,Mecklenburg County
+37119005858,"Bridgehampton Club area (Mecklenburg County, Census Tract 58.58)",Census Tract 58.58,Mecklenburg County
+37119005859,Ballantyne / Blakeney,Census Tract 58.59,Mecklenburg County
+37119005860,"Ballantyne area (Mecklenburg County, Census Tract 58.60)",Census Tract 58.60,Mecklenburg County
+37119005861,"Blakeney area (Mecklenburg County, Census Tract 58.61)",Census Tract 58.61,Mecklenburg County
+37119005862,"Blakeney area (Mecklenburg County, Census Tract 58.62)",Census Tract 58.62,Mecklenburg County
+37119005863,Blakeney / Bridgehampton Club,Census Tract 58.63,Mecklenburg County
+37119005864,"Blakeney area (Mecklenburg County, Census Tract 58.64)",Census Tract 58.64,Mecklenburg County
+37119005865,"Matthews Commercial Historic District area (Mecklenburg County, Census Tract 58.65)",Census Tract 58.65,Mecklenburg County
+37119005866,"Matthews Commercial Historic District area (Mecklenburg County, Census Tract 58.66)",Census Tract 58.66,Mecklenburg County
+37119005867,Carolina Village area,Census Tract 58.67,Mecklenburg County
+37119005868,Prestwick / Carolina Village,Census Tract 58.68,Mecklenburg County
+37119005908,The Sanctuary / Chapel Cove,Census Tract 59.08,Mecklenburg County
+37119005910,"Chapel Cove / Steele Creek (Mecklenburg County, Census Tract 59.10)",Census Tract 59.10,Mecklenburg County
+37119005913,"Steele Creek / Ayrsley (Mecklenburg County, Census Tract 59.13)",Census Tract 59.13,Mecklenburg County
+37119005915,"Ayrsley area (Mecklenburg County, Census Tract 59.15)",Census Tract 59.15,Mecklenburg County
+37119005916,"Nations Ford / Ayrsley (Mecklenburg County, Census Tract 59.16)",Census Tract 59.16,Mecklenburg County
+37119005918,"Steele Creek area (Mecklenburg County, Census Tract 59.18)",Census Tract 59.18,Mecklenburg County
+37119005919,Wildwood / Twins Estates,Census Tract 59.19,Mecklenburg County
+37119005920,Shopton / Twins Estates,Census Tract 59.20,Mecklenburg County
+37119005921,Shopton area,Census Tract 59.21,Mecklenburg County
+37119005922,"Chapel Cove / Steele Creek (Mecklenburg County, Census Tract 59.22)",Census Tract 59.22,Mecklenburg County
+37119005923,"Steele Creek area (Mecklenburg County, Census Tract 59.23)",Census Tract 59.23,Mecklenburg County
+37119005924,"Chapel Cove / Steele Creek (Mecklenburg County, Census Tract 59.24)",Census Tract 59.24,Mecklenburg County
+37119005925,Steele Creek / Chapel Cove,Census Tract 59.25,Mecklenburg County
+37119005926,The Sanctuary / North Rock Hill,Census Tract 59.26,Mecklenburg County
+37119005927,"Ayrsley area (Mecklenburg County, Census Tract 59.27)",Census Tract 59.27,Mecklenburg County
+37119005928,Shopton / City Park,Census Tract 59.28,Mecklenburg County
+37119005929,"Steele Creek area (Mecklenburg County, Census Tract 59.29)",Census Tract 59.29,Mecklenburg County
+37119005930,"Steele Creek / Ayrsley (Mecklenburg County, Census Tract 59.30)",Census Tract 59.30,Mecklenburg County
+37119005931,"Steele Creek area (Mecklenburg County, Census Tract 59.31)",Census Tract 59.31,Mecklenburg County
+37119005932,"Steele Creek area (Mecklenburg County, Census Tract 59.32)",Census Tract 59.32,Mecklenburg County
+37119006005,Arlington / Riverfront Homes & Marina / Sodyeco,Census Tract 60.05,Mecklenburg County
+37119006008,Shuffletown / Sodyeco,Census Tract 60.08,Mecklenburg County
+37119006009,Coulwood / Shuffletown,Census Tract 60.09,Mecklenburg County
+37119006011,Arlington / Forest Pawtucket / Twins Estates,Census Tract 60.11,Mecklenburg County
+37119006012,White Oak Park / Forest Pawtucket / Twins Estates,Census Tract 60.12,Mecklenburg County
+37119006013,Sodyeco / River Park / Shuffletown,Census Tract 60.13,Mecklenburg County
+37119006014,Shuffletown / Dutchman's Ridge,Census Tract 60.14,Mecklenburg County
+37119006015,Coulwood / Paw Creek / Shuffletown,Census Tract 60.15,Mecklenburg County
+37119006016,Homestead area,Census Tract 60.16,Mecklenburg County
+37119006103,Mountain Island Village area,Census Tract 61.03,Mecklenburg County
+37119006105,Mountain Island Village / Oakdale / Northlake,Census Tract 61.05,Mecklenburg County
+37119006108,Spring Lake / Sunset Hills,Census Tract 61.08,Mecklenburg County
+37119006109,Hyde Park Estates / Bahama Park,Census Tract 61.09,Mecklenburg County
+37119006110,Coulwood / Oakdale / Chateau Woods,Census Tract 61.10,Mecklenburg County
+37119006111,Oakdale / Mountain Island Village,Census Tract 61.11,Mecklenburg County
+37119006112,"Northlake area (Mecklenburg County, Census Tract 61.12)",Census Tract 61.12,Mecklenburg County
+37119006113,"Northlake area (Mecklenburg County, Census Tract 61.13)",Census Tract 61.13,Mecklenburg County
+37119006114,Bahama Park / Northlake,Census Tract 61.14,Mecklenburg County
+37119006115,"Northlake area (Mecklenburg County, Census Tract 61.15)",Census Tract 61.15,Mecklenburg County
+37119006208,"Birkdale area (Mecklenburg County, Census Tract 62.08)",Census Tract 62.08,Mecklenburg County
+37119006209,"Birkdale area (Mecklenburg County, Census Tract 62.09)",Census Tract 62.09,Mecklenburg County
+37119006210,Hicks Crossroads / Birkdale,Census Tract 62.10,Mecklenburg County
+37119006211,Birkdale / Rosedale,Census Tract 62.11,Mecklenburg County
+37119006212,"Rosedale area (Mecklenburg County, Census Tract 62.12)",Census Tract 62.12,Mecklenburg County
+37119006214,Rosedale / Hicks Crossroads,Census Tract 62.14,Mecklenburg County
+37119006216,Birkdale / Caldwell,Census Tract 62.16,Mecklenburg County
+37119006217,"Birkdale area (Mecklenburg County, Census Tract 62.17)",Census Tract 62.17,Mecklenburg County
+37119006218,Birkdale / Villas of Cowans Ford / Hicks Crossroads,Census Tract 62.18,Mecklenburg County
+37119006219,Hicks Crossroads / Birkdale / Cowan's Ford,Census Tract 62.19,Mecklenburg County
+37119006220,Hicks Crossroads / Cowan's Ford / Birkdale,Census Tract 62.20,Mecklenburg County
+37119006221,Hicks Crossroads area,Census Tract 62.21,Mecklenburg County
+37119006222,Allison Ferry / Mountain Island Village,Census Tract 62.22,Mecklenburg County
+37119006223,Northlake / Rosedale / Hicks Crossroads,Census Tract 62.23,Mecklenburg County
+37119006224,Rosedale / Northlake,Census Tract 62.24,Mecklenburg County
+37119006305,Joplor / Moss Creek,Census Tract 63.05,Mecklenburg County
+37119006306,Rosedale / Joplor,Census Tract 63.06,Mecklenburg County
+37119006307,Joplor / Rosedale,Census Tract 63.07,Mecklenburg County
+37119006308,Caldwell / Rosedale / Birkdale,Census Tract 63.08,Mecklenburg County
+37119006309,"Rosedale area (Mecklenburg County, Census Tract 63.09)",Census Tract 63.09,Mecklenburg County
+37119006310,Hopewell / Moss Creek,Census Tract 63.10,Mecklenburg County
+37119006311,"Caldwell / Hopewell (Mecklenburg County, Census Tract 63.11)",Census Tract 63.11,Mecklenburg County
+37119006403,Hopewell / Caldwell,Census Tract 64.03,Mecklenburg County
+37119006404,Hopewell area,Census Tract 64.04,Mecklenburg County
+37119006407,"Caldwell / Birkdale (Mecklenburg County, Census Tract 64.07)",Census Tract 64.07,Mecklenburg County
+37119006408,"Caldwell area (Mecklenburg County, Census Tract 64.08)",Census Tract 64.08,Mecklenburg County
+37119006409,"Caldwell / Hopewell (Mecklenburg County, Census Tract 64.09)",Census Tract 64.09,Mecklenburg County
+37119006410,"Caldwell area (Mecklenburg County, Census Tract 64.10)",Census Tract 64.10,Mecklenburg County
+37119006411,"Caldwell / Birkdale (Mecklenburg County, Census Tract 64.11)",Census Tract 64.11,Mecklenburg County
+37119980100,Shopton / Twins Estates / Reid Park,Census Tract 9801,Mecklenburg County
+37119980200,"Nations Ford / Ayrsley (Mecklenburg County, Census Tract 9802)",Census Tract 9802,Mecklenburg County
+37119980300,Midtown / Second Ward,Census Tract 9803,Mecklenburg County
+37159050201,"Granite Commons / The Reserve at the Country Club (Rowan County, Census Tract 502.01)",Census Tract 502.01,Rowan County
+37159050202,"Granite Commons / The Reserve at the Country Club (Rowan County, Census Tract 502.02)",Census Tract 502.02,Rowan County
+37159050300,"Cresent / The Reserve at the Country Club (Rowan County, Census Tract 503)",Census Tract 503,Rowan County
+37159050400,"Cresent / The Reserve at the Country Club (Rowan County, Census Tract 504)",Census Tract 504,Rowan County
+37159050500,The Reserve at the Country Club / Cresent,Census Tract 505,Rowan County
+37159050700,Wood Field area,Census Tract 507,Rowan County
+37159050800,The Reserve at the Country Club / Wood Field / Granite Commons,Census Tract 508,Rowan County
+37159050901,"Rowan County (Rowan County, Census Tract 509.01)",Census Tract 509.01,Rowan County
+37159050903,"Braunville Estates area (Rowan County, Census Tract 509.03)",Census Tract 509.03,Rowan County
+37159050904,"Rowan County (Rowan County, Census Tract 509.04)",Census Tract 509.04,Rowan County
+37159051001,"Braunville Estates area (Rowan County, Census Tract 510.01)",Census Tract 510.01,Rowan County
+37159051002,Granite Commons / Braunville Estates,Census Tract 510.02,Rowan County
+37159051101,Granite Commons / Jackson Park,Census Tract 511.01,Rowan County
+37159051102,Granite Commons / Cresent,Census Tract 511.02,Rowan County
+37159051201,"Rowan County (Rowan County, Census Tract 512.01)",Census Tract 512.01,Rowan County
+37159051202,"Hidden Creek area (Rowan County, Census Tract 512.02)",Census Tract 512.02,Rowan County
+37159051204,Cresent / Hidden Creek,Census Tract 512.04,Rowan County
+37159051301,"Hidden Creek area (Rowan County, Census Tract 513.01)",Census Tract 513.01,Rowan County
+37159051302,Greystone Village / Wood Field / Hidden Creek,Census Tract 513.02,Rowan County
+37159051303,Hidden Creek / Cresent,Census Tract 513.03,Rowan County
+37159051400,"Jackson Park area (Rowan County, Census Tract 514)",Census Tract 514,Rowan County
+37159051501,"Jackson Park area (Rowan County, Census Tract 515.01)",Census Tract 515.01,Rowan County
+37159051502,Jackson Park / Kellswater Bridge / Car Town,Census Tract 515.02,Rowan County
+37159051600,"Jackson Park area (Rowan County, Census Tract 516)",Census Tract 516,Rowan County
+37159051700,China Grove,Census Tract 517,Rowan County
+37159051801,"Rowan County (Rowan County, Census Tract 518.01)",Census Tract 518.01,Rowan County
+37159051802,"Rowan County (Rowan County, Census Tract 518.02)",Census Tract 518.02,Rowan County
+37159051901,"Rowan County (Rowan County, Census Tract 519.01)",Census Tract 519.01,Rowan County
+37159051903,"Rowan County (Rowan County, Census Tract 519.03)",Census Tract 519.03,Rowan County
+37159051904,"Rowan County (Rowan County, Census Tract 519.04)",Census Tract 519.04,Rowan County
+37159052000,The Reserve at the Country Club area,Census Tract 520,Rowan County
+37167930101,"Stanly County (Stanly County, Census Tract 9301.01)",Census Tract 9301.01,Stanly County
+37167930102,"Stanly County (Stanly County, Census Tract 9301.02)",Census Tract 9301.02,Stanly County
+37167930200,Vickers Plantation area,Census Tract 9302,Stanly County
+37167930300,Vickers Plantation / Park West / Anderson Ridge,Census Tract 9303,Stanly County
+37167930500,Park West area,Census Tract 9305,Stanly County
+37167930700,"Stanly County (Stanly County, Census Tract 9307)",Census Tract 9307,Stanly County
+37167930801,"Stanly County (Stanly County, Census Tract 9308.01)",Census Tract 9308.01,Stanly County
+37167930802,Saddlebrook / Tucker Chase,Census Tract 9308.02,Stanly County
+37167930901,"Stanly County (Stanly County, Census Tract 9309.01)",Census Tract 9309.01,Stanly County
+37167930902,Red Cross,Census Tract 9309.02,Stanly County
+37167931001,"Stanly County (Stanly County, Census Tract 9310.01)",Census Tract 9310.01,Stanly County
+37167931002,Grandview / Morgan Hills,Census Tract 9310.02,Stanly County
+37167931101,"Stanly County (Stanly County, Census Tract 9311.01)",Census Tract 9311.01,Stanly County
+37167931102,"Stanly County (Stanly County, Census Tract 9311.02)",Census Tract 9311.02,Stanly County
+37167931202,Park West / Morgan Hills,Census Tract 9312.02,Stanly County
+37167931203,Morgan Hills / Grandview,Census Tract 9312.03,Stanly County
+37167931204,Morgan Hills / Anderson Ridge,Census Tract 9312.04,Stanly County
+37179020100,"Union County (Union County, Census Tract 201)",Census Tract 201,Union County
+37179020203,Downtown / Bethel Glen (Union County),Census Tract 202.03,Union County
+37179020204,Fairview,Census Tract 202.04,Union County
+37179020205,"Unionville (Union County, Census Tract 202.05)",Census Tract 202.05,Union County
+37179020206,"Unionville (Union County, Census Tract 202.06)",Census Tract 202.06,Union County
+37179020305,Hemby Bridge,Census Tract 203.05,Union County
+37179020307,"Union County (Union County, Census Tract 203.07)",Census Tract 203.07,Union County
+37179020308,"Union County (Union County, Census Tract 203.08)",Census Tract 203.08,Union County
+37179020309,"Downtown area (Union County, Census Tract 203.09)",Census Tract 203.09,Union County
+37179020310,"Downtown area (Union County, Census Tract 203.10)",Census Tract 203.10,Union County
+37179020312,"Matthews Commercial Historic District area (Union County, Census Tract 203.12)",Census Tract 203.12,Union County
+37179020313,"Matthews Commercial Historic District area (Union County, Census Tract 203.13)",Census Tract 203.13,Union County
+37179020314,"Matthews Commercial Historic District area (Union County, Census Tract 203.14)",Census Tract 203.14,Union County
+37179020315,"Matthews Commercial Historic District area (Union County, Census Tract 203.15)",Census Tract 203.15,Union County
+37179020316,"Indian Trail (Union County, Census Tract 203.16)",Census Tract 203.16,Union County
+37179020317,"Union County (Union County, Census Tract 203.17)",Census Tract 203.17,Union County
+37179020318,Lake Park,Census Tract 203.18,Union County
+37179020319,Downtown / Matthews Commercial Historic District,Census Tract 203.19,Union County
+37179020320,"Indian Trail (Union County, Census Tract 203.20)",Census Tract 203.20,Union County
+37179020321,"Indian Trail (Union County, Census Tract 203.21)",Census Tract 203.21,Union County
+37179020401,"Union County (Union County, Census Tract 204.01)",Census Tract 204.01,Union County
+37179020403,"Union County (Union County, Census Tract 204.03)",Census Tract 204.03,Union County
+37179020405,"Union County (Union County, Census Tract 204.05)",Census Tract 204.05,Union County
+37179020406,"Union County (Union County, Census Tract 204.06)",Census Tract 204.06,Union County
+37179020501,"Union County (Union County, Census Tract 205.01)",Census Tract 205.01,Union County
+37179020502,"Union County (Union County, Census Tract 205.02)",Census Tract 205.02,Union County
+37179020601,"Union County (Union County, Census Tract 206.01)",Census Tract 206.01,Union County
+37179020602,"Union County (Union County, Census Tract 206.02)",Census Tract 206.02,Union County
+37179020701,"Union County (Union County, Census Tract 207.01)",Census Tract 207.01,Union County
+37179020702,"Union County (Union County, Census Tract 207.02)",Census Tract 207.02,Union County
+37179020800,"Union County (Union County, Census Tract 208)",Census Tract 208,Union County
+37179020901,"Union County (Union County, Census Tract 209.01)",Census Tract 209.01,Union County
+37179020902,"Union County (Union County, Census Tract 209.02)",Census Tract 209.02,Union County
+37179021004,Mineral Springs,Census Tract 210.04,Union County
+37179021005,"Union County (Union County, Census Tract 210.05)",Census Tract 210.05,Union County
+37179021006,"Blakeney area (Union County, Census Tract 210.06)",Census Tract 210.06,Union County
+37179021007,"Blakeney area (Union County, Census Tract 210.07)",Census Tract 210.07,Union County
+37179021009,"Millbridge area (Union County, Census Tract 210.09)",Census Tract 210.09,Union County
+37179021012,"Millbridge area (Union County, Census Tract 210.12)",Census Tract 210.12,Union County
+37179021013,"Millbridge area (Union County, Census Tract 210.13)",Census Tract 210.13,Union County
+37179021014,"Millbridge area (Union County, Census Tract 210.14)",Census Tract 210.14,Union County
+37179021015,"Union County (Union County, Census Tract 210.15)",Census Tract 210.15,Union County
+37179021016,Millbridge / Blakeney / Bent Creek,Census Tract 210.16,Union County
+37179021017,Millbridge / Bent Creek,Census Tract 210.17,Union County
+37179021018,"Blakeney area (Union County, Census Tract 210.18)",Census Tract 210.18,Union County
+37179021019,Providence / Matthews Commercial Historic District / Blakeney,Census Tract 210.19,Union County
+37179021020,Wesley Chapel,Census Tract 210.20,Union County
+37179021021,"Union County (Union County, Census Tract 210.21)",Census Tract 210.21,Union County
+45023020100,"CHESTER (Chester County, Census Tract 201)",Census Tract 201,Chester County
+45023020200,"CHESTER (Chester County, Census Tract 202)",Census Tract 202,Chester County
+45023020300,"Chester County (Chester County, Census Tract 203)",Census Tract 203,Chester County
+45023020400,"Chester County (Chester County, Census Tract 204)",Census Tract 204,Chester County
+45023020500,"Chester County (Chester County, Census Tract 205)",Census Tract 205,Chester County
+45023020601,"Chester County (Chester County, Census Tract 206.01)",Census Tract 206.01,Chester County
+45023020602,"Chester County (Chester County, Census Tract 206.02)",Census Tract 206.02,Chester County
+45023020700,"Chester County (Chester County, Census Tract 207)",Census Tract 207,Chester County
+45023020800,"Chester County (Chester County, Census Tract 208)",Census Tract 208,Chester County
+45023020900,"Chester County (Chester County, Census Tract 209)",Census Tract 209,Chester County
+45023021000,GREAT FALLS,Census Tract 210,Chester County
+45057010100,"Lancaster County (Lancaster County, Census Tract 101)",Census Tract 101,Lancaster County
+45057010201,"Lancaster County (Lancaster County, Census Tract 102.01)",Census Tract 102.01,Lancaster County
+45057010202,KERSHAW,Census Tract 102.02,Lancaster County
+45057010300,"Lancaster County (Lancaster County, Census Tract 103)",Census Tract 103,Lancaster County
+45057010400,"Lancaster County (Lancaster County, Census Tract 104)",Census Tract 104,Lancaster County
+45057010500,"Lancaster County (Lancaster County, Census Tract 105)",Census Tract 105,Lancaster County
+45057010600,"Lancaster County (Lancaster County, Census Tract 106)",Census Tract 106,Lancaster County
+45057010700,"LANCASTER (Lancaster County, Census Tract 107)",Census Tract 107,Lancaster County
+45057010800,"LANCASTER (Lancaster County, Census Tract 108)",Census Tract 108,Lancaster County
+45057010900,"Roselyn area (Lancaster County, Census Tract 109)",Census Tract 109,Lancaster County
+45057011001,"Lancaster County (Lancaster County, Census Tract 110.01)",Census Tract 110.01,Lancaster County
+45057011002,"Lancaster County (Lancaster County, Census Tract 110.02)",Census Tract 110.02,Lancaster County
+45057011100,"Roselyn area (Lancaster County, Census Tract 111)",Census Tract 111,Lancaster County
+45057011203,Bretagne / Wakefield / The Traditions at Covington,Census Tract 112.03,Lancaster County
+45057011204,Rosemont / Avondale,Census Tract 112.04,Lancaster County
+45057011205,Fox Ridge / Lynnwood Farms / Reid Pointe,Census Tract 112.05,Lancaster County
+45057011206,Fox Ridge / Avondale,Census Tract 112.06,Lancaster County
+45057011207,"Bent Creek area (Lancaster County, Census Tract 112.07)",Census Tract 112.07,Lancaster County
+45057011208,"Bent Creek area (Lancaster County, Census Tract 112.08)",Census Tract 112.08,Lancaster County
+45057011209,Roselyn / Walnut Creek / Cedar Valley,Census Tract 112.09,Lancaster County
+45057011210,Walnut Creek / Bent Creek,Census Tract 112.10,Lancaster County
+45057011211,Walnut Creek / Roselyn,Census Tract 112.11,Lancaster County
+45091060102,"Seven Oaks area (York County, Census Tract 601.02)",Census Tract 601.02,York County
+45091060200,"Seven Oaks area (York County, Census Tract 602)",Census Tract 602,York County
+45091060300,Seven Oaks / South Rock Hill,Census Tract 603,York County
+45091060401,South Rock Hill / Seven Oaks,Census Tract 604.01,York County
+45091060402,"South Rock Hill area (York County, Census Tract 604.02)",Census Tract 604.02,York County
+45091060501,Seven Oaks / West Rock Hill,Census Tract 605.01,York County
+45091060502,"South Rock Hill / West Rock Hill (York County, Census Tract 605.02)",Census Tract 605.02,York County
+45091060600,"Seven Oaks area (York County, Census Tract 606)",Census Tract 606,York County
+45091060700,"North Rock Hill area (York County, Census Tract 607)",Census Tract 607,York County
+45091060802,Seven Oaks / North Rock Hill,Census Tract 608.02,York County
+45091060803,"North Rock Hill area (York County, Census Tract 608.03)",Census Tract 608.03,York County
+45091060804,"North Rock Hill area (York County, Census Tract 608.04)",Census Tract 608.04,York County
+45091060901,East Rock Hill / Seven Oaks,Census Tract 609.01,York County
+45091060904,"West Rock Hill area (York County, Census Tract 609.04)",Census Tract 609.04,York County
+45091060908,"West Rock Hill / North Rock Hill (York County, Census Tract 609.08)",Census Tract 609.08,York County
+45091060909,"West Rock Hill / North Rock Hill (York County, Census Tract 609.09)",Census Tract 609.09,York County
+45091060910,"North Rock Hill area (York County, Census Tract 609.10)",Census Tract 609.10,York County
+45091060911,"North Rock Hill area (York County, Census Tract 609.11)",Census Tract 609.11,York County
+45091060912,"North Rock Hill area (York County, Census Tract 609.12)",Census Tract 609.12,York County
+45091060913,"North Rock Hill area (York County, Census Tract 609.13)",Census Tract 609.13,York County
+45091061004,Old Orchid / North Rock Hill,Census Tract 610.04,York County
+45091061006,Nations Ford / Prestwick,Census Tract 610.06,York County
+45091061007,Prestwick / Nations Ford,Census Tract 610.07,York County
+45091061008,Prestwick / Wakefield / Whiteville Park,Census Tract 610.08,York County
+45091061009,"North Rock Hill area (York County, Census Tract 610.09)",Census Tract 610.09,York County
+45091061010,"North Rock Hill area (York County, Census Tract 610.10)",Census Tract 610.10,York County
+45091061011,Whiteville Park / Old Orchid,Census Tract 610.11,York County
+45091061012,Steele Creek / Whiteville Park,Census Tract 610.12,York County
+45091061101,Whiteville Park area,Census Tract 611.01,York County
+45091061103,Old Orchid / Nims Village / The Forest at Fort Mill,Census Tract 611.03,York County
+45091061104,Lakebridge / Massey,Census Tract 611.04,York County
+45091061202,Riverchase / Cedar Valley / Ellis Pond,Census Tract 612.02,York County
+45091061203,Cedar Valley area,Census Tract 612.03,York County
+45091061204,"Seven Oaks area (York County, Census Tract 612.04)",Census Tract 612.04,York County
+45091061205,Ellis Pond / Seven Oaks,Census Tract 612.05,York County
+45091061301,"South Rock Hill area (York County, Census Tract 613.01)",Census Tract 613.01,York County
+45091061302,"South Rock Hill / West Rock Hill (York County, Census Tract 613.02)",Census Tract 613.02,York County
+45091061401,"York County (York County, Census Tract 614.01)",Census Tract 614.01,York County
+45091061403,"West Rock Hill area (York County, Census Tract 614.03)",Census Tract 614.03,York County
+45091061404,"West Rock Hill area (York County, Census Tract 614.04)",Census Tract 614.04,York County
+45091061503,"Lincoln Estates area (York County, Census Tract 615.03)",Census Tract 615.03,York County
+45091061504,"Lincoln Estates area (York County, Census Tract 615.04)",Census Tract 615.04,York County
+45091061505,Lincoln Estates / West Rock Hill,Census Tract 615.05,York County
+45091061506,West Rock Hill / Lincoln Estates,Census Tract 615.06,York County
+45091061601,"Lincoln Estates area (York County, Census Tract 616.01)",Census Tract 616.01,York County
+45091061602,"Lincoln Estates area (York County, Census Tract 616.02)",Census Tract 616.02,York County
+45091061701,"York County (York County, Census Tract 617.01)",Census Tract 617.01,York County
+45091061705,"York County (York County, Census Tract 617.05)",Census Tract 617.05,York County
+45091061706,"York County (York County, Census Tract 617.06)",Census Tract 617.06,York County
+45091061708,"York County (York County, Census Tract 617.08)",Census Tract 617.08,York County
+45091061709,"The Sanctuary area (York County, Census Tract 617.09)",Census Tract 617.09,York County
+45091061710,"The Sanctuary area (York County, Census Tract 617.10)",Census Tract 617.10,York County
+45091061801,CLOVER,Census Tract 618.01,York County
+45091061802,"York County (York County, Census Tract 618.02)",Census Tract 618.02,York County
+45091061900,"York County (York County, Census Tract 619)",Census Tract 619,York County
