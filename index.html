@@ -74,11 +74,16 @@ figure svg{display:block;width:100%;height:auto;max-width:760px;margin:0 auto}
 figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:10px}
 ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
 ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 48px}
+ol.steps ul{margin:8px 0 0;padding-left:20px}
+ol.steps ul li{margin-bottom:6px}
+ol.steps pre{margin:8px 0}
+.callout ul{margin:0;padding-left:20px}
+.callout ul li{margin-bottom:4px}
 ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
 .math-step{margin:0 0 16px}
 .math-step b{color:var(--ink)}
 .katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
-code{font-family:var(--mono);font-size:.88em;background:var(--code-bg);padding:1px 6px;border-radius:6px}
+code{font-family:var(--mono);font-size:.88em;background:var(--code-bg);padding:1px 6px;border-radius:6px;overflow-wrap:anywhere}
 pre{font-family:var(--mono);font-size:14px;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;line-height:1.5}
 pre code{background:none;padding:0}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
@@ -115,6 +120,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <div class="buttons">
       <a class="btn primary" href="ARI_Weighting_Studio.html">Open the studio</a>
       <a class="btn ghost" href="examples/ari_11_indicators_four_dimensions.json" download>Download the Charlotte example</a>
+      <a class="btn ghost" href="#another-city">Map another city</a>
       <a class="btn ghost" href="https://github.com/Balo-97/AI-Readiness-Index-APH-Studio">View on GitHub</a>
     </div>
     <p class="note">Runs entirely in your browser: nothing to install, and your data stays on your computer.</p>
@@ -267,7 +273,36 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
       <li>On the Index tab, choose how missing values are handled (leave the area unscored, reweight, or fill with the median) and the normalisation (min–max or percentile).</li>
     </ol>
     <h3>The boundaries (GeoJSON)</h3>
-    <p>To map your own areas, click <b>Upload boundaries (GeoJSON)…</b> on the Index tab. The file needs polygons or multipolygons, one property whose values match your table's ID column (the studio finds it, and you can change it under the map's <b>Join</b> setting), and longitude/latitude coordinates (WGS 84). A shapefile or GeoPackage converts to GeoJSON in QGIS or at <a href="https://mapshaper.org">mapshaper.org</a>, which can also simplify large files so they draw faster.</p>
+    <p>The built-in map covers only the 14 counties of the Charlotte region. For anywhere else, click <b>Upload boundaries (GeoJSON)…</b> on the Index tab. The file needs polygons or multipolygons, one property whose values match your table's ID column (the studio finds it, and you can change it under the map's <b>Join</b> setting), and longitude/latitude coordinates (WGS 84). A shapefile or GeoPackage converts to GeoJSON in QGIS or at <a href="https://mapshaper.org">mapshaper.org</a>, which can also simplify large files so they draw faster.</p>
+
+    <h3 id="another-city">Getting a map for another US city</h3>
+    <p>Census tract boundaries for every state are free from the U.S. Census Bureau. It takes about five minutes.</p>
+    <ol class="steps">
+      <li><b>Download the tracts for your state.</b> Open the Census Bureau's <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html">Cartographic Boundary Files</a>, pick the year that matches your data, and download <b>Census Tracts</b> for your state as a shapefile (<code>.zip</code>). For North Carolina in 2024 the file is <code>cb_2024_37_tract_500k.zip</code>. Tract boundaries are fixed for the decade, so any year from 2020 on matches current ACS estimates.</li>
+      <li><b>Cut it to your area and convert it</b> at <a href="https://mapshaper.org">mapshaper.org</a>, a free tool that runs in your browser.
+        <ul>
+          <li>Drag the <code>.zip</code> onto the page and click <b>Import</b>.</li>
+          <li>To keep only your county, click <b>Console</b>, type a filter with the county's three-digit code and press Enter. For Mecklenburg County (code 119):
+<pre><code>-filter 'COUNTYFP == "119"'</code></pre>
+            For several counties: <code>-filter '["119","025","179"].includes(COUNTYFP)'</code>. The county code is digits 3–5 of any tract's <code>GEOID</code>.</li>
+          <li>Click <b>Simplify</b> and set the slider to about 10–20% so the map draws quickly.</li>
+          <li>Click <b>Export</b>, choose <b>GeoJSON</b> and save the file.</li>
+        </ul>
+      </li>
+      <li><b>Upload it in the studio.</b> On the Index tab, click <b>Upload boundaries (GeoJSON)…</b>. The studio matches the file's <code>GEOID</code> to your table's ID column on its own. Check that the map's <b>Join</b> setting shows every row matched; rows without a shape have IDs that are not in the file.</li>
+      <li><b>Optional: add an outline.</b> County outlines help orient readers. Download <b>Counties</b> from the same Census page, convert it the same way, and add it under <b>Outline layer → Upload…</b>.</li>
+    </ol>
+    <div class="callout">
+      <p><b>Make the IDs in your table match.</b> A tract's <code>GEOID</code> has 11 digits: state (2), county (3) and tract (6), for example <code>37119000101</code>.</p>
+      <ul>
+        <li><b>data.census.gov</b> tables have a <code>GEO_ID</code> column such as <code>1400000US37119000101</code>. Keep only the last 11 digits (in Excel, <code>=RIGHT(A2,11)</code>).</li>
+        <li><b>The Census API</b> returns separate <code>state</code>, <code>county</code> and <code>tract</code> columns. Join them in that order.</li>
+        <li><b>Excel</b> removes leading zeros, so Alabama's <code>01073000100</code> becomes <code>1073000100</code>. The studio ignores leading zeros when matching, so either form works.</li>
+      </ul>
+    </div>
+
+    <h3>Other places and other kinds of area</h3>
+    <p>Any polygon boundaries work, as long as one property matches an ID column in your table. Examples include block groups (from the same Census page), neighbourhoods, wards or council districts from a city's open-data portal, and small statistical areas from a national statistics office outside the US. City portals often publish shapefiles in a local projection. Convert those to longitude/latitude before exporting: type <code>-proj wgs84</code> in the mapshaper console, or in QGIS choose <i>CRS EPSG:4326</i> when you save as GeoJSON.</p>
     <p><b>Privacy.</b> Your tables and boundaries are processed in your browser and never sent anywhere. They are kept in this browser for next time; use the Export buttons to keep copies.</p>
   </div>
 </section>

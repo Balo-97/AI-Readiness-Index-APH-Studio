@@ -5,6 +5,7 @@ An expert-weighted **AI Readiness Index (ARI)** for census tracts, and the brows
 - **Website (AIreadiness):** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/>
 - **Open the studio:** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/ARI_Weighting_Studio.html>
 - **Example project (Charlotte, Mecklenburg County):** [`examples/ari_11_indicators_four_dimensions.json`](examples/ari_11_indicators_four_dimensions.json)
+- **Using it for another city:** [Getting a map for another US city](#getting-a-map-for-another-us-city)
 
 The studio runs entirely in your browser. There is nothing to install and no server; your data and judgements stay on your computer.
 
@@ -163,13 +164,40 @@ geoid,tract_name,county_name,household-income,household-income_cv,acs-broadband-
 
 ### The boundaries (GeoJSON)
 
-To map your own areas, click **Upload boundaries (GeoJSON)…** on the Index tab. The file needs:
+The built-in map covers only the 14 counties of the Charlotte region. For anywhere else, upload a boundary file: click **Upload boundaries (GeoJSON)…** on the Index tab. The file needs:
 
 - polygons or multipolygons (a FeatureCollection, a single Feature or a bare geometry);
 - one property whose values match the table's ID column (the studio finds the best match itself; you can change it under the map's **Join** setting);
 - longitude/latitude coordinates (WGS 84, EPSG:4326), the GeoJSON standard.
 
 Have a shapefile or GeoPackage? Convert it in QGIS (*Export → Save Features As… → GeoJSON, CRS EPSG:4326*) or at [mapshaper.org](https://mapshaper.org) (*Export → GeoJSON*). Simplify large files there first (*Simplify → 10–20%*); they draw much faster.
+
+#### Getting a map for another US city
+
+Census tract boundaries for every state are free from the U.S. Census Bureau. It takes about five minutes:
+
+1. **Download the tracts for your state.** Open the Census Bureau's [Cartographic Boundary Files](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html), pick the year that matches your data, and download **Census Tracts** for your state as a shapefile (`.zip`). For North Carolina in 2024, for example, the file is `cb_2024_37_tract_500k.zip`. Tract boundaries are fixed for the decade, so any year from 2020 on matches current ACS estimates.
+2. **Cut it to your area and convert it** at [mapshaper.org](https://mapshaper.org), a free tool that runs in your browser:
+   1. Drag the `.zip` onto the page and click **Import**.
+   2. To keep only your county, click **Console** and type a filter with the county's three-digit code, then press Enter. For Mecklenburg County (code 119):
+      ```
+      -filter 'COUNTYFP == "119"'
+      ```
+      For several counties: `-filter '["119","025","179"].includes(COUNTYFP)'`. The county code is digits 3–5 of any tract's `GEOID`.
+   3. Click **Simplify** and set the slider to about 10–20% so the map draws quickly.
+   4. Click **Export**, choose **GeoJSON** and save the file.
+3. **Upload it in the studio.** On the Index tab, click **Upload boundaries (GeoJSON)…**. The studio matches the file's `GEOID` to your table's ID column on its own. Check that the map's **Join** setting shows every row matched; rows without a shape have IDs that are not in the file.
+4. **Optional: add an outline.** County outlines help orient readers. Download **Counties** from the same Census page, convert it the same way, and add it under **Outline layer → Upload…**.
+
+**Make the IDs in your table match.** A tract's `GEOID` has 11 digits: state (2), county (3) and tract (6), for example `37119000101`. How you get it depends on where your data comes from:
+
+- **data.census.gov** tables have a `GEO_ID` column such as `1400000US37119000101`. Keep only the last 11 digits (in Excel, `=RIGHT(A2,11)`).
+- **The Census API** returns separate `state`, `county` and `tract` columns. Join them in that order.
+- **Excel** removes leading zeros, so Alabama's `01073000100` becomes `1073000100`. The studio ignores leading zeros when matching, so either form works.
+
+#### Other places and other kinds of area
+
+Any polygon boundaries work, as long as one property matches an ID column in your table. Examples include block groups (from the same Census page), neighbourhoods, wards or council districts from a city's open-data portal, and small statistical areas from a national statistics office outside the US. City portals often publish shapefiles in a local projection. Convert those to longitude/latitude before exporting: type `-proj wgs84` in the mapshaper console, or in QGIS choose *CRS EPSG:4326* when you save as GeoJSON.
 
 ### Privacy
 
