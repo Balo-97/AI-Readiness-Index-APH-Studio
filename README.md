@@ -2,8 +2,8 @@
 
 An expert-weighted **AI Readiness Index (ARI)** for census tracts, and the browser tool that builds it.
 
-- **Website:** <https://balo-97.github.io/ari-weighting-studio/>
-- **Open the studio:** <https://balo-97.github.io/ari-weighting-studio/ARI_Weighting_Studio.html>
+- **Website (AIreadiness):** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/>
+- **Open the studio:** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/ARI_Weighting_Studio.html>
 - **Example project (Charlotte, Mecklenburg County):** [`examples/ari_11_indicators_four_dimensions.json`](examples/ari_11_indicators_four_dimensions.json)
 
 The studio runs entirely in your browser. There is nothing to install and no server; your data and judgements stay on your computer.
@@ -97,7 +97,7 @@ The ARI is high only when both pillars are high. A positive gap means access is 
 
 ## Quick start with the Charlotte example
 
-1. **Open the studio** at <https://balo-97.github.io/ari-weighting-studio/ARI_Weighting_Studio.html>. On a first visit it opens a demo; nothing in the demo is saved.
+1. **Open the studio** at <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/ARI_Weighting_Studio.html>. On a first visit it opens a demo; nothing in the demo is saved.
 2. **Load the example project.** Download [`ari_11_indicators_four_dimensions.json`](examples/ari_11_indicators_four_dimensions.json). In the studio, click **Import project file…** in the banner, or go to **Setup → Import .json files…**, or drag the file onto the page. Check the preview and press **Start the project**.
 
    It has four dimensions and eleven indicators, all mapped to columns of the bundled Charlotte data:
@@ -182,8 +182,8 @@ Uploaded tables and boundaries are processed in your browser and never sent anyw
 **Option 2: the whole repository.**
 
 ```bash
-git clone https://github.com/Balo-97/ari-weighting-studio.git
-cd ari-weighting-studio
+git clone https://github.com/Balo-97/AI-Readiness-Index-APH-Studio.git
+cd AI-Readiness-Index-APH-Studio
 python -m http.server 8000
 ```
 
