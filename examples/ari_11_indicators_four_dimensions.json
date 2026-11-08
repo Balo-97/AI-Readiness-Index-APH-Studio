@@ -159,7 +159,9 @@
     "cvMax": 30,
     "excludeUnreliable": false,
     "fallbackEqual": true,
-    "gap": "raw"
+    "gap": "z",
+    "minPop": 100,
+    "popCol": ""
    }
   }
  },

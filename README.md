@@ -27,7 +27,7 @@ Artificial intelligence is reaching many areas of community life at once, includ
 
 The ARI measures readiness at the census tract or county level, with two pillars:
 
-- **Access**: the digital infrastructure available to residents, such as broadband subscriptions and computers.
+- **Access**: the ways AI reaches residents: the digital infrastructure it runs on (broadband), work in jobs where AI is already used, and services such as health care and transport that increasingly use AI on residents' behalf, even when they do not use it directly.
 - **Capacity**: residents' ability to make use of it: education, income, employment and skills.
 
 Census tracts show the differences between neighbourhoods within a city; counties compare places across a region. The studio switches between the two with the **Unit of analysis** setting on the Index tab, using the same expert weights for both.
@@ -41,7 +41,7 @@ How much each indicator should count is a value judgement that local policy make
 | **Setup** | Build the hierarchy: dimensions (Level 1) and indicators (Level 2). Give each indicator a pillar (Access or Capacity), a direction (higher or lower is better) and a data column. A searchable catalogue lists ready-made indicators. Import and export project files. |
 | **Compare** | Each team member compares items two at a time on Saaty's 1–9 scale, first the dimensions, then the indicators within each dimension. The studio flags inconsistent answers and suggests which to revisit. |
 | **Group weights** | Pools everyone's judgements into group weights, with each person's consistency ratio, the group's agreement (Kendall's W) and a full report. Import teammates' judgement files here. |
-| **Index** | Load the tract table, set the study area, and compute the Access and Capacity scores, the ARI and the readiness gap for every tract. Map them, find spatial clusters (Moran's I, LISA), click any tract for a breakdown with radar charts, and test how stable the ranking is (Monte Carlo). Switch between census tracts and counties with **Unit of analysis**; each level has its own table and map, and the weights are shared. |
+| **Index** | Load the tract table, set the study area, and compute the Access and Capacity scores, the ARI, the readiness gap and a gap label for every tract. Map them, find spatial clusters (Moran's I, LISA), click any tract for a breakdown with radar charts, and test how stable the ranking is (Monte Carlo). Switch between census tracts and counties with **Unit of analysis**; each level has its own table and map, and the weights are shared. |
 | **Disaggregation (beta)** | Break the results down by characteristics of the tracts, such as income or majority race, alone or in combination. **Still being worked on and not yet tested**: treat its results as provisional. |
 | **Guide** | Instructions inside the app. |
 
@@ -59,7 +59,7 @@ The ARI combines two streams. On the weights side, experts' pairwise judgements 
                \                                 /
                  Pillar scores A and C (weighted geometric mean, 0-100)
                 /                                  \
-     ARI = sqrt(A x C)  overall readiness      Gap G = A - C  where to invest
+     ARI = sqrt(A x C)  overall readiness      Gap G and gap labels  where to invest
 ```
 
 **1. Hierarchy.** The goal (AI readiness of census tracts or counties) splits into dimensions, and each dimension into indicators. Each indicator belongs to one pillar, Access ($A$) or Capacity ($C$), and has a direction $\delta_j = +1$ (higher is better) or $-1$ (lower is better).
@@ -88,11 +88,25 @@ Percentile ranks are available instead of min–max.
 
 $$P_t=100\prod_{j\in P}\bigl(x'_{tj}\bigr)^{w^{P}_j},\qquad P\in\{A,C\}.$$
 
-**9. The index and the gap.**
+**9. The index, the gap and the gap labels.**
 
-$$\mathrm{ARI}_t=\sqrt{A_t\,C_t},\qquad G_t=A_t-C_t.$$
+$$\mathrm{ARI}_t=\sqrt{A_t\,C_t}.$$
 
-The ARI is high only when both pillars are high. A positive gap means access is ahead of residents' capacity to use it (invest in skills); a negative gap means capacity is ahead of access (invest in connectivity).
+The ARI is high only when both pillars are high. The readiness gap compares the two pillars, in one of three versions:
+
+$$G^{z}_t=\frac{A_t-\bar A}{s_A}-\frac{C_t-\bar C}{s_C}\ \ \text{(standardised, default)},\qquad G^{\%}_t=\mathrm{pct}(A_t)-\mathrm{pct}(C_t),\qquad G^{\mathrm{raw}}_t=A_t-C_t,$$
+
+where $\mathrm{pct}$ is the percentile rank in the study area, $100\,(\text{rank}-1)/(n-1)$. Min–max gives each indicator its own ruler, so the raw gap mostly reflects how the indicators are spread: in the Charlotte example, a tract at the median on every indicator has a raw gap of about +34. The standardised and percentile-rank gaps compare each tract with the rest of the study area instead. A positive gap means a tract stands out more on access than on capacity.
+
+A negative gap can simply mean that capacity is exceptional, not that access is lacking. Each tract therefore also gets a **gap label** from the terciles of $A$ and $C$, where *low* means the bottom third of the study area:
+
+| Gap label | Rule | Points to |
+|---|---|---|
+| Access-limited | $A$ low, $C$ not | investment in access |
+| Capacity-limited | $C$ low, $A$ not | investment in skills and capacity |
+| Both low | both low | both |
+| Ready | both in the top third | no gap |
+| Mid-range | everything else | no binding gap |
 
 **10. Robustness and spatial pattern.** A Monte Carlo analysis moves every judgement randomly by up to ±k steps of the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster. They use 9,999 permutations by default: with $n$ tracts the correction can only find a single tract significant if the number of permutations is at least $n/\alpha-1$ (about 6,000 for 300 tracts), and the studio warns when it is lower.
 
@@ -123,7 +137,7 @@ The ARI is high only when both pillars are high. A positive gap means access is 
 4. **Compare.** On the **Compare** tab, answer each pair: click the number on the side of the more important item (16 comparisons for this example). Revise any set whose consistency ratio is above 0.10.
 5. **See the weights** on the **Group weights** tab.
 6. **Compute the index.** On the **Index** tab, click **Load example tracts (CRXP + Census ACS, 2024)**. The study area is already set to Mecklenburg County. Until every comparison is answered, equal weights stand in and results are marked provisional.
-7. **Explore.** Map the ARI, the pillars, the gap or the bivariate Access × Capacity classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.
+7. **Explore.** Map the ARI, the pillars, the gap labels, the gap or the bivariate Access × Capacity classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.
 8. **Save.** Use **Setup → Export project + all judgements (.json)** to keep your work, and **Export all…** for every output.
 
 ## Working as a team

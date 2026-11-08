@@ -47,7 +47,8 @@ SETTINGS = {
     "priority": "rgmm", "pooling": "aij", "crMax": 0.1, "pw": {}, "excluded": [],
     "index": {"idCol": "geoid", "nameCol": "tract_name", "filterCol": "county_name", "filterVals": ["Mecklenburg County"],
               "norm": "minmax", "floor": 0.01, "winsor": 0, "missing": "exclude", "cvMax": 30,
-              "excludeUnreliable": False, "fallbackEqual": True, "gap": "raw"},
+              "excludeUnreliable": False, "fallbackEqual": True, "gap": "z",
+              "minPop": 100, "popCol": ""},   # popCol "" = use the total-population column
 }
 
 
