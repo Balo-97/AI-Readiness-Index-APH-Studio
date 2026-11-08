@@ -3572,7 +3572,7 @@ function mapLayers(R) {
   L.push({ key: 'ARI', label: 'AI Readiness Index (ARI)', vals: B.ARI, type: 'seq' });
   if (B.S) L.push({ key: 'S', label: 'Access score A', vals: B.S, type: 'seq' });
   if (B.D) L.push({ key: 'D', label: 'Capacity score C', vals: B.D, type: 'seq' });
-  if (B.S && B.D) { L.push({ key: 'GL', label: 'Gap labels (from the Access and Capacity terciles)', type: 'gaplabel' }); L.push({ key: 'G', label: `Readiness gap G (${gapDef().short})`, vals: B.G, type: 'div' }); L.push({ key: 'BIV', label: 'Access × Capacity (bivariate terciles)', type: 'biv' }); }
+  if (B.S && B.D) { L.push({ key: 'GL', label: 'Gap labels (Access × Capacity terciles)', type: 'gaplabel' }); L.push({ key: 'G', label: `Readiness gap G (${gapDef().short})`, vals: B.G, type: 'div' }); L.push({ key: 'BIV', label: 'Access × Capacity (bivariate terciles)', type: 'biv' }); }
   if (B.C) L.push({ key: 'C', label: 'Context score', vals: B.C, type: 'seq' });
   L.push({ key: 'flags', label: `Unreliable inputs (CV > ${idxS().cvMax}%)`, vals: Float64Array.from(P.flags, f => f.length), type: 'seq', integer: true });
   if (mc) L.push({ key: 'mc', label: 'Rank uncertainty (width of 90% range)', vals: Float64Array.from({ length: P.N }, (_, r) => mc.p95[r] - mc.p5[r]), type: 'seq' });
@@ -3796,7 +3796,7 @@ function mapExportSVG() {
   const src = `Boundaries: ${geo.name}. Data: ${dataset.name}. Weights: group AHP (${inc} participant${inc === 1 ? '' : 's'}, ${s.pooling.toUpperCase()}, ${s.priority === 'eigen' ? 'eigenvector' : 'RGMM'}).`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="IBM Plex Sans, Segoe UI, Helvetica, Arial, sans-serif">
 <rect width="${W}" height="${H}" fill="${T.surface}"/>
-<text x="14" y="24" font-size="16" font-weight="600" fill="${T.ink}">${esc(project.title)} — ${esc(parts.S.title)}</text>
+<text x="14" y="24" font-size="${Math.min(16, 16 * (W - 28) / Math.max(1, (project.title.length + 3 + parts.S.title.length) * 8.8)).toFixed(1)}" font-weight="600" fill="${T.ink}">${esc(project.title)} — ${esc(parts.S.title)}</text>
 <svg x="0" y="${titleH}" width="${M.W}" height="${M.H}" viewBox="0 0 ${M.W} ${M.H}">${parts.inner.replace(/ (class|data-f|data-r|data-rot)="[^"]*"/g, '')}</svg>
 <g transform="translate(14 ${titleH + M.H + gap})">${leg.inner}</g>
 <text x="14" y="${H - 12}" font-size="10" fill="${T.muted}">${esc(src)}</text>
