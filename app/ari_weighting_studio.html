@@ -563,7 +563,12 @@ const ui = Object.assign({ tab: 'setup', matrix: 'L1', showMatrix: false, groupO
 Object.assign(ui, { catalogOpen: false, catalogQuery: '', catalogTheme: '', catalogSel: {}, catalogTarget: '__theme', confirm: null, importPreview: null, addingMe: false, exportText: null, selectedRow: null, xa: { open: false, running: false, png: true, indicatorMaps: false, status: '' }, mc: { draws: 500, mode: 'noise', steps: 1, varyNorm: false, running: false, progress: 0 } });
 Object.assign(ui, { ext: null, share: { name: '', n: ['', '', ''], den: '' } });
 ui.map = Object.assign({ layer: 'ARI', method: 'quantile', classes: 5, hatch: false, context: true }, (lsGet(LS_UI) || {}).map || {}, { k: 1, tx: 0, ty: 0 });
-ui.sp = Object.assign({ variable: 'ARI', rule: 'queen', d: 20, minShared: 40, k: 6, alpha: 0.05, fdr: true, perms: 999 }, (lsGet(LS_UI) || {}).sp || {});
+ui.sp = Object.assign({ variable: 'ARI', rule: 'queen', d: 20, minShared: 40, k: 6, alpha: 0.05, fdr: true, perms: 9999 }, (lsGet(LS_UI) || {}).sp || {});
+// 999 permutations used to be the default, but it is too few for the FDR correction: with 303 tracts the smallest
+// possible pseudo p (1/1000) is above the strictest Benjamini-Hochberg cut-off (0.05/303). Move old defaults up once.
+if (!ui.sp.permsV2) { if (+ui.sp.perms === 999) ui.sp.perms = 9999; ui.sp.permsV2 = 1; }
+// Smallest number of permutations at which a single unit can pass the FDR cut-off alpha/n: 1/(B+1) <= alpha/n.
+const minPermsForFdr = (n, alpha) => Math.ceil(n / alpha) - 1;
 ui.dg = Object.assign({ outcome: 'ARI', weight: 'total-population', minN: 5, minNc: 1, by: { preset: 'race' }, inter: [{ preset: 'race' }, { preset: 'income' }, { preset: 'age' }], third: false }, (lsGet(LS_UI) || {}).dg || {});
 while (ui.dg.inter.length < 3) ui.dg.inter.push({ preset: 'age' });
 const saveUi = () => lsSet(LS_UI, { tab: ui.tab, matrix: ui.matrix, showMatrix: ui.showMatrix, groupOpen: ui.groupOpen, sort: ui.sort, level: ui.level, map: { layer: ui.map.layer, method: ui.map.method, classes: ui.map.classes, hatch: ui.map.hatch, context: ui.map.context }, sp: ui.sp, dg: ui.dg });
@@ -594,7 +599,10 @@ function normalizeProject(p) {
   x.excludeUnreliable = !!x.excludeUnreliable;
   x.fallbackEqual = x.fallbackEqual !== false;
   x.gap = x.gap === 'z' ? 'z' : 'raw';
-  x.county = Object.assign({ idCol: '', nameCol: '', filterCol: '', filterVals: [] }, x.county && typeof x.county === 'object' ? x.county : {});
+  // Areas with fewer residents than this are left unscored and kept out of every indicator's min/max (0 = off).
+  x.minPop = fin(+x.minPop) && +x.minPop >= 0 ? Math.round(+x.minPop) : 100;
+  x.popCol = typeof x.popCol === 'string' ? x.popCol : '';
+  x.county = Object.assign({ idCol: '', nameCol: '', filterCol: '', filterVals: [], popCol: '' }, x.county && typeof x.county === 'object' ? x.county : {});
   if (!Array.isArray(x.county.filterVals)) x.county.filterVals = [];
   return p;
 }
@@ -1195,7 +1203,7 @@ const LEVELS = {
 const U = () => LEVELS[level];
 const lsk = k => (level === 'county' ? k + '-county' : k);
 const levelStore = {};
-const IDX_LEVEL = new Set(['idCol', 'nameCol', 'filterCol', 'filterVals']);
+const IDX_LEVEL = new Set(['idCol', 'nameCol', 'filterCol', 'filterVals', 'popCol']);
 function idxS() {
   const x = project.settings.index; if (level !== 'county') return x;
   return new Proxy(x, { get: (t, k) => (IDX_LEVEL.has(k) ? t.county[k] : t[k]), set: (t, k, v) => { (IDX_LEVEL.has(k) ? t.county : t)[k] = v; return true; } });
@@ -1253,6 +1261,7 @@ function adoptDataset(d, source, quiet, text) {
   if (!x.nameCol) { const n = H.find(h => /name/i.test(h) && h !== x.idCol); if (n) { x.nameCol = n; changed = true; } }
   if (x.filterCol && !H.includes(x.filterCol)) { x.filterCol = ''; x.filterVals = []; changed = true; }
   if (level === 'tract' && !x.filterCol && source === 'bundled' && H.includes('county_name')) { x.filterCol = 'county_name'; x.filterVals = ['Mecklenburg County']; changed = true; }
+  if (x.popCol && x.popCol !== '__none' && !H.includes(x.popCol)) { x.popCol = ''; changed = true; }   // '' = detect automatically
   for (const ind of project.inds) {
     if (ind.column && H.includes(ind.column)) continue;
     const slug = ind.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -1284,21 +1293,34 @@ function filteredRows() {
   const c = dataset.headers.indexOf(x.filterCol); if (c < 0) return all; const set = new Set(x.filterVals);
   return all.filter(i => set.has(dataset.rows[i][c]));
 }
+// Minimum residents: the population column (per level) and the threshold. Off when there is no column or min = 0.
+// popCol '' means "not chosen": use a column named like total population if the table has one; '__none' = off.
+const autoPopCol = H => H.find(h => /^(total[-_ ]?pop(ulation)?|population|pop|tot[-_]?pop)$/i.test(h)) || '';
+function popRule() {
+  const x = idxS(); const H = dataset ? dataset.headers : [];
+  const col = x.popCol === '__none' ? '' : H.includes(x.popCol) ? x.popCol : autoPopCol(H);
+  return { col, c: col ? H.indexOf(col) : -1, min: +x.minPop || 0, on: !!col && +x.minPop > 0 };
+}
 function prepare() {
   const x = idxS(); const H = dataset.headers; const ridx = filteredRows(); const N = ridx.length; const f = x.floor;
   const idc = H.indexOf(x.idCol), nmc = H.indexOf(x.nameCol);
   const ids = ridx.map(r => idc >= 0 ? dataset.rows[r][idc] : String(r + 1));
   const names = ridx.map(r => nmc >= 0 ? dataset.rows[r][nmc] : '');
+  // Areas below the minimum population stay in the study area (so they are listed and drawn) but are left unscored,
+  // and their values are dropped before each indicator's min, max, ranks and median are taken: a tract of a few
+  // dozen residents, whose survey estimates are mostly 0% or 100%, must not set the scale for everyone else.
+  const PR = popRule(); const pop = PR.c >= 0 ? ridx.map(r => numeric(dataset.rows[r][PR.c])) : null;
+  const small = ridx.map((_, k) => !!(PR.on && pop && fin(pop[k]) && pop[k] < PR.min));
   const inds = project.inds.map(ind => {
     const c = ind.column ? H.indexOf(ind.column) : -1;
     if (c < 0) return { ind, mapped: false, reason: ind.column ? `column “${ind.column}” not in file` : 'no data column' };
-    let v = ridx.map(r => numeric(dataset.rows[r][c]));
-    const raw = Float64Array.from(v);
+    const raw = Float64Array.from(ridx, r => numeric(dataset.rows[r][c]));
+    let v = Array.from(raw, (y, k) => small[k] ? NaN : y);
     const valid = v.filter(fin);
     if (valid.length < 2) return { ind, mapped: false, reason: 'fewer than 2 numeric values' };
     const stats = { n: valid.length, min: Math.min(...valid), max: Math.max(...valid), med: quantile(valid, 0.5) };
     if (x.winsor > 0) { const lo = quantile(valid, x.winsor / 100), hi = quantile(valid, 1 - x.winsor / 100); v = v.map(y => fin(y) ? clamp(y, lo, hi) : y); }
-    if (x.missing === 'median') v = v.map(y => fin(y) ? y : stats.med);
+    if (x.missing === 'median') v = v.map((y, k) => fin(y) || small[k] ? y : stats.med);
     const fv = v.filter(fin); const mn = Math.min(...fv), mx = Math.max(...fv);
     const nMM = new Float64Array(N), nPC = new Float64Array(N), lnMM = new Float64Array(N), lnPC = new Float64Array(N);
     const rk = ranksDesc(v.map(y => -y)); const nf = fv.length; // ascending ranks
@@ -1313,8 +1335,8 @@ function prepare() {
     return { ind, mapped: true, stats, raw, nMM, nPC, lnMM, lnPC, cv, cvCol: cvc >= 0 ? H[cvc] : '', missing: N - valid.length };
   });
   const flags = ids.map(() => []);
-  for (const e of inds) if (e.mapped && e.cv) e.cv.forEach((c, r) => { if (fin(c) && c > x.cvMax) flags[r].push(e.ind.name); });
-  return { N, ridx, ids, names, inds, flags };
+  for (const e of inds) if (e.mapped && e.cv) e.cv.forEach((c, r) => { if (!small[r] && fin(c) && c > x.cvMax) flags[r].push(e.ind.name); });
+  return { N, ridx, ids, names, inds, flags, pop, small, minPop: PR.on ? PR.min : 0, popCol: PR.col };
 }
 function scoreAll(P, gw, norm) {
   const x = idxS(); const groups = { S: [], D: [], C: [] };
@@ -1326,7 +1348,7 @@ function scoreAll(P, gw, norm) {
       let sw = 0, sl = 0, miss = false;
       for (const e of L) { const lv = (norm === 'percentile' ? e.lnPC : e.lnMM)[r]; const w = gw[e.ind.id] / tot; if (isNaN(lv)) { miss = true; continue; } sw += w; sl += w * lv; }
       arr[r] = (miss && x.missing === 'exclude') || sw < 1e-12 ? NaN : 100 * Math.exp(sl / sw);
-      if (x.excludeUnreliable && P.flags[r].length) arr[r] = NaN;
+      if ((x.excludeUnreliable && P.flags[r].length) || (P.small && P.small[r])) arr[r] = NaN;
     }
     out[k] = arr;
   }
@@ -1358,6 +1380,23 @@ function computeIndex() {
   indexCache = { key, P, base, W, G, gw, tS, tD, cls };
   return indexCache;
 }
+// Minimum-residents setting, under the study-area filter. Lists the areas it leaves out.
+function minPopFields() {
+  const x = idxS(), H = dataset.headers, PR = popRule(), u = U();
+  let note;
+  if (!PR.col) note = `No population column chosen, so every ${u.one} is scored however few people live there. Pick the column with each ${u.one}'s total population to set a minimum.`;
+  else if (!PR.on) note = `Minimum switched off (0): every ${u.one} is scored however few people live there.`;
+  else {
+    const R = project ? computeIndex() : null; const P = R && R.P;
+    const out = P ? P.small.map((s, k) => s ? k : -1).filter(k => k >= 0) : [];
+    note = `${u.Many.replace('Census t', 'T')} with fewer than ${PR.min.toLocaleString()} residents are left unscored and kept out of every indicator's minimum and maximum, so they cannot set the scale for the others. `
+      + (!out.length ? `None in the study area.` : `Left out here (${out.length}): ${out.slice(0, 6).map(k => `${esc(P.names[k] || P.ids[k])} (${Math.round(P.pop[k]).toLocaleString()} residents)`).join('; ')}${out.length > 6 ? '; …' : ''}.`);
+  }
+  return `<div class="grid2" style="margin-top:12px">
+      <label class="field"><span>Population column</span><select id="x-pop" data-bind="idx.popCol">${opt('__none', 'None (no minimum)', PR.col || '__none')}${H.map(c => opt(c, c, PR.col)).join('')}</select></label>
+      <label class="field"><span>Minimum residents</span><input type="number" id="x-minpop" min="0" step="10" data-bind="idx.minPop" value="${x.minPop}"><span class="hint">0 = no minimum. The default, 100, removes only areas with almost no residents, such as parks, airports and other special land-use tracts.</span></label></div>
+    <p class="hint" style="margin-top:6px" id="minpop-note">${note}</p>`;
+}
 function viewIndex() {
   const x = idxS(); let h = '';
   // Data
@@ -1377,6 +1416,7 @@ function viewIndex() {
       else h += `<p class="hint" style="margin-top:8px">That column has ${vals.length} distinct values; choose a column with fewer (e.g. county).</p>`;
       h += `<p class="hint" style="margin-top:6px">${filteredRows().length} of ${dataset.rows.length} rows in the study area.${x.filterVals.length ? '' : ' Tick at least one value, or every row is used.'}</p>`;
     }
+    h += minPopFields();
     h += sharePanel();
   }
   h += `</section>`;
@@ -1586,7 +1626,7 @@ function tractBreakdown(R) {
     <div class="dhead"><div style="min-width:0"><div class="eyebrow">${U().One} breakdown</div><h3 id="bd-title">${esc(name)}</h3><div class="hint mono">${esc(P.ids[r])}</div></div>
       <button class="btn ghost sm" data-act="close-breakdown" aria-label="Close tract breakdown" title="Close (Esc)">✕</button></div>
     <div class="stats tight">
-      <div class="stat"><div class="k">ARI</div><div class="v">${fmt(B.ARI[r], 1)}</div><div class="hint">${fin(B.rank[r]) ? `rank ${fmt(B.rank[r], 0)} of ${nScored}` : 'not scored'}</div></div>
+      <div class="stat"><div class="k">ARI</div><div class="v">${fmt(B.ARI[r], 1)}</div><div class="hint">${fin(B.rank[r]) ? `rank ${fmt(B.rank[r], 0)} of ${nScored}` : P.small && P.small[r] ? `not scored: ${Math.round(P.pop[r]).toLocaleString()} residents, below the minimum of ${P.minPop.toLocaleString()}` : 'not scored'}</div></div>
       ${B.S ? `<div class="stat"><div class="k">Access A</div><div class="v">${fmt(B.S[r], 1)}</div></div>` : ''}
       ${B.D ? `<div class="stat"><div class="k">Capacity C</div><div class="v">${fmt(B.D[r], 1)}</div></div>` : ''}
       ${B.C ? `<div class="stat"><div class="k">Context</div><div class="v">${fmt(B.C[r], 1)}</div></div>` : ''}
@@ -2035,7 +2075,7 @@ function mapSpec(R) {
   }
   if (lay.type === 'biv') {
     const items = []; for (const d of [3, 2, 1]) for (const s of [1, 2, 3]) items.push({ color: BIV_HEX[`${d}${s}`], d, s, count: R.cls.filter(c => c[0] === s && c[1] === d).length });
-    return { lay, layers, title: lay.label, type: 'biv', items, note: `Terciles — S: ${fmt(R.tS[0], 1)} / ${fmt(R.tS[1], 1)} · D: ${fmt(R.tD[0], 1)} / ${fmt(R.tD[1], 1)}`, colorOf: r => R.cls[r][0] && R.cls[r][1] ? BIV_HEX[`${R.cls[r][1]}${R.cls[r][0]}`] : null, valueOf: r => R.cls[r][0] ? profileLabel(R.cls[r][0], R.cls[r][1]) : '–' };
+    return { lay, layers, title: lay.label, type: 'biv', items, note: `Tercile breaks: Access ${fmt(R.tS[0], 1)} / ${fmt(R.tS[1], 1)}, Capacity ${fmt(R.tD[0], 1)} / ${fmt(R.tD[1], 1)}`, colorOf: r => R.cls[r][0] && R.cls[r][1] ? BIV_HEX[`${R.cls[r][1]}${R.cls[r][0]}`] : null, valueOf: r => R.cls[r][0] ? profileLabel(R.cls[r][0], R.cls[r][1]) : '–' };
   }
   const vals = []; for (let r = 0; r < P.N; r++) if (fin(lay.vals[r])) vals.push(lay.vals[r]);
   if (!vals.length) return { lay, layers, title: lay.label, type: 'seq', items: [], colorOf: () => null, valueOf: () => '–', note: 'No values to map.' };
@@ -2346,7 +2386,7 @@ function computeSpatial(R) {
   const t0 = performance.now();
   const nb = sp.rule === 'knn' ? knnNeighbours(units.map(unitCentroid), Math.max(1, Math.round(+sp.k) || 6)) : fuzzyContiguity(units, Math.max(0, +sp.d), sp.rule, Math.max(0, +sp.minShared));
   const y = rows.map(r => v.vals[r]);
-  const G = moranGlobal(y, nb, +sp.perms || 999), L = moranLocal(y, nb, +sp.perms || 999);
+  const G = moranGlobal(y, nb, +sp.perms || 9999), L = moranLocal(y, nb, +sp.perms || 9999);
   const thr = sp.fdr ? bhThreshold(L.p, +sp.alpha) : +sp.alpha;
   const cls = rows.map((r, i) => !nb[i].length ? 'none' : (fin(L.p[i]) && L.p[i] <= thr) ? L.q[i] : 'ns');
   const k = nb.map(a => a.length);
@@ -2386,9 +2426,16 @@ function spatialPanel(R, scored) {
       : `<label class="field"><span>Snap tolerance (m)</span><input type="number" id="sp-d" min="0" max="500" step="1" data-bind="sp.d" value="${sp.d}"><span class="hint">Boundaries closer than this count as touching (see note below).</span></label>`}
     ${sp.rule === 'rook' ? `<label class="field"><span>Minimum shared border (m)</span><input type="number" id="sp-min" min="0" max="2000" step="5" data-bind="sp.minShared" value="${sp.minShared}"></label>` : ''}
     <label class="field"><span>Significance</span><span class="row" style="gap:6px;flex-wrap:nowrap"><select id="sp-alpha" data-bind="sp.alpha">${[0.1, 0.05, 0.01].map(a => opt(a, 'α = ' + a, sp.alpha)).join('')}</select><select id="sp-fdr" data-bind="sp.fdr">${opt('1', 'FDR (Benjamini–Hochberg)', sp.fdr ? '1' : '0')}${opt('0', 'No correction', sp.fdr ? '1' : '0')}</select></span></label>
-    <label class="field"><span>Permutations</span><select id="sp-perms" data-bind="sp.perms">${[999, 9999].map(b => opt(b, b.toLocaleString(), sp.perms)).join('')}</select></label>
+    <label class="field"><span>Permutations</span><select id="sp-perms" data-bind="sp.perms">${[999, 9999, 99999].map(b => opt(b, b.toLocaleString() + (b === 9999 ? ' (default)' : b === 99999 ? ' (slower)' : ''), sp.perms)).join('')}</select></label>
   </div>`;
   if (!SP || SP.error) return h + `<p class="muted" style="margin-top:10px">${esc(SP ? SP.error : '')}</p></section>`;
+  // Too few permutations for the FDR correction: no single unit can reach the strictest cut-off, so whether
+  // anything is significant depends on how many units happen to tie at the smallest p-value in this random draw.
+  const nTest = SP.rows.length - SP.islands, need = minPermsForFdr(nTest, +sp.alpha);
+  if (sp.fdr && +sp.perms < need) {
+    const better = [9999, 99999].find(b => b >= need);
+    h += `<div class="banner warn" style="margin-top:12px" id="fdr-perms-warning"><div class="txt"><b>Too few permutations for the FDR correction.</b> With ${nTest} ${U().many} and α = ${sp.alpha}, the strictest FDR cut-off is ${sp.alpha}/${nTest} = ${fmt(+sp.alpha / nTest, 5)}, but with ${(+sp.perms).toLocaleString()} permutations no pseudo p-value can go below 1/${(+sp.perms + 1).toLocaleString()} = ${fmt(1 / (+sp.perms + 1), 5)}. Whether any cluster survives then depends on the random draw. Use at least ${need.toLocaleString()} permutations${better ? ` (choose ${better.toLocaleString()})` : ''}.</div></div>`;
+  }
   const G = SP.G; const sig = G.pSim <= +sp.alpha;
   const verdict = !sig ? `No significant spatial autocorrelation at α = ${sp.alpha}: the pattern is consistent with a random arrangement of tracts.`
     : G.I > 0 ? `Significant positive spatial autocorrelation: tracts with similar ${esc(SP.v.label)} values cluster together (I = ${fmt(G.I, 3)} against ${fmt(G.EI, 4)} expected under randomness).`
@@ -2434,7 +2481,7 @@ function viewGuide() {
       <li><b>Setup.</b> Define the goal, the Level 1 dimensions and the Level 2 indicators under each. Tag every indicator Access, Capacity or Context, and say whether a higher value means more or less ready. Nothing is fixed; the CRXP catalogue only speeds up typing.</li>
       <li><b>Compare.</b> Each person picks their name under “You are” and answers every pair on Saaty's 1–9 scale: first the dimensions, then the indicators within each dimension. The side panel shows your weights and consistency ratio live, and suggests which answer to change if CR is above the threshold.</li>
       <li><b>Group weights.</b> Judgements are pooled (AIJ geometric mean by default), priorities are derived (RGMM by default), and local weights are multiplied down the hierarchy into global weights. Export the weights and a consistency report for the paper.</li>
-      <li><b>Index.</b> Choose the unit of analysis (census tracts or counties), load the data, map indicator columns, and the studio computes Access A, Capacity C, ARI = √(A·C) and the gap G = A − C for every tract, maps them (any score, the gap, the bivariate A × C classes or a single indicator) on the tract boundaries, finds spatial clusters (Moran’s I, LISA), and runs a Monte Carlo check of rank stability. Click any tract (table, scatter or map) for its breakdown: every indicator’s value and score, and radar charts by dimension.</li>
+      <li><b>Index.</b> Choose the unit of analysis (census tracts or counties), load the data, map indicator columns, and the studio computes Access A, Capacity C, ARI = √(A·C) and the gap G = A − C for every tract, maps them (any score, the gap, the bivariate A × C classes or a single indicator) on the tract boundaries, finds spatial clusters (Moran’s I, LISA), and runs a Monte Carlo check of rank stability. Click any tract (table, scatter or map) for its breakdown: every indicator’s value and score, and radar charts by dimension. Tracts with fewer residents than the <b>minimum</b> (100 by default, set under the study area) are left unscored and kept out of each indicator’s minimum and maximum: survey estimates for a handful of residents are mostly 0% or 100% and would otherwise set the scale for every other tract. LISA uses 9,999 permutations by default; with the FDR correction, fewer than about (number of tracts ÷ α) permutations cannot detect any cluster reliably, and the studio warns when that happens.</li>
       <li><b>Disaggregation (beta).</b> <i>This tab is still being worked on and has not yet been tested; treat its results as provisional and check them before relying on them.</i> Break the results down by the characteristics of the tracts (or counties): majority race or ethnicity, income, poverty, age, nativity, language, county, or any column. Compare each group's index, dimension and indicator scores (population-weighted, with the gap, the between-group share of variation and a Kruskal–Wallis test). Cross two or three characteristics to look at intersections: each combination against what the characteristics predict on their own, with an F-test of the interaction.</li>
     </ol>
     <p class="small muted">In a shared workspace everyone's judgements save automatically and appear live. In a local copy, collect teammates' “Export only my judgements” files and import them all at once: select several files with Import, or drop them anywhere on the page. <b>Export all…</b> in the top bar saves every output (weights, results, maps, spatial statistics, sensitivity) as one .zip with a README.</p></section>
@@ -2452,7 +2499,8 @@ Group (AIJ)           a_ij^G = Π_k a_ij,k^(λ_k / Σλ)     (weighted geometric
 Group (AIP)           w_i^G ∝ Π_k w_i,k^(λ_k / Σλ)
 Global weight         w_j = w_d × w_j|d
 Pillar weight         w_j^P = w_j / Σ_(k∈P) w_k              (P = Access or Capacity)
-Normalise             x' = f + (1 − f)·(x − min)/(max − min)     (flipped for ↓ indicators)
+Normalise             x' = f + (1 − f)·(x − min)/(max − min)     (flipped for ↓ indicators; min and max over
+                      tracts with at least the minimum number of residents)
 Pillar score          A_i = 100 · Π_(j∈Access) x'_ij ^ w_j^P     (C_i likewise)
 Index and gap         ARI_i = √(A_i · C_i),   G_i = A_i − C_i
 Agreement             Kendall's W = 12 S / (m² (n³ − n))</div></section>
@@ -2640,7 +2688,8 @@ function dimensionScoresCSV(R) {
 function indexSettingsJSON(R) {
   const P = R.P, W = R.W, x = idxS(), s = project.settings, PR = tractProfile(R);
   return JSON.stringify({ project: project.title, goal: project.goal, generated: new Date().toISOString(),
-    data: { file: dataset.name, rows: dataset.rows.length, columns: dataset.headers.length, id_column: x.idCol, name_column: x.nameCol, study_area_filter: x.filterCol ? { column: x.filterCol, values: x.filterVals } : null, tracts_in_study_area: P.N, tracts_scored: [...R.base.ARI].filter(fin).length },
+    data: { file: dataset.name, rows: dataset.rows.length, columns: dataset.headers.length, id_column: x.idCol, name_column: x.nameCol, study_area_filter: x.filterCol ? { column: x.filterCol, values: x.filterVals } : null, tracts_in_study_area: P.N, tracts_scored: [...R.base.ARI].filter(fin).length,
+      minimum_population: P.minPop ? { column: P.popCol, minimum: P.minPop, left_unscored: P.small.map((s, k) => s ? { id: P.ids[k], name: P.names[k], population: P.pop[k] } : null).filter(Boolean) } : null },
     method: { priority: s.priority, pooling: s.pooling, cr_threshold: s.crMax, participants: includedPids().map(pid => ({ name: pname(pid), weight: pw(pid) })) },
     weights_status: W.ok && !W.fallbackUsed.length ? 'final' : 'provisional', equal_weight_fallback_for: W.fallbackUsed.map(M => M.level === 1 ? 'Level 1: dimensions' : M.title), missing_weights_for: W.missing.map(M => M.level === 1 ? 'Level 1: dimensions' : M.title),
     normalisation: { method: x.norm, floor: x.floor, winsorise_percent: x.winsor, missing_values: x.missing, gap: x.gap, cv_threshold: x.cvMax, exclude_unreliable_tracts: x.excludeUnreliable },
@@ -2725,7 +2774,8 @@ function exportReadme(R, SP, notes, stamp, o) {
     `Weights status: ${W.ok && !W.fallbackUsed.length ? 'final (every comparison set has a group result)' : 'PROVISIONAL' + (W.fallbackUsed.length ? ' (equal weights stand in for: ' + W.fallbackUsed.map(M => M.level === 1 ? 'Level 1 dimensions' : M.title).join(', ') + ')' : ' (some sets have no group result)')}`);
   if (R) {
     const x = idxS();
-    L.push('', `Unit of analysis: ${U().Many.toLowerCase()} (index and all results in this bundle are at this level)`, `Data: ${dataset.name} (${dataset.rows.length} rows)`, `Study area: ${x.filterCol && x.filterVals.length ? x.filterCol + ' = ' + x.filterVals.join(', ') : 'all rows'} (${R.P.N} tracts, ${[...R.base.ARI].filter(fin).length} scored)`,
+    L.push('', `Unit of analysis: ${U().Many.toLowerCase()} (index and all results in this bundle are at this level)`, `Data: ${dataset.name} (${dataset.rows.length} rows)`, `Study area: ${x.filterCol && x.filterVals.length ? x.filterCol + ' = ' + x.filterVals.join(', ') : 'all rows'} (${R.P.N} ${U().many}, ${[...R.base.ARI].filter(fin).length} scored)`,
+      R.P.minPop ? `Minimum residents: ${R.P.minPop} (column ${R.P.popCol}); ${U().many} below it are left unscored and kept out of every indicator's min and max: ${R.P.small.map((s, k) => s ? `${R.P.names[k] || R.P.ids[k]} (${R.P.pop[k]})` : '').filter(Boolean).join('; ') || 'none'}` : 'Minimum residents: none',
       `Normalisation: ${x.norm === 'percentile' ? 'percentile rank' : 'min–max'}, floor ${x.floor}, winsorise ${x.winsor}%, missing values: ${x.missing}, gap: ${x.gap === 'z' ? 'z(A) − z(C)' : 'A − C'}, unreliable if CV > ${x.cvMax}%`);
     if (SP) L.push(`Spatial statistics: ${SP.v.label}; ${ui.sp.rule === 'knn' ? ui.sp.k + ' nearest neighbours' : ui.sp.rule + ' contiguity, ' + ui.sp.d + ' m tolerance'}; ${SP.G.B} permutations; alpha ${ui.sp.alpha}${ui.sp.fdr ? ' with false-discovery-rate control' : ''}`);
     if (!geo) L.push('Maps and spatial statistics: not included (no boundaries loaded).');
@@ -3522,10 +3572,10 @@ function onBind(el, committed) {
     case 'part.include': { const ex = new Set(project.settings.excluded); val ? ex.delete(id) : ex.add(id); project.settings.excluded = [...ex]; saveProject(); indexCache = null; render(); break; }
     case 'part.name': { if (!participants[id]) break; participants[id].name = val; if (committed) { saveParticipant(id, 0); renderTop(); } break; }
     case 'part.weight': { const v = +val; if (fin(v) && v > 0) { project.settings.pw[id] = v; saveProject(); indexCache = null; if (committed) render(); } break; }
-    case 'idx.idCol': case 'idx.nameCol': case 'idx.norm': case 'idx.missing': case 'idx.gap': x[k.slice(4)] = val; saveProject(); indexCache = null; if (k === 'idx.idCol') autoJoin(true); render(); break;
+    case 'idx.idCol': case 'idx.nameCol': case 'idx.norm': case 'idx.missing': case 'idx.gap': case 'idx.popCol': x[k.slice(4)] = val; saveProject(); indexCache = null; if (k === 'idx.idCol') autoJoin(true); render(); break;
     case 'idx.filterCol': x.filterCol = val; x.filterVals = []; saveProject(); indexCache = null; render(); break;
     case 'idx.filterVal': { const s = new Set(x.filterVals); val ? s.add(el.dataset.val) : s.delete(el.dataset.val); x.filterVals = [...s]; saveProject(); indexCache = null; render(); break; }
-    case 'idx.floor': case 'idx.winsor': case 'idx.cvMax': { const v = +val; if (fin(v)) { x[k.slice(4)] = k === 'idx.floor' ? clamp(v, 0.001, 0.5) : v; saveProject(); indexCache = null; if (committed) render(); } break; }
+    case 'idx.floor': case 'idx.winsor': case 'idx.cvMax': case 'idx.minPop': { const v = +val; if (fin(v)) { x[k.slice(4)] = k === 'idx.floor' ? clamp(v, 0.001, 0.5) : k === 'idx.minPop' ? Math.max(0, Math.round(v)) : v; saveProject(); indexCache = null; if (committed) render(); } break; }
     case 'idx.excludeUnreliable': case 'idx.fallbackEqual': x[k.slice(4)] = val; saveProject(); indexCache = null; render(); break;
     case 'mc.mode': ui.mc.mode = val; render(); break;
     case 'ext.year': if (ui.ext) { ui.ext.imp = extractorImport(ui.ext.files, tractLookup, +val); render(); } break;

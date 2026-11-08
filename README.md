@@ -78,7 +78,7 @@ $$a^{G}_{ij}=\prod_{k=1}^{K}a_{ij,k}^{\lambda_k/\sum_l\lambda_l}.$$
 
 **6. Global and pillar weights.** An indicator's global weight is its dimension's weight times its weight within the dimension, $w_j=w_d\,w_{j\mid d}$. The weights are then rescaled to sum to 1 within each pillar, $w^{P}_j=w_j/\sum_{k\in P}w_k$.
 
-**7. Indicator scores.** Each indicator is rescaled across the $N$ tracts of the study area, flipped if lower is better, and raised off zero by a small floor $f=0.01$:
+**7. Indicator scores.** Tracts with fewer residents than a minimum (100 by default) are left unscored first: survey estimates for a handful of residents are mostly 0% or 100% and would otherwise set the scale for everyone else. Each indicator is then rescaled across the $N$ remaining tracts of the study area, flipped if lower is better, and raised off zero by a small floor $f=0.01$:
 
 $$z_{tj}=\frac{x_{tj}-\min_s x_{sj}}{\max_s x_{sj}-\min_s x_{sj}},\qquad z_{tj}\leftarrow 1-z_{tj}\ \text{if}\ \delta_j=-1,\qquad x'_{tj}=f+(1-f)\,z_{tj}.$$
 
@@ -94,7 +94,7 @@ $$\mathrm{ARI}_t=\sqrt{A_t\,C_t},\qquad G_t=A_t-C_t.$$
 
 The ARI is high only when both pillars are high. A positive gap means access is ahead of residents' capacity to use it (invest in skills); a negative gap means capacity is ahead of access (invest in connectivity).
 
-**10. Robustness and spatial pattern.** A Monte Carlo analysis moves every judgement randomly by up to ±k steps of the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster.
+**10. Robustness and spatial pattern.** A Monte Carlo analysis moves every judgement randomly by up to ±k steps of the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster. They use 9,999 permutations by default: with $n$ tracts the correction can only find a single tract significant if the number of permutations is at least $n/\alpha-1$ (about 6,000 for 300 tracts), and the studio warns when it is lower.
 
 **A note on responsible use.** Weights are value judgements, and the same flexibility that lets a community set its own priorities can be used to make an area look more or less ready than it is. Document who took part and what they judged, report consistency, run the sensitivity analysis, and publish the weights with the results.
 
@@ -145,6 +145,7 @@ Any CSV with a header row and **one row per area** works: tracts, block groups, 
 - **An ID column**, such as `geoid`, unique for each row. It is also what joins the table to the map.
 - **A name column** (optional), such as `tract_name`.
 - **A column to define the study area** (optional), such as `county_name`, so you can analyse a subset of rows.
+- **A population column** (recommended), such as `total-population`, so areas with almost no residents can be left out (see step 2 below).
 - **One numeric column per indicator.** Percentages, rates, medians or counts all work; the studio rescales them.
 - **Reliability columns** (optional): name a column `<indicator>_cv` and the studio reads it as that indicator's coefficient of variation (%) and flags unreliable estimates (default threshold 30%).
 
@@ -160,7 +161,7 @@ geoid,tract_name,county_name,household-income,household-income_cv,acs-broadband-
 **In the studio:**
 
 1. On the **Index** tab, click **Upload CSV…** and choose your file.
-2. Set the **ID column**, the name column and, if you want a subset, **Study area: filter rows by** a column and its values.
+2. Set the **ID column**, the name column and, if you want a subset, **Study area: filter rows by** a column and its values. Check the **Population column** and **Minimum residents** (default 100): areas with fewer residents are left unscored and cannot set any indicator's minimum or maximum. The studio finds a column named like `total-population` on its own; choose *None* or a minimum of 0 to switch the rule off.
 3. On the **Setup** tab, give each indicator its **data column** (a dropdown lists your columns), its pillar and its direction.
 4. Choose how missing values are handled (leave the tract unscored, reweight, or fill with the median) and the normalisation (min–max or percentile) on the Index tab.
 

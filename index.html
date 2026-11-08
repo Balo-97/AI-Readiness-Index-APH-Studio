@@ -197,14 +197,14 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <div class="math-step"><b>5. Combining the panel.</b> Each cell is pooled across the \(K\) experts by a weighted geometric mean, which keeps the matrix reciprocal:
       $$a^{G}_{ij}=\prod_{k=1}^{K}a_{ij,k}^{\,\lambda_k/\sum_l\lambda_l}.$$</div>
     <div class="math-step"><b>6. Global and pillar weights.</b> An indicator's global weight is its dimension's weight times its weight within the dimension, \(w_j=w_d\,w_{j\mid d}\). Weights are then rescaled to sum to 1 within each pillar: \(w^{P}_j=w_j/\sum_{k\in P}w_k\).</div>
-    <div class="math-step"><b>7. Indicator scores.</b> Each indicator is rescaled across the \(N\) tracts of the study area, flipped if lower is better, and raised off zero by a small floor \(f=0.01\):
+    <div class="math-step"><b>7. Indicator scores.</b> Tracts with fewer residents than a minimum (100 by default) are left unscored first: survey estimates for a handful of residents are mostly 0% or 100% and would otherwise set the scale for everyone else. Each indicator is then rescaled across the \(N\) remaining tracts of the study area, flipped if lower is better, and raised off zero by a small floor \(f=0.01\):
       $$z_{tj}=\frac{x_{tj}-\min_s x_{sj}}{\max_s x_{sj}-\min_s x_{sj}},\qquad x'_{tj}=f+(1-f)\,z_{tj}.$$</div>
     <div class="math-step"><b>8. Pillar scores.</b> A weighted geometric mean on a 0–100 scale, so a weak indicator cannot be fully offset by a strong one:
       $$A_t=100\prod_{j\in A}\bigl(x'_{tj}\bigr)^{w^{A}_j},\qquad C_t=100\prod_{j\in C}\bigl(x'_{tj}\bigr)^{w^{C}_j}.$$</div>
     <div class="math-step"><b>9. Index and gap.</b>
       $$\mathrm{ARI}_t=\sqrt{A_t\,C_t},\qquad G_t=A_t-C_t.$$
       The ARI is high only when both pillars are high. A positive gap means access is ahead of residents' capacity to use it, which points to investment in skills; a negative gap means capacity is ahead of access, which points to investment in connectivity.</div>
-    <div class="math-step"><b>10. Robustness and spatial pattern.</b> A Monte Carlo analysis moves every judgement at random along the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster.</div>
+    <div class="math-step"><b>10. Robustness and spatial pattern.</b> A Monte Carlo analysis moves every judgement at random along the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster. They use 9,999 permutations by default: with \(n\) tracts the correction can only find a single tract significant if the number of permutations is at least \(n/\alpha-1\) (about 6,000 for 300 tracts), and the studio warns when it is lower.</div>
     <div class="callout"><b>Responsible use.</b> Weights are value judgements. The same flexibility that lets a community set its own priorities could be used to make an area look more or less ready than it is. Document who took part and what they judged, report consistency, run the sensitivity analysis, and publish the weights with the results.</div>
   </div>
 </section>
@@ -260,6 +260,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
       <li><b>An ID column</b>, such as <code>geoid</code>, unique for each row. It also joins the table to the map.</li>
       <li><b>A name column</b> (optional), such as <code>tract_name</code>.</li>
       <li><b>A column that defines the study area</b> (optional), such as <code>county_name</code>.</li>
+      <li><b>A population column</b> (recommended), such as <code>total-population</code>, so areas with almost no residents can be left out.</li>
       <li><b>One numeric column per indicator</b>: percentages, rates, medians or counts.</li>
       <li><b>Reliability columns</b> (optional): a column named <code>&lt;indicator&gt;_cv</code> is read as that indicator's coefficient of variation (%), and estimates above 30% are flagged as unreliable.</li>
     </ul>
@@ -269,7 +270,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <p><b>How values are read.</b> Columns may be separated by commas, semicolons or tabs, and quoted fields may contain commas. Thousands separators, <code>$</code>, <code>%</code> and spaces are ignored, so <code>$61,250</code> and <code>12.5%</code> read as numbers. Blank cells and <code>NA</code>, <code>N/A</code>, <code>null</code>, <code>NaN</code>, <code>none</code> and <code>-</code> count as missing. Decimal commas (<code>1,5</code>) are not supported.</p>
     <ol class="steps">
       <li>On the <b>Index</b> tab, click <b>Upload CSV…</b> and choose your file.</li>
-      <li>Set the <b>ID column</b>, the name column and, for a subset, <b>Study area: filter rows by</b> a column and its values.</li>
+      <li>Set the <b>ID column</b>, the name column and, for a subset, <b>Study area: filter rows by</b> a column and its values. Check the <b>Population column</b> and <b>Minimum residents</b> (default 100): areas with fewer residents are left unscored and cannot set any indicator's minimum or maximum. A column named like <code>total-population</code> is found on its own; choose <i>None</i> or a minimum of 0 to switch the rule off.</li>
       <li>On the <b>Setup</b> tab, give each indicator its data column, its pillar and its direction.</li>
       <li>On the Index tab, choose how missing values are handled (leave the area unscored, reweight, or fill with the median) and the normalisation (min–max or percentile).</li>
     </ol>
