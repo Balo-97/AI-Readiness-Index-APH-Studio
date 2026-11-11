@@ -42,11 +42,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
 header.site{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px}
-.brand{font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.brand{font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em;white-space:nowrap}
 nav.top{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
 nav.top a{color:var(--ink-2);text-decoration:none}
 nav.top a:hover{color:var(--accent)}
-@media (max-width:760px){nav.top{display:none}}
+@media (max-width:900px){nav.top{display:none}}
 .hero{padding:64px 0 40px}
 .eyebrow{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 h1{font-size:clamp(34px,5vw,52px);line-height:1.1;margin:10px 0 16px;letter-spacing:-.02em}
@@ -61,7 +61,7 @@ section{padding:36px 0;border-top:1px solid var(--line)}
 h2{font-size:30px;line-height:1.2;margin:0 0 14px;letter-spacing:-.01em}
 h3{font-size:20px;margin:26px 0 8px}
 p{margin:0 0 14px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
 @media (max-width:760px){.grid2{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
 .card h3{margin-top:0}
@@ -93,6 +93,82 @@ th{font-weight:600;background:var(--surface-2)}
 tr:last-child td{border-bottom:none}
 .callout{border-left:4px solid var(--gold);background:var(--surface);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0}
 footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* worked example: three lanes of step cards */
+.wx{--eo:#0F7CB8;--ap:#B5399F;display:flex;flex-direction:column;gap:22px;margin-top:22px}
+.wx-w{--c:#B5399F;--on-c:#FFFFFF}
+.wx-d{--c:#0F7CB8;--on-c:#FFFFFF}
+.wx-i{--c:#70349A;--on-c:#FFFFFF}
+@media (prefers-color-scheme: dark){
+  .wx{--eo:#7DD3FC;--ap:#F5A3EA}
+  .wx-w{--c:#F5A3EA;--on-c:#2A0D26}
+  .wx-d{--c:#7DD3FC;--on-c:#062033}
+  .wx-i{--c:#D8B4FE;--on-c:#1E0B33}
+}
+.wx-lane-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:0 0 10px;font-size:15px;color:var(--muted)}
+.wx-lane-head b{color:var(--c);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.wx-swatch{width:11px;height:11px;border-radius:3px;background:var(--c);align-self:center}
+.wx-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px}
+.wx-card{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--radius);padding:16px 18px 14px;min-width:0}
+.wx-card header{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.wx-card h3{margin:0;font-size:18px;line-height:1.25}
+.wx-num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c);color:var(--on-c);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.wx-sub{margin:2px 0 0;font-size:14px;color:var(--c);font-weight:600}
+.wx-cap{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.wx-gfx{display:block;width:100%;height:auto;overflow:visible}
+.wx-gfx text{font-family:var(--font);fill:var(--ink)}
+.wx-gfx .m{fill:var(--muted)}
+.wx-gfx .c{fill:var(--c)}
+.wx-gfx .oc{fill:var(--on-c)}
+.wx-gfx .dk{fill:#1D1724}
+.wx-gfx .wt{fill:#FFFFFF}
+.wx-gfx .f-soft{fill:var(--surface-2)}
+.wx-gfx .f-soft2{fill:color-mix(in srgb,var(--ink) 9%,var(--surface))}
+.wx-gfx .f-c{fill:var(--c)}
+.wx-gfx .f-cs{fill:color-mix(in srgb,var(--c) 18%,transparent)}
+.wx-gfx .f-dot{fill:color-mix(in srgb,var(--ink) 30%,transparent)}
+.wx-gfx .f-eo{fill:var(--eo)}
+.wx-gfx .f-ap{fill:var(--ap)}
+.wx-gfx .s-line{stroke:var(--line);fill:none}
+.wx-gfx .s-ink{stroke:color-mix(in srgb,var(--ink) 55%,transparent);fill:none}
+.wx-gfx .s-c{stroke:var(--c);fill:none}
+.wx-gfx .s-surf{stroke:var(--surface)}
+/* arrows between cards (wide screens) */
+.wx-row>.wx-card:not(:last-child)::after{content:"";position:absolute;top:50%;right:-27px;width:20px;height:20px;transform:translateY(-50%);
+  background:var(--c);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2 10h12M10 5l5 5-5 5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2 10h12M10 5l5 5-5 5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.wx-ghost{border:1.5px dashed color-mix(in srgb,var(--c) 60%,transparent);background:transparent;justify-content:center;align-items:center;text-align:center;gap:6px;color:var(--ink-2);font-size:15px}
+.wx-ghost p{margin:0;max-width:260px}
+.wx-ghost b{color:var(--ink)}
+.wx-down{font-size:26px;line-height:1;color:var(--c)}
+/* pillar card */
+.wx-formula{margin:2px 0 6px;font-size:16px}
+.wx-formula span{font-size:13px;color:var(--muted)}
+.wx-pillar{margin-top:10px}
+.wx-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:4px 10px;font-size:14px}
+.wx-bar .wx-track{grid-column:1/-1;order:3}
+.wx-bar-name{line-height:1.25}
+.wx-eo{color:var(--eo)}
+.wx-ap{color:var(--ap)}
+.wx-track{height:12px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.wx-track i{display:block;height:100%;border-radius:6px}
+.wx-fill-eo{background:var(--eo)}
+.wx-fill-ap{background:var(--ap)}
+.wx-val{font-size:22px;text-align:right;line-height:1.1;font-variant-numeric:tabular-nums}
+.wx-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.wx-chips span{font-size:12px;padding:2px 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.wx-chips b{color:var(--ink);font-weight:600}
+.wx-chips sup{font-size:10px;color:var(--c);font-weight:600;margin-left:1px}
+/* medium screens: two columns, no arrows; small screens: one column, arrows point down */
+@media (max-width:900px){
+  .wx-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .wx-row>.wx-card::after{display:none}
+  .wx-ghost{grid-column:1/-1;flex-direction:row;padding:12px 16px}
+}
+@media (max-width:600px){
+  .wx-row{grid-template-columns:1fr;gap:30px}
+  .wx-row>.wx-card:not(:last-child)::after{display:block;top:auto;bottom:-25px;right:auto;left:50%;transform:translateX(-50%) rotate(90deg)}
+  .wx-ghost{flex-direction:column}
+}
 </style>
 </head>
 <body>
@@ -103,6 +179,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <nav class="top" aria-label="Sections">
       <a href="#introduction">Introduction</a>
       <a href="#methodology">Methodology</a>
+      <a href="#worked-example">Example</a>
       <a href="#quick-start">Quick start</a>
       <a href="#your-data">Your own data</a>
       <a href="#run-locally">Run locally</a>
@@ -144,7 +221,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
 <section id="methodology">
   <div class="wrap">
     <h2>Methodology</h2>
-    <p>The ARI combines two streams. Experts' pairwise judgements become indicator weights; each indicator's raw value for every tract becomes a score between 0 and 1. The two meet in the pillar scores.</p>
+    <p>The ARI combines two streams. Experts' pairwise judgements become indicator weights; each indicator's raw value for every tract becomes a score between 0 and 1. The two meet in the pillar scores. The <a href="#worked-example">worked example</a> after the formulas follows one tract through every step.</p>
     <figure>
       <svg viewBox="0 0 760 470" role="img" aria-labelledby="pipe-title pipe-desc">
         <title id="pipe-title">How the AI Readiness Index is built</title>
@@ -216,6 +293,87 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
       </tbody></table></div></div>
     <div class="math-step"><b>10. Robustness and spatial pattern.</b> A Monte Carlo analysis moves every judgement at random along the scale, recomputes everything, and reports each tract's range of ranks. Moran's I and local Moran (LISA) statistics, with a false-discovery-rate correction, show where high and low readiness cluster. They use 9,999 permutations by default: with \(n\) tracts the correction can only find a single tract significant if the number of permutations is at least \(n/\alpha-1\) (about 6,000 for 300 tracts), and the studio warns when it is lower.</div>
     <div class="callout"><b>Responsible use.</b> Weights are value judgements. The same flexibility that lets a community set its own priorities could be used to make an area look more or less ready than it is. Document who took part and what they judged, report consistency, run the sensitivity analysis, and publish the weights with the results.</div>
+  </div>
+</section>
+
+<section id="worked-example">
+  <div class="wrap">
+    <h2>Worked example: one tract, step by step</h2>
+    <p>How a single census tract gets its score, from the team's judgements to the gap label. The tract and the small
+      hierarchy (three dimensions, seven indicators) are illustrative, and numbers are rounded. The same example is
+      worked through in the paper.</p>
+
+    <div class="wx">
+      <div class="wx-lane wx-w">
+        <div class="wx-lane-head"><span class="wx-swatch"></span><b>Weights</b><span>from the team's judgements (AHP)</span></div>
+        <div class="wx-row">
+          <article class="wx-card" aria-labelledby="wx-t1">
+            <header><span class="wx-num">1</span><div><h3 id="wx-t1">Pairwise judgements</h3><p class="wx-sub">Saaty 1–9 scale, two levels</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 170" role="img" aria-label="Level 1: Economy is moderately more important than Education and Work, value 3. Level 2, within Economy: Broadband is moderately more important than Unemployment, value 3."><g id="wx-judge"></g></svg>
+            <p class="wx-cap">Each team member compares two items at a time: the dimensions first (Level 1), then the indicators within each dimension (Level 2). The mirror cell is the reciprocal (3 → 1/3).</p>
+          </article>
+          <article class="wx-card" aria-labelledby="wx-t2">
+            <header><span class="wx-num">2</span><div><h3 id="wx-t2">Local weights</h3><p class="wx-sub">Each matrix → weights</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 186" role="img" aria-label="The Level 1 matrix gives dimension weights Economy 0.65, Education and Work 0.23, Health 0.12. The Economy matrix gives local weights Broadband 0.27, Computer and internet 0.48, Income 0.16, Unemployment 0.09."><g id="wx-local"></g></svg>
+            <p class="wx-cap">The row geometric mean of each matrix gives dimension weights \(w_d\) (Level 1) and local weights \(w_{j|d}\) within each dimension (Level 2). Every matrix is checked for consistency.</p>
+          </article>
+          <article class="wx-card" aria-labelledby="wx-t3">
+            <header><span class="wx-num">3</span><div><h3 id="wx-t3">Global weights</h3><p class="wx-sub">\(w_j = w_d \times w_{j|d}\)</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 176" role="img" aria-label="Global weight of each indicator equals its dimension weight times its local weight; the seven global weights sum to 1."><g id="wx-global"></g></svg>
+            <p class="wx-cap">The global weights sum to 1. They are then rescaled to sum to 1 within each pillar, so broadband's 0.18 becomes 0.36 of Engagement Opportunity.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="wx-lane wx-d">
+        <div class="wx-lane-head"><span class="wx-swatch"></span><b>Data</b><span>from the census, for every tract</span></div>
+        <div class="wx-row">
+          <article class="wx-card" aria-labelledby="wx-t4">
+            <header><span class="wx-num">4</span><div><h3 id="wx-t4">Raw indicator values</h3><p class="wx-sub">One value per tract</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 140" role="img" aria-label="Every tract's raw value on two indicators; the highlighted tract has 82 percent broadband and 7.1 percent unemployment."><g id="wx-raw"></g></svg>
+            <p class="wx-cap">ACS 2020–2024 estimates for every tract (or county) in the study area. Estimates with a coefficient of variation above 30% are flagged as unreliable.</p>
+          </article>
+          <article class="wx-card" aria-labelledby="wx-t5">
+            <header><span class="wx-num">5</span><div><h3 id="wx-t5">Indicator scores 0–1</h3><p class="wx-sub">Normalise, flip, floor</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 140" role="img" aria-label="The same values rescaled to 0 to 1; broadband scores 0.67; unemployment is flipped from 0.30 to 0.70 because lower is better."><g id="wx-norm"></g></svg>
+            <p class="wx-cap">Each indicator is rescaled across the study area, \(z' = 0.01 + 0.99\,(x-\min)/(\max-\min)\). Lower-is-better indicators such as unemployment are flipped, and the 0.01 floor keeps every score above zero.</p>
+          </article>
+          <div class="wx-card wx-ghost" aria-hidden="true">
+            <p><b>Weights meet scores.</b> The weights from step 3 and the scores from step 5 come together in the pillar scores below.</p>
+            <span class="wx-down">↓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wx-lane wx-i">
+        <div class="wx-lane-head"><span class="wx-swatch"></span><b>Index</b><span>pillars, index and gap</span></div>
+        <div class="wx-row">
+          <article class="wx-card" aria-labelledby="wx-t6">
+            <header><span class="wx-num">6</span><div><h3 id="wx-t6">Pillar scores</h3><p class="wx-sub">Weighted geometric mean, 0–100</p></div></header>
+            <p class="wx-formula">\(\mathit{EO} = 100\,\prod_j {z'_j}^{\,w_j}\) <span>(AP likewise)</span></p>
+            <div class="wx-pillar">
+              <div class="wx-bar"><span class="wx-bar-name">Engagement Opportunity <b class="wx-eo">EO</b></span><span class="wx-track"><i style="width:64.4%" class="wx-fill-eo"></i></span><b class="wx-val">64.4</b></div>
+              <div class="wx-chips"><span>Broadband <b>0.67</b><sup>0.36</sup></span><span>Computer + internet <b>0.63</b><sup>0.64</sup></span></div>
+            </div>
+            <div class="wx-pillar">
+              <div class="wx-bar"><span class="wx-bar-name">Adoption Potential <b class="wx-ap">AP</b></span><span class="wx-track"><i style="width:47%" class="wx-fill-ap"></i></span><b class="wx-val">47.0</b></div>
+              <div class="wx-chips"><span>Unemployed ↓ <b>0.70</b><sup>0.11</sup></span><span>Bachelor's+ <b>0.44</b><sup>0.30</sup></span><span>Income <b>0.21</b><sup>0.20</sup></span><span>AI jobs <b>0.50</b><sup>0.15</sup></span><span>Insured <b>0.80</b><sup>0.24</sup></span></div>
+            </div>
+            <p class="wx-cap">Each chip shows a score \(z'\) and, raised, its weight within the pillar. A weak score cannot be fully offset by a strong one.</p>
+          </article>
+          <article class="wx-card" aria-labelledby="wx-t7">
+            <header><span class="wx-num">7</span><div><h3 id="wx-t7">AI Readiness Index</h3><p class="wx-sub">\(\mathrm{ARI} = \sqrt{\mathit{EO}\times\mathit{AP}}\)</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 136" role="img" aria-label="Gauge showing ARI 55.0 out of 100."><g id="wx-gauge"></g></svg>
+            <p class="wx-cap">\(\sqrt{64.4 \times 47.0} = 55.0\). The geometric mean of the two pillars is high only when both are high.</p>
+          </article>
+          <article class="wx-card" aria-labelledby="wx-t8">
+            <header><span class="wx-num">8</span><div><h3 id="wx-t8">Gap and gap label</h3><p class="wx-sub">Where to invest</p></div></header>
+            <svg class="wx-gfx" viewBox="0 0 280 156" role="img" aria-label="Gap labels from the terciles of Engagement Opportunity and Adoption Potential: EO-limited when EO is in the bottom third and AP is not, AP-limited the reverse, Both low, Ready when both are in the top third, and Mid-range otherwise."><g id="wx-gap"></g></svg>
+            <p class="wx-cap">Here \(\mathit{EO}-\mathit{AP} = +17.4\). Because each indicator has its own scale, the studio compares each tract with the rest of the study area and labels it from the terciles of EO and AP.</p>
+          </article>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -361,5 +519,158 @@ python -m http.server 8000</code></pre>
 <footer>
   <div class="wrap">ARI Weighting Studio · <a href="https://github.com/Balo-97/AI-Readiness-Index-APH-Studio">Source on GitHub</a> · Example data: Carolinas Regional Explorer (CC BY 4.0) and U.S. Census Bureau ACS.</div>
 </footer>
+<script>
+/* Worked example graphics. Colours come from CSS classes, so they follow the light and dark themes.
+   The example: Level 1 matrix over Economy, Education & Work, Health gives w_d = 0.648, 0.230, 0.122 (CR 0.003);
+   the Economy matrix gives w_j|d = 0.272, 0.483, 0.157, 0.088 (CR 0.005); Education & Work has one judgement
+   (Bachelor's 2x AI-exposed jobs: 0.667 / 0.333); Health has one indicator. Global weights sum to 1. */
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent, text) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k === 'cls' ? 'class' : k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const $ = id => document.getElementById(id);
+  if (!$('wx-judge')) return;
+  const marker = (svg, id, cls) => {
+    const defs = el('defs', {}, svg);
+    const m = el('marker', { id, viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 6.5, markerHeight: 6.5, orient: 'auto' }, defs);
+    el('path', { d: 'M0 0 L10 5 L0 10 z', cls }, m);
+  };
+
+  // 1 · two Saaty scales, the chosen judgement highlighted
+  const jg = $('wx-judge');
+  const scale = (y0, level, left, right, pick) => {
+    el('text', { x: 0, y: y0 + 10, 'font-size': 10, 'font-weight': 700, 'letter-spacing': '.08em', cls: 'c' }, jg, level);
+    el('text', { x: 0, y: y0 + 27, 'font-size': 13, 'font-weight': 600 }, jg, left);
+    el('text', { x: 280, y: y0 + 27, 'font-size': 13, 'font-weight': 600, 'text-anchor': 'end' }, jg, right);
+    [9, 7, 5, 3, 1, 3, 5, 7, 9].forEach((v, i) => {
+      const x = 16 + i * 31, on = i === pick;
+      el('circle', { cx: x, cy: y0 + 46, r: 11.5, cls: on ? 'f-c' : 'f-soft2' }, jg);
+      el('text', { x, y: y0 + 50.5, 'font-size': 12.5, 'text-anchor': 'middle', 'font-weight': on ? 700 : 500, cls: on ? 'oc' : '' }, jg, v);
+    });
+  };
+  scale(0, 'LEVEL 1 · DIMENSIONS', 'Economy', 'Education & Work', 3);
+  scale(68, 'LEVEL 2 · WITHIN ECONOMY', 'Broadband', 'Unemployment', 3);
+  el('text', { x: 2, y: 136, 'font-size': 10.5, cls: 'm' }, jg, '← more important');
+  el('text', { x: 278, y: 136, 'font-size': 10.5, cls: 'm', 'text-anchor': 'end' }, jg, 'more important →');
+  el('text', { x: 140, y: 162, 'font-size': 11.5, cls: 'm', 'text-anchor': 'middle' }, jg, 'Selected: 3, moderately more important');
+
+  // 2 · each matrix gives weights
+  const lc = $('wx-local');
+  marker(lc.ownerSVGElement, 'wx-arrow-w', 'f-c');
+  const matrix = (x0, y0, M, cw, ch) => M.forEach((row, r) => row.forEach((v, c) => {
+    el('rect', { x: x0 + c * cw, y: y0 + r * ch, width: cw - 2, height: ch - 2, rx: 3, cls: r === c ? 'f-soft' : 'f-soft2' }, lc);
+    el('text', { x: x0 + c * cw + (cw - 2) / 2, y: y0 + r * ch + ch / 2 + 3.5, 'font-size': 11.5, 'text-anchor': 'middle', 'font-weight': 500 }, lc, v);
+  }));
+  const bars = (x0, y0, rows, ch) => rows.forEach(([n, w], i) => {
+    const y = y0 + i * ch;
+    el('text', { x: x0, y: y + ch / 2 + 3.5, 'font-size': 11 }, lc, n);
+    el('rect', { x: x0 + 112, y: y + 3, width: Math.max(3, w * 50), height: ch - 7, rx: 3, cls: 'f-c' }, lc);
+    el('text', { x: x0 + 112 + w * 50 + 5, y: y + ch / 2 + 3.5, 'font-size': 11.5, 'font-weight': 600 }, lc, w.toFixed(2));
+  });
+  el('text', { x: 0, y: 10, 'font-size': 10, 'font-weight': 700, 'letter-spacing': '.08em', cls: 'c' }, lc, 'LEVEL 1 → DIMENSION WEIGHTS');
+  matrix(0, 18, [['1', '3', '5'], ['⅓', '1', '2'], ['⅕', '½', '1']], 24, 19);
+  el('path', { d: 'M76 46 L90 46', cls: 's-c', 'stroke-width': 2, 'marker-end': 'url(#wx-arrow-w)' }, lc);
+  bars(97, 18, [['Economy', .648], ['Education & Work', .230], ['Health', .122]], 19);
+  el('text', { x: 0, y: 92, 'font-size': 10, 'font-weight': 700, 'letter-spacing': '.08em', cls: 'c' }, lc, 'LEVEL 2 (ECONOMY) → LOCAL WEIGHTS');
+  matrix(0, 99, [['1', '½', '2', '3'], ['2', '1', '3', '5'], ['½', '⅓', '1', '2'], ['⅓', '⅕', '½', '1']], 19, 17);
+  el('path', { d: 'M78 133 L91 133', cls: 's-c', 'stroke-width': 2, 'marker-end': 'url(#wx-arrow-w)' }, lc);
+  bars(97, 99, [['Broadband', .272], ['Computer + internet', .483], ['Income', .157], ['Unemployment', .088]], 17);
+  el('text', { x: 0, y: 182, 'font-size': 11, cls: 'm' }, lc, 'Consistency: CR 0.003 and 0.005, both below 0.10 ✓');
+
+  // 3 · global weights, with each indicator's pillar
+  const gl = $('wx-global');
+  [['Dimension', 0, 'start'], ['Indicator', 78, 'start'], ['local', 222, 'end'], ['global', 253, 'end']].forEach(([t, x, a]) =>
+    el('text', { x, y: 10, 'font-size': 10.5, cls: 'm', 'text-anchor': a }, gl, t));
+  const G = [
+    ['Economy', .648, [['Broadband', .272, 'EO'], ['Computer + internet', .483, 'EO'], ['Income', .157, 'AP'], ['Unemployment ↓', .088, 'AP']]],
+    ['Edu & Work', .230, [['Bachelor’s+', .667, 'AP'], ['AI-exposed jobs', .333, 'AP']]],
+    ['Health', .122, [['Health insurance', 1, 'AP']]],
+  ];
+  let y = 20, total = 0;
+  G.forEach(([dn, wd, inds], gi) => {
+    if (gi) el('line', { x1: 0, x2: 280, y1: y - 2, y2: y - 2, cls: 's-line', 'stroke-width': 1 }, gl);
+    el('text', { x: 0, y: y + 13, 'font-size': 11.5, 'font-weight': 700 }, gl, dn);
+    el('text', { x: inds.length > 1 ? 0 : 46, y: y + 13 + (inds.length > 1 ? 16 : 0), 'font-size': 11.5, 'font-weight': 700, cls: 'c' }, gl, wd.toFixed(2));
+    inds.forEach(([n, wl, p]) => {
+      const wg = wd * wl; total += wg;
+      el('text', { x: 78, y: y + 13, 'font-size': 11.5 }, gl, n);
+      el('text', { x: 222, y: y + 13, 'font-size': 11.5, 'text-anchor': 'end', cls: 'm' }, gl, wl.toFixed(2));
+      el('text', { x: 253, y: y + 13, 'font-size': 12, 'text-anchor': 'end', 'font-weight': 700, cls: 'c' }, gl, wg.toFixed(2));
+      el('rect', { x: 257, y: y + 3, width: 23, height: 14, rx: 4, cls: p === 'EO' ? 'f-eo' : 'f-ap' }, gl);
+      el('text', { x: 268.5, y: y + 13.5, 'font-size': 9.5, 'font-weight': 700, 'text-anchor': 'middle', cls: 'oc' }, gl, p);
+      y += 17;
+    });
+    y += 5;
+  });
+  el('line', { x1: 198, x2: 256, y1: y - 1, y2: y - 1, cls: 's-ink', 'stroke-width': 1 }, gl);
+  el('text', { x: 222, y: y + 13, 'font-size': 11.5, 'text-anchor': 'end', cls: 'm' }, gl, 'sum');
+  el('text', { x: 253, y: y + 13, 'font-size': 12, 'text-anchor': 'end', 'font-weight': 700, cls: 'c' }, gl, total.toFixed(2));
+  el('text', { x: 0, y: y + 13, 'font-size': 10.5, cls: 'm' }, gl, 'EO, AP: the two pillars');
+
+  // 4 & 5 · every tract's value on two indicators, raw and rescaled
+  const bb = [53, 55.5, 57, 59, 61, 62.5, 64, 66, 67, 69, 70.5, 72, 73.5, 75, 77, 78.5, 80, 84, 85.5, 87, 89, 91, 93, 95.5];
+  const un = [1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 8, 8.5, 9, 10, 11, 12, 13.5, 15, 17, 19.5];
+  const MY_UN = 1 + 20 * (1 - (0.70 - 0.01) / 0.99);   // 7.06%, whose flipped score is 0.70
+  const strip = (g, y0, label, vals, lo, hi, mine, o = {}) => {
+    const X = v => 10 + (v - lo) / (hi - lo) * 260;
+    el('text', { x: 0, y: y0, 'font-size': 12.5, 'font-weight': 600 }, g, label);
+    el('line', { x1: 10, x2: 270, y1: y0 + 26, y2: y0 + 26, cls: 's-ink', 'stroke-width': 1.2 }, g);
+    vals.forEach((v, i) => el('circle', { cx: X(o.map ? o.map(v) : v), cy: y0 + 26 + ((i * 7) % 5 - 2) * 2.4, r: 3.4, cls: 'f-dot' }, g));
+    if (o.ghost != null) {
+      const gx = X(o.ghost), mx = X(mine);
+      el('circle', { cx: gx, cy: y0 + 26, r: 6, cls: 's-c', 'stroke-width': 1.6, 'stroke-dasharray': '3 2' }, g);
+      el('path', { d: `M${gx} ${y0 + 34} Q ${(gx + mx) / 2} ${y0 + 52} ${mx - 1} ${y0 + 35}`, cls: 's-c', 'stroke-width': 1.6, 'marker-end': 'url(#wx-arrow-d)' }, g);
+      el('text', { x: (gx + mx) / 2, y: y0 + 57, 'font-size': 11, 'text-anchor': 'middle', cls: 'c' }, g, 'flip');
+    }
+    el('circle', { cx: X(mine), cy: y0 + 26, r: 6.5, cls: 'f-c s-surf', 'stroke-width': 2 }, g);
+    el('text', { x: X(mine), y: o.below ? y0 + 47 : y0 + 14, 'font-size': 12, 'text-anchor': 'middle', 'font-weight': 700 }, g, o.fmt(mine));
+    el('text', { x: 10, y: y0 + 44, 'font-size': 11, 'text-anchor': 'middle', cls: 'm' }, g, o.loLab ?? lo);
+    el('text', { x: 270, y: y0 + 44, 'font-size': 11, 'text-anchor': 'middle', cls: 'm' }, g, o.hiLab ?? hi);
+  };
+  const raw = $('wx-raw'), nm = $('wx-norm');
+  marker(nm.ownerSVGElement, 'wx-arrow-d', 'f-c');
+  strip(raw, 12, 'Broadband subscription (%)  ↑', bb, 52, 97, 82.0, { fmt: v => v.toFixed(1) + '%' });
+  strip(raw, 84, 'Unemployment rate (%)  ↓', un, 1, 21, MY_UN, { fmt: v => v.toFixed(1) + '%', below: true });
+  strip(nm, 12, 'Broadband → score z′', bb, 0, 1, 0.67, { map: v => 0.01 + 0.99 * (v - 52) / 45, fmt: v => v.toFixed(2), loLab: '0', hiLab: '1' });
+  strip(nm, 84, 'Unemployment ↓ → flipped', un, 0, 1, 0.70, { map: v => 0.01 + 0.99 * (1 - (v - 1) / 20), ghost: (MY_UN - 1) / 20, fmt: v => v.toFixed(2), loLab: '0', hiLab: '1' });
+  el('rect', { x: 9, y: 34, width: 4, height: 8, cls: 'f-c' }, nm);
+  el('text', { x: 18, y: 59, 'font-size': 10.5, cls: 'c' }, nm, 'floor 0.01');
+
+  // 7 · gauge for ARI 55.0
+  const gg = $('wx-gauge'), cx = 140, cy = 112, R = 92, val = 55.0;
+  const pt = f => [cx - R * Math.cos(Math.PI * f), cy - R * Math.sin(Math.PI * f)];
+  const arc = (f0, f1) => { const [x0, y0] = pt(f0), [x1, y1] = pt(f1); return `M${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1}`; };
+  el('path', { d: arc(0, 1), cls: 's-line', 'stroke-width': 16, 'stroke-linecap': 'round' }, gg);
+  el('path', { d: arc(0, val / 100), cls: 's-c', 'stroke-width': 16, 'stroke-linecap': 'round' }, gg);
+  el('text', { x: cx, y: cy - 14, 'font-size': 38, 'font-weight': 700, 'text-anchor': 'middle' }, gg, val.toFixed(1));
+  el('text', { x: cx, y: cy + 9, 'font-size': 12.5, 'text-anchor': 'middle', cls: 'm' }, gg, 'out of 100');
+  el('text', { x: cx - R, y: cy + 24, 'font-size': 11, 'text-anchor': 'middle', cls: 'm' }, gg, '0');
+  el('text', { x: cx + R, y: cy + 24, 'font-size': 11, 'text-anchor': 'middle', cls: 'm' }, gg, '100');
+
+  // 8 · gap labels from the terciles of EO (columns) and AP (rows)
+  const gp = $('wx-gap'), x0 = 52, y0 = 6, cw = 74, chh = 38;
+  const LAB = {
+    'EO-limited': ['#be64ac', 'wt'], 'AP-limited': ['#5ac8c8', 'dk'], 'Both low': ['#e8e8e8', 'dk'],
+    'Ready': ['#3b4994', 'wt'], 'Mid-range': ['#a5add3', 'dk'],
+  };
+  const lab = (s, d) => s === 1 && d === 1 ? 'Both low' : s === 1 ? 'EO-limited' : d === 1 ? 'AP-limited' : s === 3 && d === 3 ? 'Ready' : 'Mid-range';
+  for (let d = 3; d >= 1; d--) for (let s = 1; s <= 3; s++) {
+    const L = lab(s, d), x = x0 + (s - 1) * cw, yy = y0 + (3 - d) * chh;
+    el('rect', { x, y: yy, width: cw - 3, height: chh - 3, rx: 5, fill: LAB[L][0] }, gp);
+    el('text', { x: x + (cw - 3) / 2, y: yy + chh / 2 + 2, 'font-size': 10.5, 'font-weight': 600, 'text-anchor': 'middle', cls: LAB[L][1] }, gp, L);
+  }
+  ['low', 'mid', 'high'].forEach((t, i) => {
+    el('text', { x: x0 + i * cw + (cw - 3) / 2, y: y0 + 3 * chh + 11, 'font-size': 10.5, 'text-anchor': 'middle', cls: 'm' }, gp, t);
+    el('text', { x: x0 - 6, y: y0 + (2 - i) * chh + chh / 2 + 2, 'font-size': 10.5, 'text-anchor': 'end', cls: 'm' }, gp, t);
+  });
+  el('text', { x: x0 + 1.5 * cw, y: y0 + 3 * chh + 27, 'font-size': 11.5, 'font-weight': 600, 'text-anchor': 'middle', cls: 'f-eo-t' }, gp, 'Engagement Opportunity →');
+  el('text', { transform: `translate(10 ${y0 + 1.5 * chh}) rotate(-90)`, 'font-size': 11.5, 'font-weight': 600, 'text-anchor': 'middle' }, gp, 'Adoption Potential →');
+})();
+</script>
 </body>
 </html>
