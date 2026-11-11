@@ -7,7 +7,7 @@ Writes
   examples/ari_11_indicators_four_dimensions.json
 
 Dimensions: Economy; Education and Employment; Health and Transport; Character. Pillars follow the
-group's assignment (S = Access, formerly Supply; D = Capacity, formerly Demand). No judgements are
+group's assignment (S = Engagement Opportunity, formerly Access and Supply; D = Adoption Potential, formerly Capacity and Demand). No judgements are
 included; everyone weighs from scratch. Columns point at data/ari_tracts_2024.csv, which holds all
 eleven indicators for the Mecklenburg tracts.
 
@@ -27,7 +27,7 @@ DIMS = [
     ("d_character", "Character", "Who lives here: young adults and connected older residents."),
 ]
 
-# id, dimension, name, pillar (S Access / D Capacity), direction, source, column in data/ari_tracts_2024.csv
+# id, dimension, name, pillar (S Engagement Opportunity / D Adoption Potential), direction, source, column in data/ari_tracts_2024.csv
 INDICATORS = [
     ("i_income", "d_economy", "Median household income", "D", 1, "ACS B19013 · CRXP", "household-income"),
     ("i_lfpr", "d_economy", "Labour-force participation rate", "D", 1, "ACS B23025", "acs-labour-force-participation"),

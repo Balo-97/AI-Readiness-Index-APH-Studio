@@ -39,7 +39,7 @@ DISABILITY = r("B18101", 4, 7, 10, 13, 16, 19, 23, 26, 29, 32, 35, 38)
 UNDER18 = span("B01001", 3, 6) + span("B01001", 27, 30)
 
 INDICATORS = [
-    # ------------------------------------------------------------------ chosen: Access pillar (code S; the proposal's Supply)
+    # ------------------------------------------------------------------ chosen: Engagement Opportunity pillar (code S; the proposal's Supply)
     dict(id="C1", name="Broadband of any type subscription rate", pillar="S", dir=1, theme="economy", tag="Chosen",
          source="ACS B28002 · CRXP 10", column="acs-broadband-any", crxp="internet-access",
          measure="Households with a broadband subscription of any type (cable, fibre, DSL, satellite or cellular data plan), share of all households.",
@@ -71,7 +71,7 @@ INDICATORS = [
          acs=dict(kind="share", num=r("B28004", 4, 8), den=r("B28004", 2, 6)),
          check=[(r("B28004", 4, 8), "With a broadband Internet subscription"), (r("B28004", 2, 4), "Less than $10,000"),
                 (r("B28004", 6, 8), "$10,000 to $19,999")]),
-    # ------------------------------------------------------------------ chosen: Capacity pillar (code D; the proposal's Demand)
+    # ------------------------------------------------------------------ chosen: Adoption Potential pillar (code D; the proposal's Demand)
     dict(id="C7", name="Bachelor's degree or higher", pillar="D", dir=1, theme="education", tag="Chosen",
          source="ACS B15003 · CRXP 11", column="bachelors-or-higher", crxp="bachelors-or-higher",
          measure="Adults 25+ with a bachelor's, master's, professional or doctoral degree, share of all adults 25+.",
@@ -167,7 +167,7 @@ INDICATORS = [
          measure="C20 plus Finance and insurance, as the document suggests given Charlotte's banking sector.",
          acs=dict(kind="share", num=r("C24030", 13, 40, 18, 45, 15, 42), den=r("C24030", 1)),
          check=[(r("C24030", 15, 42), "› Finance and insurance")]),
-    # ------------------------------------------------------------------ additional candidates: Access side
+    # ------------------------------------------------------------------ additional candidates: Engagement Opportunity side
     dict(id="A1", name="Fixed wireline broadband subscription rate", pillar="S", dir=1, theme="economy", tag="Recommended addition",
          source="ACS B28002", column="acs-fixed-broadband",
          measure="Households subscribing to cable, fibre-optic or DSL broadband, share of all households.",
@@ -201,7 +201,7 @@ INDICATORS = [
          measure="Employed civilians 16+ in households with a computer and broadband, share of all employed civilians 16+.",
          acs=dict(kind="share", num=r("B28007", 6), den=r("B28007", 3)),
          check=[(r("B28007", 6), "Employed › Has a computer › With a broadband Internet subscription"), (r("B28007", 3), "› Employed")]),
-    # ------------------------------------------------------------------ additional candidates: Capacity side
+    # ------------------------------------------------------------------ additional candidates: Adoption Potential side
     dict(id="A7", name="Employment–population ratio", pillar="D", dir=1, theme="economy", tag="Optional (alternative to C11 and C12)",
          source="ACS B23025 · CRXP 9", column="employment", crxp="employment",
          measure="Employed civilians, share of the population 16+.",
