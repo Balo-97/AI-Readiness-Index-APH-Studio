@@ -2,7 +2,7 @@
 
 An expert-weighted **AI Readiness Index (ARI)** at the **census tract or county level**, and the browser tool that builds it.
 
-- **Website (AIreadiness):** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/>
+- **Website:** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/>
 - **Open the studio:** <https://balo-97.github.io/AI-Readiness-Index-APH-Studio/ARI_Weighting_Studio.html>
 - **Example project (Charlotte, Mecklenburg County):** [`examples/ari_11_indicators_four_dimensions.json`](examples/ari_11_indicators_four_dimensions.json)
 - **Using it for another city:** [Getting a map for another US city](#getting-a-map-for-another-us-city)
@@ -27,8 +27,8 @@ Artificial intelligence is reaching many areas of community life at once, includ
 
 The ARI measures readiness at the census tract or county level, with two pillars:
 
-- **Access**: the ways AI reaches residents: the digital infrastructure it runs on (broadband), work in jobs where AI is already used, and services such as health care and transport that increasingly use AI on residents' behalf, even when they do not use it directly.
-- **Capacity**: residents' ability to make use of it: education, income, employment and skills.
+- **Engagement Opportunity (EO)**: the ways AI reaches residents: the digital infrastructure it runs on (broadband), work in jobs where AI is already used, and services such as health care and transport that increasingly use AI on residents' behalf, even when they do not use it directly.
+- **Adoption Potential (AP)**: residents' ability to make use of it: education, income, employment and skills.
 
 Census tracts show the differences between neighbourhoods within a city; counties compare places across a region. The studio switches between the two with the **Unit of analysis** setting on the Index tab, using the same expert weights for both.
 
@@ -38,10 +38,10 @@ How much each indicator should count is a value judgement that local policy make
 
 | Tab | What you do there |
 |---|---|
-| **Setup** | Build the hierarchy: dimensions (Level 1) and indicators (Level 2). Give each indicator a pillar (Access or Capacity), a direction (higher or lower is better) and a data column. A searchable catalogue lists ready-made indicators. Import and export project files. |
+| **Setup** | Build the hierarchy: dimensions (Level 1) and indicators (Level 2). Give each indicator a pillar (Engagement Opportunity or Adoption Potential), a direction (higher or lower is better) and a data column. A searchable catalogue lists ready-made indicators. Import and export project files. |
 | **Compare** | Each team member compares items two at a time on Saaty's 1–9 scale, first the dimensions, then the indicators within each dimension. The studio flags inconsistent answers and suggests which to revisit. |
 | **Group weights** | Pools everyone's judgements into group weights, with each person's consistency ratio, the group's agreement (Kendall's W) and a full report. Import teammates' judgement files here. |
-| **Index** | Load the tract table, set the study area, and compute the Access and Capacity scores, the ARI, the readiness gap and a gap label for every tract. Map them, find spatial clusters (Moran's I, LISA), click any tract for a breakdown with radar charts, and test how stable the ranking is (Monte Carlo). Switch between census tracts and counties with **Unit of analysis**; each level has its own table and map, and the weights are shared. |
+| **Index** | Load the tract table, set the study area, and compute the Engagement Opportunity and Adoption Potential scores, the ARI, the readiness gap and a gap label for every tract. Map them, find spatial clusters (Moran's I, LISA), click any tract for a breakdown with radar charts, and test how stable the ranking is (Monte Carlo). Switch between census tracts and counties with **Unit of analysis**; each level has its own table and map, and the weights are shared. |
 | **Disaggregation (beta)** | Break the results down by characteristics of the tracts, such as income or majority race, alone or in combination. **Still being worked on and not yet tested**: treat its results as provisional. |
 | **Guide** | Instructions inside the app. |
 
@@ -57,12 +57,12 @@ The ARI combines two streams. On the weights side, experts' pairwise judgements 
         |                                         |
  Indicator weights (decision matrix)       Indicator scores 0-1 (normalise, flip, floor)
                \                                 /
-                 Pillar scores A and C (weighted geometric mean, 0-100)
+                 Pillar scores EO and AP (weighted geometric mean, 0-100)
                 /                                  \
-     ARI = sqrt(A x C)  overall readiness      Gap G and gap labels  where to invest
+     ARI = sqrt(EO x AP)  overall readiness    Gap G and gap labels  where to invest
 ```
 
-**1. Hierarchy.** The goal (AI readiness of census tracts or counties) splits into dimensions, and each dimension into indicators. Each indicator belongs to one pillar, Access ($A$) or Capacity ($C$), and has a direction $\delta_j = +1$ (higher is better) or $-1$ (lower is better).
+**1. Hierarchy.** The goal (AI readiness of census tracts or counties) splits into dimensions, and each dimension into indicators. Each indicator belongs to one pillar, Engagement Opportunity ($\mathit{EO}$) or Adoption Potential ($\mathit{AP}$), and has a direction $\delta_j = +1$ (higher is better) or $-1$ (lower is better).
 
 **2. Pairwise comparisons.** For each pair of siblings, an expert answers how much more important one is than the other: 1 equal, 3 moderately, 5 strongly, 7 very strongly, 9 extremely more important (2, 4, 6, 8 in between). The answers fill a reciprocal matrix $\mathbf{A}=(a_{ij})$ with $a_{ii}=1$ and $a_{ji}=1/a_{ij}$.
 
@@ -86,24 +86,24 @@ Percentile ranks are available instead of min–max.
 
 **8. Pillar scores.** A weighted geometric mean on a 0–100 scale, so a weak indicator cannot be fully offset by a strong one:
 
-$$P_t=100\prod_{j\in P}\bigl(x'_{tj}\bigr)^{w^{P}_j},\qquad P\in\{A,C\}.$$
+$$P_t=100\prod_{j\in P}\bigl(x'_{tj}\bigr)^{w^{P}_j},\qquad P\in\{\mathit{EO},\mathit{AP}\}.$$
 
 **9. The index, the gap and the gap labels.**
 
-$$\mathrm{ARI}_t=\sqrt{A_t\,C_t}.$$
+$$\mathrm{ARI}_t=\sqrt{\mathit{EO}_t\,\mathit{AP}_t}.$$
 
 The ARI is high only when both pillars are high. The readiness gap compares the two pillars, in one of three versions:
 
-$$G^{z}_t=\frac{A_t-\bar A}{s_A}-\frac{C_t-\bar C}{s_C}\ \ \text{(standardised, default)},\qquad G^{\%}_t=\mathrm{pct}(A_t)-\mathrm{pct}(C_t),\qquad G^{\mathrm{raw}}_t=A_t-C_t,$$
+$$G^{z}_t=\frac{\mathit{EO}_t-\overline{\mathit{EO}}}{s_{\mathit{EO}}}-\frac{\mathit{AP}_t-\overline{\mathit{AP}}}{s_{\mathit{AP}}}\ \ \text{(standardised, default)},\qquad G^{\%}_t=\mathrm{pct}(\mathit{EO}_t)-\mathrm{pct}(\mathit{AP}_t),\qquad G^{\mathrm{raw}}_t=\mathit{EO}_t-\mathit{AP}_t,$$
 
-where $\mathrm{pct}$ is the percentile rank in the study area, $100\,(\text{rank}-1)/(n-1)$. Min–max gives each indicator its own ruler, so the raw gap mostly reflects how the indicators are spread: in the Charlotte example, a tract at the median on every indicator has a raw gap of about +34. The standardised and percentile-rank gaps compare each tract with the rest of the study area instead. A positive gap means a tract stands out more on access than on capacity.
+where $\mathrm{pct}$ is the percentile rank in the study area, $100\,(\text{rank}-1)/(n-1)$. Min–max gives each indicator its own ruler, so the raw gap mostly reflects how the indicators are spread: in the Charlotte example, a tract at the median on every indicator has a raw gap of about +34. The standardised and percentile-rank gaps compare each tract with the rest of the study area instead. A positive gap means a tract stands out more on engagement opportunity than on adoption potential.
 
-A negative gap can simply mean that capacity is exceptional, not that access is lacking. Each tract therefore also gets a **gap label** from the terciles of $A$ and $C$, where *low* means the bottom third of the study area:
+A negative gap can simply mean that adoption potential is exceptional, not that engagement opportunity is lacking. Each tract therefore also gets a **gap label** from the terciles of $\mathit{EO}$ and $\mathit{AP}$, where *low* means the bottom third of the study area:
 
 | Gap label | Rule | Points to |
 |---|---|---|
-| Access-limited | $A$ low, $C$ not | investment in access |
-| Capacity-limited | $C$ low, $A$ not | investment in skills and capacity |
+| EO-limited | $\mathit{EO}$ low, $\mathit{AP}$ not | investment in engagement opportunity |
+| AP-limited | $\mathit{AP}$ low, $\mathit{EO}$ not | investment in adoption potential (skills and capacity) |
 | Both low | both low | both |
 | Ready | both in the top third | no gap |
 | Mid-range | everything else | no binding gap |
@@ -121,23 +121,23 @@ A negative gap can simply mean that capacity is exceptional, not that access is 
 
    | Dimension | Indicator | Pillar | Direction |
    |---|---|---|---|
-   | Economy | Median household income | Capacity | higher is better |
-   | | Labour-force participation rate | Capacity | higher is better |
-   | | Broadband subscription of any type | Access | higher is better |
-   | Education and Employment | High-AI-exposure occupation share | Access | higher is better |
-   | | High school diploma or higher | Capacity | higher is better |
-   | | College enrolment (share of adults 18+) | Capacity | higher is better |
-   | Health and Transport | Health insurance coverage | Access | higher is better |
-   | | Routine checkup (adults) | Access | higher is better |
-   | | Households without a vehicle | Access | lower is better |
-   | Character | Population aged 18–34 | Capacity | higher is better |
-   | | Residents 65+ with a computer and broadband | Capacity | higher is better |
+   | Economy | Median household income | Adoption Potential | higher is better |
+   | | Labour-force participation rate | Adoption Potential | higher is better |
+   | | Broadband subscription of any type | Engagement Opportunity | higher is better |
+   | Education and Employment | High-AI-exposure occupation share | Engagement Opportunity | higher is better |
+   | | High school diploma or higher | Adoption Potential | higher is better |
+   | | College enrolment (share of adults 18+) | Adoption Potential | higher is better |
+   | Health and Transport | Health insurance coverage | Engagement Opportunity | higher is better |
+   | | Routine checkup (adults) | Engagement Opportunity | higher is better |
+   | | Households without a vehicle | Engagement Opportunity | lower is better |
+   | Character | Population aged 18–34 | Adoption Potential | higher is better |
+   | | Residents 65+ with a computer and broadband | Adoption Potential | higher is better |
 
 3. **Add yourself.** In the top bar, choose **You are → ＋ New participant…** and type your name.
 4. **Compare.** On the **Compare** tab, answer each pair: click the number on the side of the more important item (16 comparisons for this example). Revise any set whose consistency ratio is above 0.10.
 5. **See the weights** on the **Group weights** tab.
 6. **Compute the index.** On the **Index** tab, click **Load example tracts (CRXP + Census ACS, 2024)**. The study area is already set to Mecklenburg County. Until every comparison is answered, equal weights stand in and results are marked provisional.
-7. **Explore.** Map the ARI, the pillars, the gap labels, the gap or the bivariate Access × Capacity classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.
+7. **Explore.** Map the ARI, the pillars, the gap labels, the gap or the bivariate EO × AP classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.
 8. **Save.** Use **Setup → Export project + all judgements (.json)** to keep your work, and **Export all…** for every output.
 
 ## Working as a team

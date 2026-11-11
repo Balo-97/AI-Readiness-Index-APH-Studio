@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AIreadiness</title>
+<title>ARI</title>
 <meta name="description" content="An expert-weighted AI Readiness Index at the census tract or county level, built with the Analytic Hierarchy Process. Tested on Charlotte and Mecklenburg County, North Carolina.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -116,7 +116,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
   <div class="hero">
     <div class="eyebrow">AI Readiness Index · Analytic Hierarchy Process</div>
     <h1>How ready is each neighbourhood for AI?</h1>
-    <p class="lede">The ARI Weighting Studio lets a panel of local experts weigh what matters for AI readiness, then scores every census tract or county on <b>Access</b> to digital infrastructure and residents' <b>Capacity</b> to use it.</p>
+    <p class="lede">The ARI Weighting Studio lets a panel of local experts weigh what matters for AI readiness, then scores every census tract or county on <b>Engagement Opportunity</b>, the ways AI reaches residents, and on their <b>Adoption Potential</b>, their ability to use it.</p>
     <div class="buttons">
       <a class="btn primary" href="ARI_Weighting_Studio.html">Open the studio</a>
       <a class="btn ghost" href="examples/ari_11_indicators_four_dimensions.json" download>Download the Charlotte example</a>
@@ -133,8 +133,8 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <p>Artificial intelligence is reaching many areas of community life at once, from transport and health care to education and work. It will not arrive the same way everywhere. Whether residents can benefit depends on whether they have the digital infrastructure AI runs on, and the education, income and skills to use it. Both vary sharply between neighbourhoods within the same city, yet existing AI-readiness indices compare whole countries.</p>
     <p>The AI Readiness Index (ARI) measures readiness at the <b>census tract or county level</b>, with two pillars:</p>
     <div class="grid2">
-      <div class="card"><h3><span class="pill a">A</span> Access</h3><p>The ways AI reaches residents: the digital infrastructure it runs on, work in jobs where AI is already used, and services such as health care and transport that use AI on residents' behalf.</p></div>
-      <div class="card"><h3><span class="pill c">C</span> Capacity</h3><p>Residents' ability to make use of it: education, income, employment and skills.</p></div>
+      <div class="card"><h3><span class="pill a">EO</span> Engagement Opportunity</h3><p>The ways AI reaches residents: the digital infrastructure it runs on, work in jobs where AI is already used, and services such as health care and transport that use AI on residents' behalf.</p></div>
+      <div class="card"><h3><span class="pill c">AP</span> Adoption Potential</h3><p>Residents' ability to make use of it: education, income, employment and skills.</p></div>
     </div>
     <p style="margin-top:18px">Census tracts show the differences between neighbourhoods within a city; counties compare places across a region. The studio switches between the two with the <b>Unit of analysis</b> setting on the Index tab, using the same expert weights for both.</p>
     <p>How much each indicator should count is a value judgement that local policy makers and experts have to make for their own area. The studio helps a panel make those judgements in a structured, transparent and checkable way with the Analytic Hierarchy Process (AHP). It then turns them into weights, scores every tract or county, maps the results and tests how stable they are. It is tested on Charlotte and Mecklenburg County, North Carolina, with data from the <a href="https://github.com/kvenkita/crxp">Carolinas Regional Explorer</a> and the U.S. Census Bureau's American Community Survey.</p>
@@ -148,7 +148,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <figure>
       <svg viewBox="0 0 760 470" role="img" aria-labelledby="pipe-title pipe-desc">
         <title id="pipe-title">How the AI Readiness Index is built</title>
-        <desc id="pipe-desc">Pairwise judgements become indicator weights; raw indicator values become indicator scores from 0 to 1. Both feed the pillar scores A and C, a weighted geometric mean from 0 to 100, which give the ARI, the square root of A times C, and the readiness gap with its gap labels.</desc>
+        <desc id="pipe-desc">Pairwise judgements become indicator weights; raw indicator values become indicator scores from 0 to 1. Both feed the pillar scores EO and AP, a weighted geometric mean from 0 to 100, which give the ARI, the square root of EO times AP, and the readiness gap with its gap labels.</desc>
         <defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C24FB6"/></marker></defs>
         <g font-family="IBM Plex Sans, Segoe UI, Arial, sans-serif" text-anchor="middle">
           <text x="190" y="22" font-size="13" font-weight="700" letter-spacing="3" fill="#B5399F">WEIGHTS</text>
@@ -166,10 +166,10 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
           <text x="570" y="178" font-size="19" font-weight="700" fill="#fff">Indicator scores 0–1</text>
           <text x="570" y="203" font-size="14" fill="#DFF4FF">Normalise, flip, floor</text>
           <rect x="200" y="266" width="360" height="74" rx="14" fill="#70349A"/>
-          <text x="380" y="298" font-size="19" font-weight="700" fill="#fff">Pillar scores A and C</text>
+          <text x="380" y="298" font-size="19" font-weight="700" fill="#fff">Pillar scores EO and AP</text>
           <text x="380" y="323" font-size="14" fill="#F1E3FB">Weighted geometric mean, 0–100</text>
           <rect x="40" y="386" width="300" height="74" rx="14" fill="#70349A"/>
-          <text x="190" y="418" font-size="19" font-weight="700" fill="#fff">ARI = √(A × C)</text>
+          <text x="190" y="418" font-size="19" font-weight="700" fill="#fff">ARI = √(EO × AP)</text>
           <text x="190" y="443" font-size="14" fill="#F1E3FB">Overall readiness</text>
           <rect x="420" y="386" width="300" height="74" rx="14" fill="#70349A"/>
           <text x="570" y="418" font-size="19" font-weight="700" fill="#fff">Gap and gap labels</text>
@@ -184,10 +184,10 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
           <path d="M430 342 C 440 364, 570 356, 570 381" marker-end="url(#ah)"/>
         </g>
       </svg>
-      <figcaption>Expert judgements become weights (left); census data become scores (right). Both feed the Access and Capacity scores, which combine into the index and the gap.</figcaption>
+      <figcaption>Expert judgements become weights (left); census data become scores (right). Both feed the Engagement Opportunity and Adoption Potential scores, which combine into the index and the gap.</figcaption>
     </figure>
 
-    <div class="math-step"><b>1. Hierarchy.</b> The goal, the AI readiness of census tracts or counties, splits into dimensions (Level 1), and each dimension into indicators (Level 2). Each indicator belongs to one pillar, Access or Capacity, and has a direction: higher is better, or lower is better.</div>
+    <div class="math-step"><b>1. Hierarchy.</b> The goal, the AI readiness of census tracts or counties, splits into dimensions (Level 1), and each dimension into indicators (Level 2). Each indicator belongs to one pillar, Engagement Opportunity (EO) or Adoption Potential (AP), and has a direction: higher is better, or lower is better.</div>
     <div class="math-step"><b>2. Pairwise comparisons.</b> For each pair of siblings, an expert answers how much more important one is than the other: 1 equal, 3 moderately, 5 strongly, 7 very strongly, 9 extremely more important, with 2, 4, 6 and 8 in between. The answers fill a reciprocal matrix with \(a_{ii}=1\) and \(a_{ji}=1/a_{ij}\).</div>
     <div class="math-step"><b>3. Local weights.</b> The row geometric mean gives the weights within each set:
       $$g_i=\Bigl(\prod_{j=1}^{n}a_{ij}\Bigr)^{1/n},\qquad w_i=\frac{g_i}{\sum_k g_k}.$$</div>
@@ -200,16 +200,16 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <div class="math-step"><b>7. Indicator scores.</b> Tracts with fewer residents than a minimum (100 by default) are left unscored first: survey estimates for a handful of residents are mostly 0% or 100% and would otherwise set the scale for everyone else. Each indicator is then rescaled across the \(N\) remaining tracts of the study area, flipped if lower is better, and raised off zero by a small floor \(f=0.01\):
       $$z_{tj}=\frac{x_{tj}-\min_s x_{sj}}{\max_s x_{sj}-\min_s x_{sj}},\qquad x'_{tj}=f+(1-f)\,z_{tj}.$$</div>
     <div class="math-step"><b>8. Pillar scores.</b> A weighted geometric mean on a 0–100 scale, so a weak indicator cannot be fully offset by a strong one:
-      $$A_t=100\prod_{j\in A}\bigl(x'_{tj}\bigr)^{w^{A}_j},\qquad C_t=100\prod_{j\in C}\bigl(x'_{tj}\bigr)^{w^{C}_j}.$$</div>
+      $$\mathit{EO}_t=100\prod_{j\in \mathit{EO}}\bigl(x'_{tj}\bigr)^{w^{\mathit{EO}}_j},\qquad \mathit{AP}_t=100\prod_{j\in \mathit{AP}}\bigl(x'_{tj}\bigr)^{w^{\mathit{AP}}_j}.$$</div>
     <div class="math-step"><b>9. Index, gap and gap labels.</b>
-      $$\mathrm{ARI}_t=\sqrt{A_t\,C_t}.$$
+      $$\mathrm{ARI}_t=\sqrt{\mathit{EO}_t\,\mathit{AP}_t}.$$
       The ARI is high only when both pillars are high. The readiness gap compares the two pillars, in one of three versions:
-      $$G^{z}_t=\frac{A_t-\bar A}{s_A}-\frac{C_t-\bar C}{s_C}\ \text{(standardised, default)},\qquad G^{\%}_t=\mathrm{pct}(A_t)-\mathrm{pct}(C_t),\qquad G^{\mathrm{raw}}_t=A_t-C_t,$$
-      where \(\mathrm{pct}\) is the percentile rank in the study area. Min–max gives each indicator its own ruler, so the raw gap mostly reflects how the indicators are spread: in the Charlotte example, a tract at the median on every indicator has a raw gap of about +34. The standardised and percentile-rank gaps compare each tract with the rest of the study area. A positive gap means a tract stands out more on access than on capacity.
-      <p style="margin-top:10px">A negative gap can simply mean capacity is exceptional, not that access is lacking, so each tract also gets a <b>gap label</b> from the terciles of A and C (<i>low</i> = bottom third of the study area):</p>
+      $$G^{z}_t=\frac{\mathit{EO}_t-\overline{\mathit{EO}}}{s_{\mathit{EO}}}-\frac{\mathit{AP}_t-\overline{\mathit{AP}}}{s_{\mathit{AP}}}\ \text{(standardised, default)},\qquad G^{\%}_t=\mathrm{pct}(\mathit{EO}_t)-\mathrm{pct}(\mathit{AP}_t),\qquad G^{\mathrm{raw}}_t=\mathit{EO}_t-\mathit{AP}_t,$$
+      where \(\mathrm{pct}\) is the percentile rank in the study area. Min–max gives each indicator its own ruler, so the raw gap mostly reflects how the indicators are spread: in the Charlotte example, a tract at the median on every indicator has a raw gap of about +34. The standardised and percentile-rank gaps compare each tract with the rest of the study area. A positive gap means a tract stands out more on engagement opportunity than on adoption potential.
+      <p style="margin-top:10px">A negative gap can simply mean adoption potential is exceptional, not that engagement opportunity is lacking, so each tract also gets a <b>gap label</b> from the terciles of EO and AP (<i>low</i> = bottom third of the study area):</p>
       <div class="tablewrap"><table><thead><tr><th>Gap label</th><th>Rule</th><th>Points to</th></tr></thead><tbody>
-        <tr><td>Access-limited</td><td>A low, C not</td><td>investment in access</td></tr>
-        <tr><td>Capacity-limited</td><td>C low, A not</td><td>investment in skills and capacity</td></tr>
+        <tr><td>EO-limited</td><td>EO low, AP not</td><td>investment in engagement opportunity</td></tr>
+        <tr><td>AP-limited</td><td>AP low, EO not</td><td>investment in adoption potential (skills and capacity)</td></tr>
         <tr><td>Both low</td><td>both low</td><td>both</td></tr>
         <tr><td>Ready</td><td>both in the top third</td><td>no gap</td></tr>
         <tr><td>Mid-range</td><td>everything else</td><td>no binding gap</td></tr>
@@ -229,24 +229,24 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
       <li><b>Compare.</b> On the <b>Compare</b> tab, click the number on the side of the more important item for each pair (16 pairs in this example). Revise any set whose consistency ratio is above 0.10.</li>
       <li><b>See the weights</b> on the <b>Group weights</b> tab.</li>
       <li><b>Compute the index.</b> On the <b>Index</b> tab click <b>Load example tracts (CRXP + Census ACS, 2024)</b>. The study area is already Mecklenburg County. Until every pair is answered, equal weights stand in and results are marked provisional.</li>
-      <li><b>Explore.</b> Map the ARI, the pillars, the gap labels, the gap or the bivariate Access × Capacity classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.</li>
+      <li><b>Explore.</b> Map the ARI, the pillars, the gap labels, the gap or the bivariate EO × AP classes; click a tract for its breakdown; run the sensitivity analysis; look for spatial clusters.</li>
       <li><b>Save.</b> <b>Setup → Export project + all judgements (.json)</b> keeps your work; <b>Export all…</b> saves every output as one zip.</li>
     </ol>
     <h3>The example hierarchy</h3>
     <div class="tablewrap"><table>
       <thead><tr><th>Dimension</th><th>Indicator</th><th>Pillar</th><th>Better when</th></tr></thead>
       <tbody>
-        <tr><td>Economy</td><td>Median household income</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
-        <tr><td></td><td>Labour-force participation rate</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
-        <tr><td></td><td>Broadband subscription of any type</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
-        <tr><td>Education and Employment</td><td>High-AI-exposure occupation share</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
-        <tr><td></td><td>High school diploma or higher</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
-        <tr><td></td><td>College enrolment (share of adults 18+)</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
-        <tr><td>Health and Transport</td><td>Health insurance coverage</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
-        <tr><td></td><td>Routine checkup (adults)</td><td><span class="pill a">Access</span></td><td>higher</td></tr>
-        <tr><td></td><td>Households without a vehicle</td><td><span class="pill a">Access</span></td><td>lower</td></tr>
-        <tr><td>Character</td><td>Population aged 18–34</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
-        <tr><td></td><td>Residents 65+ with a computer and broadband</td><td><span class="pill c">Capacity</span></td><td>higher</td></tr>
+        <tr><td>Economy</td><td>Median household income</td><td><span class="pill c">Adoption Potential</span></td><td>higher</td></tr>
+        <tr><td></td><td>Labour-force participation rate</td><td><span class="pill c">Adoption Potential</span></td><td>higher</td></tr>
+        <tr><td></td><td>Broadband subscription of any type</td><td><span class="pill a">Engagement Opportunity</span></td><td>higher</td></tr>
+        <tr><td>Education and Employment</td><td>High-AI-exposure occupation share</td><td><span class="pill a">Engagement Opportunity</span></td><td>higher</td></tr>
+        <tr><td></td><td>High school diploma or higher</td><td><span class="pill c">Adoption Potential</span></td><td>higher</td></tr>
+        <tr><td></td><td>College enrolment (share of adults 18+)</td><td><span class="pill c">Adoption Potential</span></td><td>higher</td></tr>
+        <tr><td>Health and Transport</td><td>Health insurance coverage</td><td><span class="pill a">Engagement Opportunity</span></td><td>higher</td></tr>
+        <tr><td></td><td>Routine checkup (adults)</td><td><span class="pill a">Engagement Opportunity</span></td><td>higher</td></tr>
+        <tr><td></td><td>Households without a vehicle</td><td><span class="pill a">Engagement Opportunity</span></td><td>lower</td></tr>
+        <tr><td>Character</td><td>Population aged 18–34</td><td><span class="pill c">Adoption Potential</span></td><td>higher</td></tr>
+        <tr><td></td><td>Residents 65+ with a computer and broadband</td><td><span class="pill c">Adoption Potential</span></td><td>higher</td></tr>
       </tbody>
     </table></div>
 
