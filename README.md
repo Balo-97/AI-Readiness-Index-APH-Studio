@@ -72,9 +72,11 @@ $$g_i=\Bigl(\prod_{j=1}^{n}a_{ij}\Bigr)^{1/n},\qquad w_i=\frac{g_i}{\sum_k g_k}.
 
 **4. Consistency.** With $\lambda_{\max}$ the principal eigenvalue, $\mathrm{CI}=(\lambda_{\max}-n)/(n-1)$ and $\mathrm{CR}=\mathrm{CI}/\mathrm{RI}(n)$, where $\mathrm{RI}$ is Saaty's random index (0.58 for $n=3$, 0.90 for $n=4$). Matrices with $\mathrm{CR}<0.10$ are accepted; above that the studio suggests revisions.
 
-**5. Combining the panel.** Each cell is pooled across the $K$ experts with a weighted geometric mean, which keeps the matrix reciprocal:
+**5. Combining the group.** A team can agree on each judgement by consensus and enter one set of matrices, or let every member judge separately and pool the answers. In the second case each cell is pooled across the $K$ experts with a weighted geometric mean, which keeps the matrix reciprocal:
 
 $$a^{G}_{ij}=\prod_{k=1}^{K}a_{ij,k}^{\lambda_k/\sum_l\lambda_l}.$$
+
+Pooling hides disagreement: if one member answers 5 and another 1/5, the pooled value is 1, "equally important", a view that neither holds. To work by consensus in the studio, add one participant (for example "Group"), enter the agreed judgements under that name, and untick everyone else under **Include** on the Group weights tab.
 
 **6. Global and pillar weights.** An indicator's global weight is its dimension's weight times its weight within the dimension, $w_j=w_d\,w_{j\mid d}$. The weights are then rescaled to sum to 1 within each pillar, $w^{P}_j=w_j/\sum_{k\in P}w_k$.
 

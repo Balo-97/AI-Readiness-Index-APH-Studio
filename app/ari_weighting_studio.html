@@ -367,7 +367,8 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const uid = p => p + '_' + Math.random().toString(36).slice(2, 9);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const fin = x => typeof x === 'number' && isFinite(x);
-const fmt = (x, d = 3) => fin(x) ? x.toFixed(d) : '–';
+const fmt = (x, d = 3) => fin(x) ? x.toFixed(d).replace(/^-(0(?:\.0+)?)$/, '$1') : '–';
+const fmtSigned = (x, d = 3) => { const t = fmt(x, d); return fin(x) && +t > 0 ? '+' + t : t; };
 const clone = o => JSON.parse(JSON.stringify(o));
 const sum = a => a.reduce((s, x) => s + x, 0);
 const byName = (a, b) => String(a).localeCompare(String(b), undefined, { sensitivity: 'base' });
@@ -1152,7 +1153,7 @@ function viewGroup() {
           <td><div class="cellbar"><span class="t"><i style="width:${fin(pv) ? 100 * pv / maxP : 0}%;background:var(--${i.pillar === 'S' ? 'supply' : i.pillar === 'D' ? 'demand' : 'context'})"></i></span><span class="num">${fmt(pv)}</span></div></td></tr>`;
       }
     }
-    h += `</tbody><tfoot><tr><td colspan="4" class="muted small">Pillar totals of global weight</td><td colspan="2" class="small"><span class="pill S">S ${fmt(W.pillarTotals.S)}</span> <span class="pill D">D ${fmt(W.pillarTotals.D)}</span>${W.pillarTotals.C ? ` <span class="pill C">C ${fmt(W.pillarTotals.C)}</span>` : ''}</td></tr></tfoot></table></div>`;
+    h += `</tbody><tfoot><tr><td colspan="4" class="muted small">Pillar totals of global weight</td><td colspan="2" class="small"><span class="pill S">EO ${fmt(W.pillarTotals.S)}</span> <span class="pill D">AP ${fmt(W.pillarTotals.D)}</span>${W.pillarTotals.C ? ` <span class="pill C">Context ${fmt(W.pillarTotals.C)}</span>` : ''}</td></tr></tfoot></table></div>`;
     h += `<div class="row" style="margin-top:12px"><button class="btn sec sm" data-act="export-weights-csv">Export weights (.csv)</button><button class="btn sec sm" data-act="export-weights-json">Export weights + diagnostics (.json)</button><button class="btn sec sm" data-act="export-report">Export consistency report (.md)</button></div>`;
     h += exportBox();
   } else h += `<p class="muted">Add indicators on the Setup tab.</p>`;
@@ -1197,8 +1198,8 @@ let mcResult = null;
 // data in levelStore, and each level remembers its files under its own browser-storage keys.
 let level = ui.level === 'county' ? 'county' : 'tract';
 const LEVELS = {
-  tract: { one: 'tract', many: 'tracts', One: 'Tract', Many: 'Census tracts', csv: 'ari_tracts_2024.csv', csvEl: 'bundled-csv', geo: 'tracts_2020.geojson', geoEl: 'bundled-geo', outline: 'counties_2020.geojson', outlineEl: 'bundled-outline' },
-  county: { one: 'county', many: 'counties', One: 'County', Many: 'Counties', csv: 'ari_counties_2024.csv', csvEl: 'bundled-csv-county', geo: 'counties_2020.geojson', geoEl: 'bundled-outline', outline: null, outlineEl: null },
+  tract: { one: 'tract', many: 'tracts', a: 'a tract', One: 'Tract', Units: 'Tracts', Many: 'Census tracts', csv: 'ari_tracts_2024.csv', csvEl: 'bundled-csv', geo: 'tracts_2020.geojson', geoEl: 'bundled-geo', outline: 'counties_2020.geojson', outlineEl: 'bundled-outline' },
+  county: { one: 'county', many: 'counties', a: 'a county', One: 'County', Units: 'Counties', Many: 'Counties', csv: 'ari_counties_2024.csv', csvEl: 'bundled-csv-county', geo: 'counties_2020.geojson', geoEl: 'bundled-outline', outline: null, outlineEl: null },
 };
 const U = () => LEVELS[level];
 const lsk = k => (level === 'county' ? k + '-county' : k);
@@ -1471,19 +1472,19 @@ function viewIndex() {
   // Settings
   h += `<section class="panel"><div class="shead"><div><h2>Normalisation and aggregation</h2><p class="meta">x′ = floor + (1 − floor)·x, where x is the min–max (or percentile) score flipped for ↓ indicators. Pillar score = 100 · Π x′<sub>j</sub><sup>w<sub>j</sub></sup>.</p></div></div><div class="grid2">
     <label class="field"><span>Normalisation</span><select id="x-norm" data-bind="idx.norm"${readOnly ? ' disabled' : ''}>${opt('minmax', 'Min–max (proposal default)', x.norm)}${opt('percentile', 'Percentile rank', x.norm)}</select></label>
-    <label class="field"><span>Floor for geometric mean</span><input type="number" id="x-floor" step="0.01" min="0.001" max="0.5" data-bind="idx.floor" value="${x.floor}"${readOnly ? ' disabled' : ''}><span class="hint">Keeps a tract at the minimum from scoring 0 overall. 0.01 = rescale to 1–100.</span></label>
+    <label class="field"><span>Floor for geometric mean</span><input type="number" id="x-floor" step="0.01" min="0.001" max="0.5" data-bind="idx.floor" value="${x.floor}"${readOnly ? ' disabled' : ''}><span class="hint">Keeps ${U().a} at the minimum from scoring 0 overall. 0.01 = rescale to 1–100.</span></label>
     <label class="field"><span>Winsorise tails (%)</span><input type="number" id="x-winsor" step="0.5" min="0" max="20" data-bind="idx.winsor" value="${x.winsor}"${readOnly ? ' disabled' : ''}><span class="hint">Clip each indicator at this percentile before min–max. 0 = off.</span></label>
-    <label class="field"><span>Missing values</span><select id="x-missing" data-bind="idx.missing"${readOnly ? ' disabled' : ''}>${opt('exclude', 'Leave the tract unscored for that pillar', x.missing)}${opt('reweight', 'Reweight over available indicators', x.missing)}${opt('median', 'Impute the study-area median', x.missing)}</select></label>
-    <label class="field"><span>Readiness gap G</span><select id="x-gap" data-bind="idx.gap"${readOnly ? ' disabled' : ''}>${['z', 'rank', 'raw'].map(k => opt(k, GAPS[k].option, x.gap)).join('')}</select><span class="hint">Min–max puts each indicator on its own ruler, so raw EO − AP mostly shows how the indicators are spread (a tract at the median on every indicator can get a large gap). The standardised and percentile-rank gaps compare each tract with the rest of the study area. None of them says a pillar is <i>low</i>: the gap labels do (see Results).</span></label>
+    <label class="field"><span>Missing values</span><select id="x-missing" data-bind="idx.missing"${readOnly ? ' disabled' : ''}>${opt('exclude', `Leave the ${U().one} unscored for that pillar`, x.missing)}${opt('reweight', 'Reweight over available indicators', x.missing)}${opt('median', 'Impute the study-area median', x.missing)}</select></label>
+    <label class="field"><span>Readiness gap G</span><select id="x-gap" data-bind="idx.gap"${readOnly ? ' disabled' : ''}>${['z', 'rank', 'raw'].map(k => opt(k, GAPS[k].option, x.gap)).join('')}</select><span class="hint">Min–max puts each indicator on its own ruler, so raw EO − AP mostly shows how the indicators are spread (${U().a} at the median on every indicator can get a large gap). The standardised and percentile-rank gaps compare each ${U().one} with the rest of the study area. None of them says a pillar is <i>low</i>: the gap labels do (see Results).</span></label>
     <label class="field"><span>Unreliable if CV above (%)</span><input type="number" id="x-cv" step="1" min="1" max="200" data-bind="idx.cvMax" value="${x.cvMax}"${readOnly ? ' disabled' : ''}><span class="hint">CRXP: &lt;15 ok, 15–30 caution, &gt;30 unreliable.</span></label>
     <div class="field"><span>Options</span>
-      <label class="row small" style="gap:8px"><input type="checkbox" id="x-exu" data-bind="idx.excludeUnreliable"${x.excludeUnreliable ? ' checked' : ''}${readOnly ? ' disabled' : ''}>Leave tracts with any unreliable indicator unscored</label>
+      <label class="row small" style="gap:8px"><input type="checkbox" id="x-exu" data-bind="idx.excludeUnreliable"${x.excludeUnreliable ? ' checked' : ''}${readOnly ? ' disabled' : ''}>Leave ${U().many} with any unreliable indicator unscored</label>
       <label class="row small" style="gap:8px"><input type="checkbox" id="x-feq" data-bind="idx.fallbackEqual"${x.fallbackEqual ? ' checked' : ''}${readOnly ? ' disabled' : ''}>Use equal weights where group comparisons are unfinished</label></div>
   </div></section>`;
 
   // Results
   const B = R.base; const scored = []; for (let r = 0; r < P.N; r++) if (fin(B.ARI[r])) scored.push(r);
-  h += `<section class="panel"><div class="shead"><div><h2>Results</h2><p class="meta">ARI = √(EO·AP), from Engagement Opportunity EO and Adoption Potential AP. Gap G = ${gapDef().short} (${gapDef().unit}): positive means a tract stands out more on engagement opportunity than on adoption potential, negative the reverse. <b>Gap labels</b> use the terciles of EO and AP: <i>EO-limited</i> = Engagement Opportunity in the bottom third and Adoption Potential not (invest in engagement opportunity); <i>AP-limited</i> = the reverse (invest in adoption potential: skills and capacity); <i>Both low</i>; <i>Ready</i> = both in the top third; <i>Mid-range</i> = everything else.</p></div>
+  h += `<section class="panel"><div class="shead"><div><h2>Results</h2><p class="meta">ARI = √(EO·AP), from Engagement Opportunity EO and Adoption Potential AP. Gap G = ${gapDef().short} (${gapDef().unit}): positive means ${U().a} stands out more on engagement opportunity than on adoption potential, negative the reverse. <b>Gap labels</b> use the terciles of EO and AP: <i>EO-limited</i> = Engagement Opportunity in the bottom third and Adoption Potential not (invest in engagement opportunity); <i>AP-limited</i> = the reverse (invest in adoption potential: skills and capacity); <i>Both low</i>; <i>Ready</i> = both in the top third; <i>Mid-range</i> = everything else.</p></div>
     <div class="row"><button class="btn sec sm" data-act="export-results"${scored.length ? '' : ' disabled'}>Export results (.csv)</button></div></div>`;
   h += exportBox();
   if (!W.ok && !x.fallbackEqual) h += `<div class="banner warn"><div class="txt">Group weights are incomplete (${W.missing.map(M => esc(M.level === 1 ? 'dimensions' : M.title)).join(', ')}). Finish the comparisons, or tick “Use equal weights where group comparisons are unfinished”.</div></div>`;
@@ -1497,10 +1498,10 @@ function viewIndex() {
       <div class="stat"><div class="k">${U().Many.replace('Census t', 'T')} scored</div><div class="v">${scored.length}<span class="small muted"> / ${P.N}</span></div></div>
       <div class="stat"><div class="k">Median ARI</div><div class="v">${fmt(med, 1)}</div></div>
       ${B.S && B.D ? (() => { const n = k => scored.filter(r => gapClass(R.cls[r][0], R.cls[r][1]) === k).length; return ['eo-limited', 'ap-limited', 'both-low'].map(k => `<div class="stat"><div class="k"><span class="swatch" style="background:${GAP_CLASSES[k].color}"></span>${GAP_CLASSES[k].label}</div><div class="v">${n(k)}</div></div>`).join(''); })() : ''}
-      <div class="stat"><div class="k">Tracts with an unreliable input</div><div class="v">${unrel}</div></div></div>`;
+      <div class="stat"><div class="k">${U().Units} with an unreliable input</div><div class="v">${unrel}</div></div></div>`;
     if (B.S && B.D) h += `<div class="chartwrap" style="margin-top:16px"><div id="scatter-host">${scatterSVG(R, scored)}</div>${bivLegend(R)}</div>`;
     h += resultsTable(R, scored);
-  } else h += `<p class="muted">No tract could be scored with the current mapping and settings.</p>`;
+  } else h += `<p class="muted">No ${U().one} could be scored with the current mapping and settings.</p>`;
   h += `</section>`;
 
   h += mapPanel(R, scored);
@@ -1508,7 +1509,7 @@ function viewIndex() {
 
   // Sensitivity
   const mc = ui.mc;
-  h += `<section class="panel"><div class="shead"><div><h2>Sensitivity (Monte Carlo)</h2><p class="meta">Re-run the index many times with perturbed weights and see how stable each tract's rank is.</p></div></div><div class="grid2">
+  h += `<section class="panel"><div class="shead"><div><h2>Sensitivity (Monte Carlo)</h2><p class="meta">Re-run the index many times with perturbed weights and see how stable each ${U().one}'s rank is.</p></div></div><div class="grid2">
     <label class="field"><span>Perturbation</span><select id="mc-mode" data-bind="mc.mode">${opt('noise', 'Shift every judgement randomly by up to ±k Saaty steps', mc.mode)}${opt('bootstrap', 'Resample participants (bootstrap)', mc.mode)}</select></label>
     <label class="field"><span>k (steps)</span><input type="number" id="mc-steps" step="0.5" min="0.5" max="4" data-bind="mc.steps" value="${mc.steps}"${mc.mode === 'noise' ? '' : ' disabled'}></label>
     <label class="field"><span>Draws</span><input type="number" id="mc-draws" step="100" min="50" max="5000" data-bind="mc.draws" value="${mc.draws}"></label>
@@ -1542,7 +1543,7 @@ function scatterSVG(R, scored) {
   for (const t of R.tD) g += `<line class="guide" x1="${m.l}" x2="${Wd - m.r}" y1="${Y(t)}" y2="${Y(t)}"/>`;
   g += `<text x="${(m.l + Wd - m.r) / 2}" y="${Ht - 6}" text-anchor="middle">Engagement Opportunity score EO</text><text transform="translate(12 ${(m.t + Ht - m.b) / 2}) rotate(-90)" text-anchor="middle">Adoption Potential score AP</text>`;
   for (const r of scored) g += `<circle class="pt${ui.selectedRow === r ? ' sel' : ''}" data-r="${r}" cx="${X(B.S[r]).toFixed(1)}" cy="${Y(B.D[r]).toFixed(1)}" r="3.6" fill="${bivColor(R.cls[r])}"/>`;
-  return `<svg class="chart" id="scatter" viewBox="0 0 ${Wd} ${Ht}" role="img" aria-label="Scatter of Engagement Opportunity against Adoption Potential scores for ${scored.length} tracts">${g}</svg>`;
+  return `<svg class="chart" id="scatter" viewBox="0 0 ${Wd} ${Ht}" role="img" aria-label="Scatter of Engagement Opportunity against Adoption Potential scores for ${scored.length} ${U().many}">${g}</svg>`;
 }
 function resultsTable(R, scored) {
   const B = R.base, P = R.P; const hasSD = !!(B.S && B.D); const mc = mcResult && mcResult.key === R.key ? mcResult : null;
@@ -1559,7 +1560,7 @@ function resultsTable(R, scored) {
   const shown = ui.showAll ? rows : rows.slice(0, 25);
   let h = `<div class="tscroll" style="margin-top:16px"><table class="data" id="results-table"><thead><tr>${cols.map(c => `<th class="sortable${c[0] === 'name' ? '' : ' r'}" data-act="sort" data-col="${c[0]}" aria-sort="${ui.sort.col === c[0] ? (ui.sort.dir > 0 ? 'ascending' : 'descending') : 'none'}">${c[1]}${ui.sort.col === c[0] ? (ui.sort.dir > 0 ? ' ▲' : ' ▼') : ''}</th>`).join('')}${hasSD ? '<th>Gap label</th>' : ''}</tr></thead><tbody>`;
   for (const r of shown) {
-    h += `<tr data-act="select-row" data-r="${r}"${ui.selectedRow === r ? ' class="hl"' : ''}><td class="r num">${fmt(B.rank[r], 0)}</td><td>${esc(P.names[r] || P.ids[r])}<br><span class="hint mono">${esc(P.ids[r])}</span></td><td class="r num">${B.S ? fmt(B.S[r], 1) : '–'}</td><td class="r num">${B.D ? fmt(B.D[r], 1) : '–'}</td>${B.C ? `<td class="r num">${fmt(B.C[r], 1)}</td>` : ''}<td class="r num"><b>${fmt(B.ARI[r], 1)}</b></td>${hasSD ? `<td class="r num">${B.G[r] > 0 ? '+' : ''}${fmt(B.G[r], gapDef().dec)}</td>` : ''}
+    h += `<tr data-act="select-row" data-r="${r}"${ui.selectedRow === r ? ' class="hl"' : ''}><td class="r num">${fmt(B.rank[r], 0)}</td><td>${esc(P.names[r] || P.ids[r])}<br><span class="hint mono">${esc(P.ids[r])}</span></td><td class="r num">${B.S ? fmt(B.S[r], 1) : '–'}</td><td class="r num">${B.D ? fmt(B.D[r], 1) : '–'}</td>${B.C ? `<td class="r num">${fmt(B.C[r], 1)}</td>` : ''}<td class="r num"><b>${fmt(B.ARI[r], 1)}</b></td>${hasSD ? `<td class="r num">${fmtSigned(B.G[r], gapDef().dec)}</td>` : ''}
       <td class="r">${P.flags[r].length ? `<span class="pill warn" title="${esc(P.flags[r].join(', '))}">${P.flags[r].length}</span>` : '<span class="muted small">0</span>'}</td>${mc ? `<td class="r num">${fmt(mc.p5[r], 0)}–${fmt(mc.p95[r], 0)}</td>` : ''}${hasLisa ? (() => { const l = lisaOf(r); return `<td class="r small">${l && LISA[l.cls] ? `<span class="swatch" style="background:${LISA[l.cls][0]}"></span>${l.cls}` : l ? '<span class="muted">' + (l.cls === 'ns' ? 'n.s.' : '–') + '</span>' : '–'}</td>`; })() : ''}
       ${hasSD ? `<td class="small">${gapClass(R.cls[r][0], R.cls[r][1]) ? `<span class="swatch" style="background:${GAP_CLASSES[gapClass(R.cls[r][0], R.cls[r][1])].color}"></span>` : ''}${profileLabel(R.cls[r][0], R.cls[r][1])}</td>` : ''}</tr>`;
   }
@@ -1647,19 +1648,19 @@ function tractBreakdown(R) {
   const scoreTxt = x.norm === 'percentile' ? 'percentile rank in the study area' : 'position between the study area’s lowest (0) and highest (100) value';
   let h = `<aside class="drawer" id="breakdown" tabindex="-1" aria-labelledby="bd-title">
     <div class="dhead"><div style="min-width:0"><div class="eyebrow">${U().One} breakdown</div><h3 id="bd-title">${esc(name)}</h3><div class="hint mono">${esc(P.ids[r])}</div></div>
-      <button class="btn ghost sm" data-act="close-breakdown" aria-label="Close tract breakdown" title="Close (Esc)">✕</button></div>
+      <button class="btn ghost sm" data-act="close-breakdown" aria-label="Close ${U().one} breakdown" title="Close (Esc)">✕</button></div>
     <div class="stats tight">
       <div class="stat"><div class="k">ARI</div><div class="v">${fmt(B.ARI[r], 1)}</div><div class="hint">${fin(B.rank[r]) ? `rank ${fmt(B.rank[r], 0)} of ${nScored}` : P.small && P.small[r] ? `not scored: ${Math.round(P.pop[r]).toLocaleString()} residents, below the minimum of ${P.minPop.toLocaleString()}` : 'not scored'}</div></div>
       ${B.S ? `<div class="stat"><div class="k">Engagement Opportunity EO</div><div class="v">${fmt(B.S[r], 1)}</div></div>` : ''}
       ${B.D ? `<div class="stat"><div class="k">Adoption Potential AP</div><div class="v">${fmt(B.D[r], 1)}</div></div>` : ''}
       ${B.C ? `<div class="stat"><div class="k">Context</div><div class="v">${fmt(B.C[r], 1)}</div></div>` : ''}
-      ${hasSD ? `<div class="stat"><div class="k">Gap G</div><div class="v">${B.G[r] > 0 ? '+' : ''}${fmt(B.G[r], gapDef().dec)}</div></div>` : ''}
+      ${hasSD ? `<div class="stat"><div class="k">Gap G</div><div class="v">${fmtSigned(B.G[r], gapDef().dec)}</div></div>` : ''}
     </div>
     <p class="small" style="margin-top:8px">${hasSD ? `${gapClass(R.cls[r][0], R.cls[r][1]) ? `<span class="swatch" style="background:${GAP_CLASSES[gapClass(R.cls[r][0], R.cls[r][1])].color}"></span>Gap label: <b>${esc(profileLabel(R.cls[r][0], R.cls[r][1]))}</b> (${esc(GAP_CLASSES[gapClass(R.cls[r][0], R.cls[r][1])].rule)})` : 'No gap label'}` : ''}${l ? ` · LISA: ${LISA[l.cls] ? `<span class="swatch" style="background:${LISA[l.cls][0]}"></span>${esc(LISA[l.cls][1])}` : l.cls === 'ns' ? 'not significant' : 'not tested'}` : ''}${P.flags[r].length ? ` · <span class="pill warn" title="${esc(P.flags[r].join(', '))}">${P.flags[r].length} unreliable input${P.flags[r].length === 1 ? '' : 's'}</span>` : ''}</p>
-    ${PR.dims.some(D => fin(D.S[r])) ? '' : `<p class="banner warn" style="margin-top:10px"><span class="txt">This tract has no value for any mapped indicator. Tracts like this are usually parks, airports or water with few or no residents.</span></p>`}
+    ${PR.dims.some(D => fin(D.S[r])) ? '' : `<p class="banner warn" style="margin-top:10px"><span class="txt">This ${U().one} has no value for any mapped indicator.${level === 'county' ? '' : ' Tracts like this are usually parks, airports or water with few or no residents.'}</span></p>`}
     <div class="row" style="margin-top:10px">${geo ? `<button class="btn sec sm" data-act="breakdown-map">Show on map</button>` : ''}</div>
-    <p class="hint" style="margin-top:12px">Scores run from 0 to 100, higher = more ready (↓ indicators are flipped): the ${scoreTxt}. A dimension's score is the weighted geometric mean of its indicators' scores, using the group's weights within the dimension. It describes the tract; the ARI is built from the pillar scores.</p>
-    <div class="rlegend"><span><i class="lk tract"></i>This tract</span><span><i class="lk med"></i>Study-area median</span></div>`;
+    <p class="hint" style="margin-top:12px">Scores run from 0 to 100, higher = more ready (↓ indicators are flipped): the ${scoreTxt}. A dimension's score is the weighted geometric mean of its indicators' scores, using the group's weights within the dimension. It describes the ${U().one}; the ARI is built from the pillar scores.</p>
+    <div class="rlegend"><span><i class="lk tract"></i>This ${U().one}</span><span><i class="lk med"></i>Study-area median</span></div>`;
   const dimAxes = dimensionAxes(PR, r);
   if (dimAxes.length) h += `<h4 class="bd-h">Dimensions</h4>${profileChart(dimAxes, 'radar-dims', `Dimension scores of ${name} against the study-area median`)}`;
   PR.dims.forEach((D, di) => {
@@ -1693,7 +1694,7 @@ function mcSummary(R) {
     <div class="stat"><div class="k">Draws</div><div class="v">${mc.draws}</div></div>
     <div class="stat"><div class="k">Median Spearman ρ vs baseline</div><div class="v">${fmt(mc.rhoMed, 4)}</div></div>
     <div class="stat"><div class="k">Mean |rank shift|</div><div class="v">${fmt(mc.meanShift, 1)}</div></div>
-    <div class="stat"><div class="k">Tracts with a 90% range ≤ ${Math.max(3, Math.round(0.1 * T))} places</div><div class="v">${stable}<span class="small muted"> / ${T}</span></div></div></div>
+    <div class="stat"><div class="k">${U().Units} with a 90% range ≤ ${Math.max(3, Math.round(0.1 * T))} places</div><div class="v">${stable}<span class="small muted"> / ${T}</span></div></div></div>
     <p class="hint" style="margin-top:8px">${esc(mc.desc)} · median width of the 90% rank range: ${fmt(quantile(widths, 0.5), 0)} places.</p>`;
   h += mcChartSVG(R, scored);
   return h;
@@ -1709,7 +1710,7 @@ function mcChartSVG(R, scored) {
   order.forEach((r, k) => { g += `<line x1="${X(k).toFixed(1)}" x2="${X(k).toFixed(1)}" y1="${Y(mc.p5[r]).toFixed(1)}" y2="${Y(mc.p95[r]).toFixed(1)}" stroke="var(--accent-line)" stroke-width="${T > 300 ? 1 : 2}"/>`; });
   order.forEach((r, k) => { g += `<circle cx="${X(k).toFixed(1)}" cy="${Y(mc.p50[r]).toFixed(1)}" r="1.6" fill="var(--accent)"/>`; });
   g += `<line class="guide" x1="${X(0)}" y1="${Y(1)}" x2="${X(T - 1)}" y2="${Y(T)}"/>`;
-  g += `<text x="${(m.l + Wd - m.r) / 2}" y="${Ht - 4}" text-anchor="middle">Tracts ordered by baseline rank</text><text transform="translate(11 ${(m.t + Ht - m.b) / 2}) rotate(-90)" text-anchor="middle">Rank across draws (5th–95th pct.)</text>`;
+  g += `<text x="${(m.l + Wd - m.r) / 2}" y="${Ht - 4}" text-anchor="middle">${U().Units} ordered by baseline rank</text><text transform="translate(11 ${(m.t + Ht - m.b) / 2}) rotate(-90)" text-anchor="middle">Rank across draws (5th–95th pct.)</text>`;
   return `<svg class="chart" viewBox="0 0 ${Wd} ${Ht}" role="img" aria-label="Rank uncertainty intervals" style="margin-top:12px">${g}</svg>`;
 }
 // Monte Carlo core: re-derives the group weights from perturbed (or resampled) judgements and re-scores every unit.
@@ -1749,7 +1750,7 @@ function attachScatter() {
   svg.addEventListener('mousemove', e => {
     const c = e.target.closest('circle.pt'); if (!c) { tip.hidden = true; return; }
     const r = +c.dataset.r; tip.hidden = false;
-    tip.innerHTML = `<b>${esc(P.names[r] || P.ids[r])}</b><br>EO ${fmt(B.S[r], 1)} · AP ${fmt(B.D[r], 1)}<br>ARI ${fmt(B.ARI[r], 1)} · rank ${fmt(B.rank[r], 0)}<br>G ${B.G[r] > 0 ? '+' : ''}${fmt(B.G[r], gapDef().dec)}`;
+    tip.innerHTML = `<b>${esc(P.names[r] || P.ids[r])}</b><br>EO ${fmt(B.S[r], 1)} · AP ${fmt(B.D[r], 1)}<br>ARI ${fmt(B.ARI[r], 1)} · rank ${fmt(B.rank[r], 0)}<br>G ${fmtSigned(B.G[r], gapDef().dec)}`;
     const x = Math.min(e.clientX + 14, window.innerWidth - 270); tip.style.left = x + 'px'; tip.style.top = (e.clientY + 14) + 'px';
   });
   svg.addEventListener('mouseleave', () => tip.hidden = true);
@@ -2184,10 +2185,10 @@ function legendSVG(S, T, idp = 'lg') {
 }
 function mapPanel(R, scored) {
   const x = idxS(); const st = ui.map;
-  let h = `<section class="panel" id="map-panel"><div class="shead"><div><h2>Map</h2><p class="meta">Results by ${U().one}, joined to boundary polygons by ID. Hover for values; click a tract to open its breakdown and highlight it in the table and scatter.</p></div>${geo && scored.length ? `<div class="row"><button class="btn sec sm" data-act="map-export-svg">Export map (.svg)</button><button class="btn sec sm" data-act="map-export-png">Export map (.png)</button></div>` : ''}</div>
-    <div class="row"><button class="btn sm${geo ? ' sec' : ''}" data-act="geo-bundled">Load 2020 census tract boundaries (14 counties)</button><button class="btn sec sm" data-act="geo-upload">Upload boundaries (GeoJSON)…</button>${geo ? `<span class="small muted">${esc(geo.name)} · ${geo.feats.length} shapes</span>` : ''}</div>`;
+  let h = `<section class="panel" id="map-panel"><div class="shead"><div><h2>Map</h2><p class="meta">Results by ${U().one}, joined to boundary polygons by ID. Hover for values; click ${U().a} to open its breakdown and highlight it in the table and scatter.</p></div>${geo && scored.length ? `<div class="row"><button class="btn sec sm" data-act="map-export-svg">Export map (.svg)</button><button class="btn sec sm" data-act="map-export-png">Export map (.png)</button></div>` : ''}</div>
+    <div class="row"><button class="btn sm${geo ? ' sec' : ''}" data-act="geo-bundled">${level === 'county' ? 'Load 2020 county boundaries (14 counties)' : 'Load 2020 census tract boundaries (14 counties)'}</button><button class="btn sec sm" data-act="geo-upload">Upload boundaries (GeoJSON)…</button>${geo ? `<span class="small muted">${esc(geo.name)} · ${geo.feats.length} shapes</span>` : ''}</div>`;
   if (!geo) return h + `<p class="hint" style="margin-top:10px">Any polygon GeoJSON works — tracts, block groups, NPAs, counties — as long as one of its properties matches the ID column of the table (here <code>${esc(x.idCol || '—')}</code>). Have a shapefile? Convert it in QGIS or at mapshaper.org (Export → GeoJSON, WGS 84).</p></section>`;
-  if (!scored.length) return h + `<p class="muted" style="margin-top:10px">Nothing to map until at least one tract has a score.</p></section>`;
+  if (!scored.length) return h + `<p class="muted" style="margin-top:10px">Nothing to map until at least one ${U().one} has a score.</p></section>`;
   const M = mapModel(R); const S = mapSpec(R); const T = themeHex();
   h += `<div class="grid2" style="margin-top:12px">
     <label class="field"><span>Join: boundary property ↔ table column “${esc(x.idCol)}”</span><select id="map-join" data-bind="map.joinProp">${geo.props.map(p => opt(p, p, geo.idProp)).join('')}</select>
@@ -2199,12 +2200,12 @@ function mapPanel(R, scored) {
     <label class="field"><span>Classes</span><span class="row" style="gap:6px;flex-wrap:nowrap"><select id="map-method" data-bind="map.method"${S.type === 'biv' ? ' disabled' : ''}>${opt('quantile', 'Quantiles', st.method)}${opt('equal', 'Equal intervals', st.method)}${opt('jenks', 'Natural breaks (Jenks)', st.method)}</select><select id="map-classes" data-bind="map.classes" style="max-width:76px" aria-label="Number of classes"${S.type === 'biv' ? ' disabled' : ''}>${[3, 4, 5, 6, 7].map(n => opt(n, n, st.classes)).join('')}</select></span></label>
     <div class="field"><span>Options</span>
       <label class="row small" style="gap:8px"><input type="checkbox" id="map-ctx" data-bind="map.context"${st.context ? ' checked' : ''}>Show shapes outside the study area (${M.nContext})</label>
-      <label class="row small" style="gap:8px"><input type="checkbox" id="map-hatch" data-bind="map.hatch"${st.hatch ? ' checked' : ''}>Hatch tracts with an unreliable input</label></div>
+      <label class="row small" style="gap:8px"><input type="checkbox" id="map-hatch" data-bind="map.hatch"${st.hatch ? ' checked' : ''}>Hatch ${U().many} with an unreliable input</label></div>
   </div>`;
   const parts = mapSVGParts(R, T, 'm'); const leg = legendSVG(S, T, 'lg');
   h += `<div class="mapwrap" style="margin-top:14px"><div class="mapbox" id="mapbox">
-      <svg class="map" id="map" viewBox="0 0 ${M.W} ${M.H}" role="img" aria-label="${esc(S.title)} by tract">${parts.inner}</svg>
-      <div class="mapctl"><button data-act="map-zoom" data-f="1.6" title="Zoom in" aria-label="Zoom in">+</button><button data-act="map-zoom" data-f="0.625" title="Zoom out" aria-label="Zoom out">−</button><button data-act="map-fit" title="Fit to study area" aria-label="Fit to study area">⤢</button>${ui.selectedRow != null ? `<button data-act="map-zoom-sel" title="Zoom to selected tract" aria-label="Zoom to selected tract">◎</button>` : ''}</div>
+      <svg class="map" id="map" viewBox="0 0 ${M.W} ${M.H}" role="img" aria-label="${esc(S.title)} by ${U().one}">${parts.inner}</svg>
+      <div class="mapctl"><button data-act="map-zoom" data-f="1.6" title="Zoom in" aria-label="Zoom in">+</button><button data-act="map-zoom" data-f="0.625" title="Zoom out" aria-label="Zoom out">−</button><button data-act="map-fit" title="Fit to study area" aria-label="Fit to study area">⤢</button>${ui.selectedRow != null ? `<button data-act="map-zoom-sel" title="Zoom to selected ${U().one}" aria-label="Zoom to selected ${U().one}">◎</button>` : ''}</div>
       <span class="maphint">Click the map, then scroll to zoom · drag to pan</span></div>
     <div class="stack"><svg class="legend" viewBox="0 0 ${leg.width} ${leg.height}" width="${leg.width}" style="max-width:100%;height:auto" role="img" aria-label="Legend">${leg.inner}</svg>
       <p class="hint">${M.kmPerUnit ? 'Equirectangular projection with latitude correction.' : 'Planar (already projected) coordinates.'} Boundaries: ${esc(geo.name)}${outline ? `; outlines: ${esc(outline.name)}` : ''}.</p></div></div>`;
@@ -2409,7 +2410,7 @@ function computeSpatial(R) {
   if (spCache && spCache.key === key) return spCache;
   const featOf = new Map(); M.fr.forEach((r, f) => { if (r >= 0 && !featOf.has(r)) featOf.set(r, f); });
   const rows = [...featOf.keys()].filter(r => fin(v.vals[r])).sort((a, b) => a - b);
-  if (rows.length < 8) return (spCache = { key, v, error: 'Spatial statistics need at least 8 tracts with a value and a boundary.' });
+  if (rows.length < 8) return (spCache = { key, v, error: `Spatial statistics need at least 8 ${U().many} with a value and a boundary.` });
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const r of rows) for (const poly of geo.feats[featOf.get(r)].polys) for (const pt of poly[0]) { x0 = Math.min(x0, pt[0]); x1 = Math.max(x1, pt[0]); y0 = Math.min(y0, pt[1]); y1 = Math.max(y1, pt[1]); }
   const units = rows.map(r => geo.planar ? geo.feats[featOf.get(r)].polys : projectRings(geo.feats[featOf.get(r)].polys, (y0 + y1) / 2, (x0 + x1) / 2));
@@ -2446,12 +2447,12 @@ function moranScatterSVG(SP) {
 function spatialPanel(R, scored) {
   const sp = ui.sp;
   let h = `<section class="panel" id="spatial-panel"><div class="shead"><div><h2>Spatial clusters: Moran's I and LISA</h2><p class="meta">Do similar values sit next to each other? Global Moran's I answers for the whole study area; local Moran (LISA) finds where the clusters and outliers are.</p></div>${geo && scored.length ? `<div class="row"><button class="btn sec sm" data-act="sp-map">Show LISA clusters on the map</button></div>` : ''}</div>`;
-  if (!geo) return h + `<p class="muted">Load tract boundaries on the Map panel first: neighbours are worked out from them.</p></section>`;
-  if (!scored.length) return h + `<p class="muted">Nothing to analyse until tracts have a score.</p></section>`;
+  if (!geo) return h + `<p class="muted">Load ${U().one} boundaries on the Map panel first: neighbours are worked out from them.</p></section>`;
+  if (!scored.length) return h + `<p class="muted">Nothing to analyse until ${U().many} have a score.</p></section>`;
   const SP = computeSpatial(R); const vars = spatialVariables(R);
   h += `<div class="grid2">
     <label class="field"><span>Variable</span><select id="sp-var" data-bind="sp.variable">${vars.map(l => opt(l.key, l.label, SP && SP.v ? SP.v.key : sp.variable)).join('')}</select></label>
-    <label class="field"><span>Neighbours</span><select id="sp-rule" data-bind="sp.rule">${opt('queen', 'Queen contiguity: share any part of a border', sp.rule)}${opt('rook', 'Rook contiguity: share a border segment', sp.rule)}${opt('knn', 'k nearest tracts (by centroid)', sp.rule)}</select></label>
+    <label class="field"><span>Neighbours</span><select id="sp-rule" data-bind="sp.rule">${opt('queen', 'Queen contiguity: share any part of a border', sp.rule)}${opt('rook', 'Rook contiguity: share a border segment', sp.rule)}${opt('knn', `k nearest ${U().many} (by centroid)`, sp.rule)}</select></label>
     ${sp.rule === 'knn' ? `<label class="field"><span>k</span><input type="number" id="sp-k" min="1" max="20" step="1" data-bind="sp.k" value="${sp.k}"></label>`
       : `<label class="field"><span>Snap tolerance (m)</span><input type="number" id="sp-d" min="0" max="500" step="1" data-bind="sp.d" value="${sp.d}"><span class="hint">Boundaries closer than this count as touching (see note below).</span></label>`}
     ${sp.rule === 'rook' ? `<label class="field"><span>Minimum shared border (m)</span><input type="number" id="sp-min" min="0" max="2000" step="5" data-bind="sp.minShared" value="${sp.minShared}"></label>` : ''}
@@ -2467,27 +2468,27 @@ function spatialPanel(R, scored) {
     h += `<div class="banner warn" style="margin-top:12px" id="fdr-perms-warning"><div class="txt"><b>Too few permutations for the FDR correction.</b> With ${nTest} ${U().many} and α = ${sp.alpha}, the strictest FDR cut-off is ${sp.alpha}/${nTest} = ${fmt(+sp.alpha / nTest, 5)}, but with ${(+sp.perms).toLocaleString()} permutations no pseudo p-value can go below 1/${(+sp.perms + 1).toLocaleString()} = ${fmt(1 / (+sp.perms + 1), 5)}. Whether any cluster survives then depends on the random draw. Use at least ${need.toLocaleString()} permutations${better ? ` (choose ${better.toLocaleString()})` : ''}.</div></div>`;
   }
   const G = SP.G; const sig = G.pSim <= +sp.alpha;
-  const verdict = !sig ? `No significant spatial autocorrelation at α = ${sp.alpha}: the pattern is consistent with a random arrangement of tracts.`
-    : G.I > 0 ? `Significant positive spatial autocorrelation: tracts with similar ${esc(SP.v.label)} values cluster together (I = ${fmt(G.I, 3)} against ${fmt(G.EI, 4)} expected under randomness).`
-    : `Significant negative spatial autocorrelation: neighbouring tracts tend to be dissimilar (a checkerboard-like pattern).`;
+  const verdict = !sig ? `No significant spatial autocorrelation at α = ${sp.alpha}: the pattern is consistent with a random arrangement of ${U().many}.`
+    : G.I > 0 ? `Significant positive spatial autocorrelation: ${U().many} with similar ${esc(SP.v.label)} values cluster together (I = ${fmt(G.I, 3)} against ${fmt(G.EI, 4)} expected under randomness).`
+    : `Significant negative spatial autocorrelation: neighbouring ${U().many} tend to be dissimilar (a checkerboard-like pattern).`;
   const counts = { HH: 0, LL: 0, HL: 0, LH: 0, ns: 0, none: 0 }; SP.cls.forEach(c => counts[c]++);
   h += `<div class="stats" style="margin-top:14px">
       <div class="stat"><div class="k">Moran's I</div><div class="v">${fmt(G.I, 3)}</div></div>
       <div class="stat"><div class="k">z (randomisation)</div><div class="v">${fmt(G.zR, 2)}</div></div>
       <div class="stat"><div class="k">Pseudo p (${G.B.toLocaleString()} permutations)</div><div class="v">${G.pSim < 0.001 ? '&lt; 0.001' : fmt(G.pSim, 3)}</div></div>
-      <div class="stat"><div class="k">Tracts · mean neighbours</div><div class="v">${SP.rows.length} <span class="small muted">· ${fmt(SP.kMean, 1)}</span></div></div></div>
+      <div class="stat"><div class="k">${U().Units} · mean neighbours</div><div class="v">${SP.rows.length} <span class="small muted">· ${fmt(SP.kMean, 1)}</span></div></div></div>
     <p class="small" style="margin-top:10px">${verdict}</p>
     <div class="chartwrap" style="margin-top:14px"><div id="moran-host">${moranScatterSVG(SP)}</div>
     <div class="stack"><b class="small">LISA clusters (${sp.fdr ? 'FDR' : 'uncorrected'} α = ${sp.alpha})</b>
       ${['HH', 'LL', 'HL', 'LH'].map(c => `<div class="row small" style="gap:8px"><span class="swatch" style="background:${LISA[c][0]}"></span>${LISA[c][1]}<span class="muted" style="margin-left:auto">${counts[c]}</span></div>`).join('')}
       <div class="row small" style="gap:8px"><span class="swatch" style="background:var(--line)"></span>Not significant<span class="muted" style="margin-left:auto">${counts.ns}</span></div>
       ${counts.none ? `<div class="row small" style="gap:8px"><span class="swatch" style="background:var(--surface-2)"></span>No neighbours<span class="muted" style="margin-left:auto">${counts.none}</span></div>` : ''}
-      <p class="hint">The dashed line has slope I. Each point is a tract: its own standardised value against the average of its neighbours'.${sp.fdr ? ` FDR threshold on the pseudo p-values: ${SP.thr ? fmt(SP.thr, 4) : 'none significant'}.` : ''}</p></div></div>
+      <p class="hint">The dashed line has slope I. Each point is ${U().a}: its own standardised value against the average of its neighbours'.${sp.fdr ? ` FDR threshold on the pseudo p-values: ${SP.thr ? fmt(SP.thr, 4) : 'none significant'}.` : ''}</p></div></div>
     <div class="tscroll" style="margin-top:14px"><table class="data"><thead><tr><th>Inference for Moran's I</th><th class="r">E[I]</th><th class="r">s.d.</th><th class="r">z</th><th class="r">p (two-sided)</th></tr></thead><tbody>
       <tr><td>Normality assumption</td><td class="r num">${fmt(G.EI, 4)}</td><td class="r num">${fmt(Math.sqrt(G.VN), 4)}</td><td class="r num">${fmt(G.zN, 2)}</td><td class="r num">${G.pN < 1e-4 ? G.pN.toExponential(1) : fmt(G.pN, 4)}</td></tr>
       <tr><td>Randomisation assumption</td><td class="r num">${fmt(G.EI, 4)}</td><td class="r num">${fmt(Math.sqrt(G.VR), 4)}</td><td class="r num">${fmt(G.zR, 2)}</td><td class="r num">${G.pR < 1e-4 ? G.pR.toExponential(1) : fmt(G.pR, 4)}</td></tr>
       <tr><td>Permutation (${G.B.toLocaleString()} draws; pseudo p, one-sided)</td><td class="r num">${fmt(G.simMean, 4)}</td><td class="r num">${fmt(G.simSd, 4)}</td><td class="r num">${fmt(G.zSim, 2)}</td><td class="r num">${fmt(G.pSim, 4)}</td></tr></tbody></table></div>
-    <p class="hint" style="margin-top:8px">Weights: ${sp.rule === 'knn' ? `${sp.k} nearest tracts by centroid` : `${sp.rule} contiguity with a ${sp.d} m snap tolerance${sp.rule === 'rook' ? ` and at least ${sp.minShared} m of shared border` : ''}`}, row-standardised; ${SP.kMin}–${SP.kMax} neighbours per tract${SP.islands ? `; ${SP.islands} tract(s) without neighbours are left out of the LISA` : ''}. ${sp.rule !== 'knn' ? 'The CRXP boundaries were simplified tract by tract, so neighbours rarely share exact vertices; a 20 m tolerance (queen) or 8 m with 40 m of shared border (rook) reproduces the exact adjacency of the Census Bureau tract boundaries (see the README). ' : ''}Computed in ${fmt(SP.ms / 1000, 2)} s.</p>`;
+    <p class="hint" style="margin-top:8px">Weights: ${sp.rule === 'knn' ? `${sp.k} nearest ${U().many} by centroid` : `${sp.rule} contiguity with a ${sp.d} m snap tolerance${sp.rule === 'rook' ? ` and at least ${sp.minShared} m of shared border` : ''}`}, row-standardised; ${SP.kMin}–${SP.kMax} neighbours per ${U().one}${SP.islands ? `; ${SP.islands} ${SP.islands === 1 ? U().one : U().many} without neighbours ${SP.islands === 1 ? 'is' : 'are'} left out of the LISA` : ''}. ${sp.rule !== 'knn' && level !== 'county' ? 'The CRXP boundaries were simplified tract by tract, so neighbours rarely share exact vertices; a 20 m tolerance (queen) or 8 m with 40 m of shared border (rook) reproduces the exact adjacency of the Census Bureau tract boundaries (see the README). ' : ''}Computed in ${fmt(SP.ms / 1000, 2)} s.</p>`;
   return h + `</section>`;
 }
 function attachMoran() {
@@ -2510,7 +2511,7 @@ function viewGuide() {
     <ol>
       <li><b>Setup.</b> Define the goal, the Level 1 dimensions and the Level 2 indicators under each. Tag every indicator Engagement Opportunity, Adoption Potential or Context, and say whether a higher value means more or less ready. Nothing is fixed; the CRXP catalogue only speeds up typing.</li>
       <li><b>Compare.</b> Each person picks their name under “You are” and answers every pair on Saaty's 1–9 scale: first the dimensions, then the indicators within each dimension. The side panel shows your weights and consistency ratio live, and suggests which answer to change if CR is above the threshold.</li>
-      <li><b>Group weights.</b> Judgements are pooled (AIJ geometric mean by default), priorities are derived (RGMM by default), and local weights are multiplied down the hierarchy into global weights. Export the weights and a consistency report for the paper.</li>
+      <li><b>Group weights.</b> Judgements are pooled (AIJ geometric mean by default), priorities are derived (RGMM by default), and local weights are multiplied down the hierarchy into global weights. Export the weights and a consistency report for the paper. <i>Working by consensus instead?</i> If the team prefers to agree on each comparison rather than average individual answers, add one participant (for example “Group”), enter the agreed judgements under that name, and untick everyone else under Include.</li>
       <li><b>Index.</b> Choose the unit of analysis (census tracts or counties), load the data, map indicator columns, and the studio computes Engagement Opportunity EO, Adoption Potential AP, ARI = √(EO·AP), the readiness gap G and a gap label for every tract, maps them (any score, the gap labels, the gap, the bivariate EO × AP classes or a single indicator) on the tract boundaries, finds spatial clusters (Moran’s I, LISA), and runs a Monte Carlo check of rank stability. Click any tract (table, scatter or map) for its breakdown: every indicator’s value and score, and radar charts by dimension. Tracts with fewer residents than the <b>minimum</b> (100 by default, set under the study area) are left unscored and kept out of each indicator’s minimum and maximum: survey estimates for a handful of residents are mostly 0% or 100% and would otherwise set the scale for every other tract. LISA uses 9,999 permutations by default; with the FDR correction, fewer than about (number of tracts ÷ α) permutations cannot detect any cluster reliably, and the studio warns when that happens.</li>
       <li><b>Disaggregation (beta).</b> <i>This tab is still being worked on and has not yet been tested; treat its results as provisional and check them before relying on them.</i> Break the results down by the characteristics of the tracts (or counties): majority race or ethnicity, income, poverty, age, nativity, language, county, or any column. Compare each group's index, dimension and indicator scores (population-weighted, with the gap, the between-group share of variation and a Kruskal–Wallis test). Cross two or three characteristics to look at intersections: each combination against what the characteristics predict on their own, with an F-test of the interaction.</li>
     </ol>
@@ -2682,7 +2683,7 @@ function chartFile(inner, title, key) {
     + `<text x="12" y="22" style="font-size:14px;font-weight:600;fill:${T.ink}">${esc(title)}</text><svg x="0" y="${top}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${body}</svg>`
     + (key ? `<g transform="translate(12 ${top + H + 4})">${key.g}</g>` : '') + `<text x="12" y="${Ht - 7}" style="font-size:10px">${esc(project.title)} · ${new Date().toISOString().slice(0, 10)}</text></svg>`;
 }
-const keyTract = () => ({ h: 22, g: `<line x1="0" x2="18" y1="8" y2="8" stroke="${tok('--accent')}" stroke-width="2"/><text x="24" y="12">This tract</text><line x1="100" x2="118" y1="8" y2="8" stroke="${themeHex().muted}" stroke-width="1.5" stroke-dasharray="4 3"/><text x="124" y="12">Study-area median</text>` });
+const keyTract = () => ({ h: 22, g: `<line x1="0" x2="18" y1="8" y2="8" stroke="${tok('--accent')}" stroke-width="2"/><text x="24" y="12">This ${U().one}</text><line x1="100" x2="118" y1="8" y2="8" stroke="${themeHex().muted}" stroke-width="1.5" stroke-dasharray="4 3"/><text x="124" y="12">Study-area median</text>` });
 const keyBiv = () => { let g = ''; for (let d = 3; d >= 1; d--) for (let s = 1; s <= 3; s++) g += `<rect x="${64 + (s - 1) * 15}" y="${(3 - d) * 15}" width="13" height="13" rx="2" fill="${tok('--b' + d + s)}"/>`; return { h: 66, g: g + `<text x="0" y="26">AP ↑</text><text x="64" y="58">EO →</text><text x="120" y="12">Colour: tercile of EO × tercile of AP</text><text x="120" y="28">Dashed: terciles and the A = C line</text>` }; };
 const keyLisa = () => ({ h: 52, g: [...Object.values(LISA), [themeHex().line, 'Not significant']].map(([c, l], i) => `<rect x="${(i % 3) * 132}" y="${Math.floor(i / 3) * 18 + 1}" width="12" height="12" rx="2" fill="${c}"/><text x="${(i % 3) * 132 + 17}" y="${Math.floor(i / 3) * 18 + 11}">${esc(l)}</text>`).join('') + `<text x="0" y="48">Dashed line: slope = Moran's I</text>` });
 // Every comparison: each participant's own judgements (Saaty values) and the pooled group matrix with its response counts.
@@ -2794,7 +2795,7 @@ async function buildExportBundle(o = {}, onStep = () => {}) {
       for (let i = 0; i < P.N; i++) if (fin(B.rank[i])) lines.push(csvLine([P.ids[i], P.names[i], B.rank[i], mc.p5[i], mc.p50[i], mc.p95[i], mc.p95[i] - mc.p5[i]]));
       add('06-sensitivity/monte-carlo-ranks.csv', lines.join('\n') + '\n', `Each ${U().one}’s baseline rank and its 5th, 50th and 95th percentile rank across the Monte Carlo draws.`);
       add('06-sensitivity/monte-carlo-summary.json', JSON.stringify({ description: mc.desc, draws: mc.draws, median_spearman_rho: mc.rhoMed, mean_abs_rank_shift: mc.meanShift, settings: { mode: ui.mc.mode, steps: ui.mc.steps, vary_normalisation: ui.mc.varyNorm } }, null, 2), 'Monte Carlo settings and summary statistics.');
-      add('06-sensitivity/rank-uncertainty.svg', chartFile(mcChartSVG(R, scored), 'Rank uncertainty (5th–95th percentile across draws)'), 'Rank intervals, tracts ordered by baseline rank.');
+      add('06-sensitivity/rank-uncertainty.svg', chartFile(mcChartSVG(R, scored), 'Rank uncertainty (5th–95th percentile across draws)'), `Rank intervals, ${U().many} ordered by baseline rank.`);
     }
   }
   files.unshift({ name: 'README.txt', data: exportReadme(R, SP, notes, stamp, o) });
@@ -2816,9 +2817,9 @@ function exportReadme(R, SP, notes, stamp, o) {
     if (SP) L.push(`Spatial statistics: ${SP.v.label}; ${ui.sp.rule === 'knn' ? ui.sp.k + ' nearest neighbours' : ui.sp.rule + ' contiguity, ' + ui.sp.d + ' m tolerance'}; ${SP.G.B} permutations; alpha ${ui.sp.alpha}${ui.sp.fdr ? ' with false-discovery-rate control' : ''}`);
     if (!geo) L.push('Maps and spatial statistics: not included (no boundaries loaded).');
     if (!(mcResult && mcResult.key === R.key)) L.push('Sensitivity analysis: not included (run it on the Index tab first).');
-  } else L.push('', 'Index results, maps and spatial statistics: not included (no tract data loaded).');
+  } else L.push('', `Index results, maps and spatial statistics: not included (no ${U().one} data loaded).`);
   L.push('', 'Scores', '  EO, AP: Engagement Opportunity and Adoption Potential pillar scores, 100 × weighted geometric mean of floored normalised indicator scores (0–100).',
-    `  ARI = √(EO·AP). Gap G = ${gapDef().short} (${gapDef().unit}): positive = the tract stands out more on engagement opportunity than on adoption potential; negative = the reverse.`,
+    `  ARI = √(EO·AP). Gap G = ${gapDef().short} (${gapDef().unit}): positive = the ${U().one} stands out more on engagement opportunity than on adoption potential; negative = the reverse.`,
     '  Gap label (from the terciles of EO and AP; low = bottom third): EO-limited = EO low, AP not; AP-limited = AP low, EO not; Both low; Ready = both in the top third; Mid-range = the rest.',
     '  Indicator score: the normalised value the index uses, ×100, flipped for "lower is better" indicators (higher = more ready).',
     '  Dimension score: weighted geometric mean of a dimension’s indicator scores (descriptive; not part of the ARI).',
@@ -3233,8 +3234,8 @@ function exportAllPanel() {
   const item = (ok, t) => `<li${ok ? '' : ' class="muted"'}>${ok ? '✓' : '–'} ${t}</li>`;
   return `<div class="banner" id="export-all"><div class="txt"><b>Export all outputs</b> as one .zip, with a README listing every file and the settings used.
     <ul class="xa-list">${item(true, 'Project and every participant’s judgements; weights, consistency report and judgement matrices')}
-      ${item(!!R, R ? `Index results, indicator scores and dimension scores for every ${U().one}, EO × AP scatter` : 'Index results: load tract data on the Index tab first')}
-      ${item(!!(R && geo), R && geo ? 'Maps (ARI, A, C, gap, bivariate, unreliable inputs, LISA), Moran’s I and LISA' : 'Maps and spatial statistics: load boundaries first')}
+      ${item(!!R, R ? `Index results, indicator scores and dimension scores for every ${U().one}, EO × AP scatter` : `Index results: load ${U().one} data on the Index tab first`)}
+      ${item(!!(R && geo), R && geo ? 'Maps (ARI, EO, AP, gap labels, gap, bivariate, unreliable inputs, LISA), Moran’s I and LISA' : 'Maps and spatial statistics: load boundaries first')}
       ${item(!!mcOk, mcOk ? 'Sensitivity analysis (Monte Carlo ranks)' : 'Sensitivity analysis: run it on the Index tab first')}
       ${item(!!R, R ? 'Disaggregation and intersectionality, as set on the Disaggregation tab' : 'Disaggregation: load data first')}
       ${R && ui.selectedRow != null && ui.selectedRow < R.P.N ? item(true, `Radar charts for the open ${U().one} (${esc(R.P.names[ui.selectedRow] || R.P.ids[ui.selectedRow])})`) : ''}</ul>

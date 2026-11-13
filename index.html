@@ -271,8 +271,9 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);color:var(--muted);f
     <div class="math-step"><b>4. Consistency.</b> With \(\lambda_{\max}\) the principal eigenvalue of the matrix,
       $$\mathrm{CI}=\frac{\lambda_{\max}-n}{n-1},\qquad \mathrm{CR}=\frac{\mathrm{CI}}{\mathrm{RI}(n)},$$
       where \(\mathrm{RI}\) is Saaty's random index (0.58 for three items, 0.90 for four). Sets with \(\mathrm{CR}<0.10\) are accepted; above that the studio points to the judgements to revisit.</div>
-    <div class="math-step"><b>5. Combining the panel.</b> Each cell is pooled across the \(K\) experts by a weighted geometric mean, which keeps the matrix reciprocal:
-      $$a^{G}_{ij}=\prod_{k=1}^{K}a_{ij,k}^{\,\lambda_k/\sum_l\lambda_l}.$$</div>
+    <div class="math-step"><b>5. Combining the group.</b> A team can agree on each judgement by consensus and enter one set of matrices, or let every member judge separately and pool the answers. In the second case each cell is pooled across the \(K\) experts by a weighted geometric mean, which keeps the matrix reciprocal:
+      $$a^{G}_{ij}=\prod_{k=1}^{K}a_{ij,k}^{\,\lambda_k/\sum_l\lambda_l}.$$
+      Pooling hides disagreement: if one member answers 5 and another 1/5, the pooled value is 1, a view that neither holds. To work by consensus, add one participant (for example “Group”), enter the agreed judgements under that name, and untick everyone else under <b>Include</b> on the Group weights tab.</div>
     <div class="math-step"><b>6. Global and pillar weights.</b> An indicator's global weight is its dimension's weight times its weight within the dimension, \(w_j=w_d\,w_{j\mid d}\). Weights are then rescaled to sum to 1 within each pillar: \(w^{P}_j=w_j/\sum_{k\in P}w_k\).</div>
     <div class="math-step"><b>7. Indicator scores.</b> Tracts with fewer residents than a minimum (100 by default) are left unscored first: survey estimates for a handful of residents are mostly 0% or 100% and would otherwise set the scale for everyone else. Each indicator is then rescaled across the \(N\) remaining tracts of the study area, flipped if lower is better, and raised off zero by a small floor \(f=0.01\):
       $$z_{tj}=\frac{x_{tj}-\min_s x_{sj}}{\max_s x_{sj}-\min_s x_{sj}},\qquad x'_{tj}=f+(1-f)\,z_{tj}.$$</div>
